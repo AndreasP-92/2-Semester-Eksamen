@@ -1,0 +1,22 @@
+main > div{
+    margin-top:20%;
+}
+.board{
+    width:30%;
+    background-color:grey;
+}
+.innerBoard{
+    background-color: white; height: 600px;
+}
+.underLine{
+    height: 5px; width: 70%; border-bottom: 2px solid #34d4b1
+}
+.checkmarkIcon{
+    color: #34c776; font-size: 22px;
+}
+.info{
+    font-style: italic; font-size: 15px;
+}
+.terms{
+    text-decoration: underline;
+}

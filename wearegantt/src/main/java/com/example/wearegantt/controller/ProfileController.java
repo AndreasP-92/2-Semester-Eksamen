@@ -29,7 +29,7 @@ public class ProfileController {
 
     @GetMapping("/projects")
     private String projects(){
-        return "projects";
+        return "profile/project";
     }
 
 //    POST ROUTES ==================

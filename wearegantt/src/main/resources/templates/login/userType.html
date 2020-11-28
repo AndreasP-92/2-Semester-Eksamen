@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Choose your User Type</title>
 
+    <link href="/css/login/userType.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
     <header>
@@ -13,25 +15,128 @@
 
         </div>
     </header>
-    <main class="container">
+    <main class="container pt-5">
         <div class="row">
-        <div class="col-sm-4" style="background-color:grey;">
-            <div style="background-color: white;">
-                <p>asd</p>
+<!--     BOARD#1         -->
+        <div class="ml-3 board">
+            <div class="m-5 innerBoard" style="" align="center">
+                <h3> Trial User</h3>
+                <h5>Try 30 days Free</h5>
+                <div class="underLine"></div>
+<!--     CHECKMARKS       -->
+                <div class="row mt-4 pl-2" align="left">
+                    <div class="col-sm-2"><i class="fas fa-check checkmarkIcon"></i></div>
+                    <div class="col-sm-10"><p>Full Access for 30 days</p></div>
+                </div>
+                <div class="row mt-2 pl-2" align="left">
+                    <div class="col-sm-2"><i class="fas fa-check checkmarkIcon"></i></div>
+                    <div class="col-sm-10"><p>Super User Account</p></div>
+                </div>
+<!--     END       -->
+<!--    PRICE          -->
+                <h5 class="mt-5 pt-5"> € 0.00</h5>
+                <p>For 1 Month</p>
+                <button type="button" class="btn w-75" style="background-color: #34d4b1; border: 2px solid black;">Choose</button>
+<!--     END       -->
+<!--    TERMS       -->
+                <p class="info w-75 mt-5">Try out our Gantt product, lasting 30 days. Subscription will start automatic after the trial period</p>
+                <div class="row mt-2 pl-4 p4-4">
+                    <div class="col-sm-2">
+                        <input class="ml-3" type="checkbox">
+                    </div>
+                    <div class="col-sm-10">
+                        <p class="mr-4 terms"> I Accept Terms of Use</p>
+                    </div>
+<!--     END       -->
+
+                </div>
             </div>
         </div>
-        <div class="col-sm-4" style="background-color:grey;">
-            <div style="background-color: white;">
-                <p>asd</p>
+<!--     END       -->
+
+<!--     BOARD#2         -->
+            <div class="ml-3 board">
+            <div class="m-5 innerBoard" align="center">
+                <h3>Normal User</h3>
+                <h5>Limited Usage</h5>
+                <div class="underLine"></div>
+<!--     CHECKMARKS       -->
+                <div class="row mt-4 pl-2" align="left">
+                    <div class="col-sm-2"><i class="fas fa-check checkmarkIcon"></i></div>
+                    <div class="col-sm-10"><p>Full Access to Projects</p></div>
+                </div>
+                <div class="row mt-2 pl-2" align="left">
+                    <div class="col-sm-2"><i class="fas fa-check checkmarkIcon"></i></div>
+                    <div class="col-sm-10"><p>Premium Support</p></div>
+                </div>
+<!--     END       -->
+<!--    PRICE          -->
+                <h5 class="mt-5 pt-5">€ 4.00</h5>
+                <p>Per Month</p>
+                <button type="button" class="btn w-75" style="background-color: #34d4b1; border: 2px solid black;">Choose</button>
+<!--     END       -->
+<!--    TERMS       -->
+                <p class="info w-75 mt-5">Use the Gantt product in the project your organization has created. <span style="color:#ff0000;"> Invitation is required from a Super User</span></p>
+                <div class="row mt-2 pl-4 p4-4">
+                    <div class="col-sm-2">
+                        <input class="ml-3" type="checkbox">
+                    </div>
+                    <div class="col-sm-10">
+                        <p class="mr-4 terms"> I Accept Terms of Use</p>
+                    </div>
+<!--     END       -->
+
+                </div>
 
             </div>
         </div>
-        <div class="col-sm-4r" style="background-color:grey;">
-            <div style="background-color: white;">
-                <p>asd</p>
+<!--     END       -->
+
+<!--     BOARD#3         -->
+            <div class="ml-3 board">
+            <div class="m-5 innerBoard" align="center">
+                <h3>Super User</h3>
+                <h5>Full Access</h5>
+                <div class="underLine"></div>
+                <!--     CHECKMARKS       -->
+                <div class="row mt-4 pl-2" align="left">
+                    <div class="col-sm-2 checkmarkIcon"><i class="fas fa-check"></i></div>
+                    <div class="col-sm-10"><p>Premium Support</p></div>
+                </div>
+                <div class="row mt-2 pl-2" align="left">
+                    <div class="col-sm-2"><i class="fas fa-check checkmarkIcon"></i></div>
+                    <div class="col-sm-10"><p>Create Projects</p></div>
+                </div>
+                <div class="row mt-2 pl-2" align="left">
+                    <div class="col-sm-2" align="left"><i class="fas fa-check checkmarkIcon"></i></div>
+                    <div class="col-sm-10"><p>Create Organization</p></div>
+                </div>
+                <div class="row mt-2 pl-2" align="left">
+                    <div class="col-sm-2"><i class="fas fa-check checkmarkIcon"></i></div>
+                    <div class="col-sm-10"><p>Create News on Newsfeed</p></div>
+                </div>
+                <!--     END       -->
+                <!--    PRICE          -->
+                <h5 class=""> € 12.00</h5>
+                <p>Per Month</p>
+                <button type="button" class="btn w-75" style="background-color: #34d4b1; border: 2px solid black;">Choose</button>
+                <!--     END       -->
+                <!--    TERMS       -->
+                <p class="info w-75 mt-5">Get full access to create, read, update and delete news and Gantt project in your organization.</p>
+                <div class="row mt-2 pl-4 p4-4">
+                    <div class="col-sm-2">
+                        <input class="ml-3" type="checkbox">
+                    </div>
+                    <div class="col-sm-10">
+                        <p class="mr-4 terms"> I Accept Terms of Use</p>
+                    </div>
+                    <!--     END       -->
+
+                </div>
 
             </div>
-        </div>
+            </div>
+<!--     END       -->
         </div>
     </main>
 </body>
