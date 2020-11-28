@@ -10,7 +10,7 @@ public class MainController {
 
     @GetMapping("/")
     private String index(){
-        return "index";
+        return "main/index";
     }
 
     @GetMapping("/contact")
