@@ -10,12 +10,19 @@ public class LoginController {
 
     @GetMapping("/login")
     private String login(){
+
         return "login";
     }
 
     @GetMapping("/register")
     private String register(){
         return "register";
+    }
+
+    @GetMapping("/usertype")
+    private String userType(){
+
+        return "login/userType";
     }
 //    POST ROUTES ==================
 
