@@ -23,7 +23,7 @@ public class ProfileController {
 
     @GetMapping("/gantt")
     private String gantt(){
-        return "gantt";
+        return "profile/gantt";
     }
 
 

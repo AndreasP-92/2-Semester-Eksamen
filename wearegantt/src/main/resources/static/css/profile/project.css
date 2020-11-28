@@ -1,11 +1,14 @@
 .projectBox{
     background-color:grey; height:300px;
     border-radius: 5%;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 p{
     color:white;
 }
 h4{
     color:white;
+}
+a{
+    text-decoration: none!important;
 }

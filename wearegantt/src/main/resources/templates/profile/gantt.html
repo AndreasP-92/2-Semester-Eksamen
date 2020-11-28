@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>**DYNAMIC PROJECT NAME **</title>
+
+
+    <link href="/css/profile/gantt.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <!--=================== NAVIGATION ============================ -->
+        <div th:replace="partials/navbar :: navigation">
+
+        </div>
+    </header>
+    <main class="">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="container">
+                    <table class="table mt-5 table-striped table-bordered table-danger table-hover">
+                        <thead class="thead-dark">
+                        <a href="#">
+                            <tr>
+                                <th scope="col ">#</th>
+                                <th scope="col ">Task Name</th>
+                                <th scope="col ">Position</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Start</th>
+                                <th scope="col">Dato</th>
+                            </tr>
+                        </a>
+                        </thead>
+                        <tbody>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>1</td>
+                            <th scope="row">1. Analysis</th>
+                            <td>Manager</td>
+                            <td>31 days</td>
+                            <td>11/23/2020</td>
+                            <td>11/23/2020</td>
+                        </tr>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>2</td>
+                            <td scope="row">SWOT Analysis</td>
+                            <td>Manager</td>
+                            <td>31 days</td>
+                            <td>11/23/2020</td>
+                            <td>11/23/2020</td>
+                        </tr>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>3</td>
+                            <td scope="row">Risk Management</td>
+                            <td>Manager</td>
+                            <td>31 days</td>
+                            <td>11/23/2020</td>
+                            <td>11/23/2020</td>
+                        </tr>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>4</td>
+                            <td scope="row">Class Diagram</td>
+                            <td>Manager</td>
+                            <td>31 days</td>
+                            <td>11/23/2020</td>
+                            <td>11/23/2020</td>
+                        </tr>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>5</td>
+                            <th scope="row">2. Design</th>
+                            <td>Manager</td>
+                            <td>23 Days</td>
+                            <td>11/30/2020</td>
+                            <td>12/07/2020</td>
+                        </tr>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>6</td>
+
+                            <td scope="row">Design Database</td>
+                            <td>Manager</td>
+                            <td>23 Days</td>
+                            <td>11/30/2020</td>
+                            <td>12/07/2020</td>
+                        </tr>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>7</td>
+                            <td scope="row">Spftware Design</td>
+                            <td>Manager</td>
+                            <td>23 Days</td>
+                            <td>11/30/2020</td>
+                            <td>12/07/2020</td>
+                        </tr>
+                        <tr class="mt-5" onclick="location.href='/admin/support/chat'" style="cursor:pointer">
+                            <td>8</td>
+                            <td>Interface Design</td>
+                            <td>Manager</td>
+                            <td>23 Days</td>
+                            <td>11/30/2020</td>
+                            <td>12/07/2020</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="container">
+                    <div class="wrapper">
+                        <div class="gantt">
+                            <div class="gantt__row gantt__row--months">
+                                <div class="gantt__row-first"></div>
+                                <span>Jan</span><span>Feb</span><span>Mar</span>
+                                <span>Apr</span><span>May</span><span>Jun</span>
+                                <span>Jul</span><span>Aug</span><span>Sep</span>
+                                <span>Oct</span><span>Nov</span><span>Dec</span>
+
+                            </div>
+                            <div class="gantt__row gantt__row--lines" data-month="5">
+                                <span></span><span></span><span></span>
+                                <span></span><span></span><span></span>
+                                <span></span><span class="marker"></span><span></span>
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="gantt__row">
+                                <div class="gantt__row-first">
+                                    Andreas Pedersen
+                                </div>
+                                <ul class="gantt__row-bars">
+                                    <li style="grid-column: 4/13; background-color: #2ecaac;">Even longer project</li>
+                                </ul>
+                            </div>
+                            <div class="gantt__row gantt__row--empty">
+                                <div class="gantt__row-first">
+                                    Tobias Cho
+                                </div>
+                                <ul class="gantt__row-bars"></ul>
+                            </div>
+                            <div class="gantt__row">
+                                <div class="gantt__row-first">
+                                    Jeffrey Oechsner
+                                </div>
+                                <ul class="gantt__row-bars">
+                                    <li style="grid-column: 2/5; background-color: #2ecaac;">Start Februar 🙌</li>
+                                    <li style="grid-column: 1/6; background-color: #ff6252;" class="stripes"></li>
+                                    <li style="grid-column: 7/11; background-color: #54c6f9;">Same line</li>
+                                </ul>
+                            </div>
+                            <div class="gantt__row gantt__row--empty">
+                                <div class="gantt__row-first">
+                                    Andreas Pedersen
+                                </div>
+                                <ul class="gantt__row-bars"></ul>
+                            </div>
+                            <div class="gantt__row gantt__row--empty">
+                                <div class="gantt__row-first">
+                                    Tobias Cho
+                                </div>
+                                <ul class="gantt__row-bars"></ul>
+                            </div>
+                            <div class="gantt__row">
+                                <div class="gantt__row-first">
+                                    Jeffrey Oechsner
+                                </div>
+                                <ul class="gantt__row-bars">
+                                    <li style="grid-column: 2/5; background-color: #2ecaac;"></li>
+                                </ul>
+                            </div>
+                            <div class="gantt__row">
+                                <div class="gantt__row-first">
+                                    Andreas Pedersen
+                                </div>
+                                <ul class="gantt__row-bars">
+                                    <li style="grid-column: 3/8; background-color: #54c6f9;">Long project</li>
+                                </ul>
+                            </div>
+
+                            <div class="gantt__row">
+                                <div class="gantt__row-first">
+                                    Ketti Waterworth
+                                </div>
+                                <ul class="gantt__row-bars">
+                                    <li style="grid-column: 4/9; background-color: #ff6252;" class="stripes">A title</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
