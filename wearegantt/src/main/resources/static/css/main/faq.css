@@ -1,6 +1,6 @@
 #contact {
     background: #707070;
-    margin-top:20%;
+    margin-top:1%;
     padding:20px;
 }
 
@@ -21,24 +21,6 @@
     background-color: #ffffff;
 }
 
-.brand_logo_container {
-    position: absolute;
-    height: 170px;
-    width: 170px;
-    top: -75px;
-    border-radius: 50%;
-    background: #ffbdbd;
-    padding: 10px;
-    text-align: center;
-    margin-top:205px;
-}
-.brand_logo {
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    border: 2px solid white;
-
-}
 
 
 
