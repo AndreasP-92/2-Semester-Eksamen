@@ -17,9 +17,49 @@
         </div>
     </header>
     <main class="">
+<!-- ======================= SIDE NAVIGATION ==================== -->
+        <div id="mySidenav" class="sidenav">
+            <div class="container">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="#">Add Task</a>
+                <a href="#">Add Employee</a>
+                <a href="#">Clients</a>
+                <a href="#">Contact</a>
+
+                <form class="">
+                    <div class="form-check" style="color:white;">
+                        <input class="form-check-input" checked type="checkbox" name="analysis">
+                        <label class="form-check-label"  name="analysis">Analysis</label>
+                    </div>
+                    <div class="form-check" style="color:white;">
+                        <input class="form-check-input" checked type="checkbox" name="design">
+                        <label class="form-check-label"  name="design">Design</label>
+                    </div>
+                    <div class="form-check" style="color:white;">
+                        <input class="form-check-input" checked type="checkbox" name="development">
+                        <label class="form-check-label"  name="development">Development</label>
+                    </div>
+                    <div class="form-check" style="color:white;">
+                        <input class="form-check-input" checked type="checkbox" name="testing">
+                        <label class="form-check-label"  name="testing">Testing</label>
+                    </div>
+
+                    <div align="center">
+                        <button class="mt-3 btn btn-light">Submit</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Use any element to open the sidenav -->
+        <span onclick="openNav()"><i class="fas fa-bars" style="font-size: 35px; padding-top: 40px; padding-left: 40px; width: 40px;"></i></span>
+
+        <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<!-- END -->
         <div class="row">
             <div class="col-sm-6">
-                <div class="container">
+                <div class="ml-3">
                     <table class="table mt-5 table-striped table-bordered table-danger table-hover">
                         <thead class="thead-dark">
                         <a href="#">
@@ -104,8 +144,8 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="container">
-                    <div class="wrapper">
+                <div class="mr-3">
+                    <div class="mt-5">
                         <div class="gantt">
                             <div class="gantt__row gantt__row--months">
                                 <div class="gantt__row-first"></div>
@@ -188,5 +228,7 @@
             </div>
         </div>
     </main>
+    <!--=================== Footer ============================ -->
 </body>
+<script src="/js/profile/gantt.js"></script>
 </html>
