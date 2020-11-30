@@ -15,19 +15,23 @@ public class MainController {
 
     @GetMapping("/contact")
     private String contact(){
-        return "contact";
+        return "main/contact";
     }
 
-    @GetMapping("/FAQ")
+    @GetMapping("/faq")
     private String faq(){
-        return "faq";
+        return "main/faq";
     }
 
     @GetMapping("/privacy")
     private String privacy(){
-        return "privacy";
+        return "main/privacy";
     }
 
+    @GetMapping("/newsfeed")
+    private String newsfeed(){
+        return "main/newsfeed";
+    }
 //    POST ROUTES ==================
 
 }

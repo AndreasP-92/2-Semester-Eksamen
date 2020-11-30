@@ -1,0 +1,44 @@
+
+#contact {
+    background: #707070;
+    margin-top:20%;
+    padding:20px;
+}
+
+#contact h3 {
+    color: #ffffff;
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+#contact h4 {
+    margin:5px 0 15px;
+    display:block;
+    font-size:13px;
+}
+
+.form-button{
+    background-color: #34d4b1;
+}
+.brand_logo_container {
+    position: absolute;
+    height: 170px;
+    width: 170px;
+    top: -75px;
+    border-radius: 50%;
+    background: #ffbdbd;
+    padding: 10px;
+    text-align: center;
+    margin-top:205px;
+    margin-left:170px;
+}
+.brand_logo {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid white;
+
+}
+
+

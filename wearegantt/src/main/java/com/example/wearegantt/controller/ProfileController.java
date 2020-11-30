@@ -9,10 +9,7 @@ public class ProfileController {
 //    GET ROUTES ==================
 
 
-    @GetMapping("/newsfeed")
-    private String newsfeed(){
-        return "newsfeed";
-    }
+
 
 
     @GetMapping("/profile")

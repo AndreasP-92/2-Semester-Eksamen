@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th = "http://www.thymeleaf.org">
+<footer th:class="footer" th:fragment="footerFragment" class = "container-fluid d-flex h-100 flex-column">
+    <div class="container mt-5" align="center">
+        <div class="row w-50" >
+            <div class="col-sm" align="center">
+                <a href="/contact">Contact</a>
+            </div>
+            <div class="col-sm" align="center">
+                <a href="/faq">FAQ</a>
+            </div>
+            <div class="col-sm" align="center">
+                <a href="/privacy">Privacy</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
-</body>
 </html>

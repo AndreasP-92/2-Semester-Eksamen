@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main/contact.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <!--=================== NAVIGATION ============================ -->
+    <div th:replace="partials/navbar :: navigation">
+
+    </div>
+</header>
+    <!--=================== Container + logo ============================ -->
+<div class="container" align="center">
+    <form id="contact" action="" method="post" class="w-50">
+            <div class="brand_logo_container">
+                <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+
+            </div>
+        <!--=================== Input ============================ -->
+        <h3 style="text-align: center">Contact Form</h3>
+        <h4></h4>
+<div class="form-group ml-5 mr-5">
+            <input placeholder="Enter Your name" type="text" required autofocus class="form-control" >
+</div>
+        <div class="form-group ml-5 mr-5">
+            <input placeholder="Enter Your Email " type="email" required class="form-control">
+        </div>
+        <div class="form-group ml-5 mr-5">
+
+            <textarea placeholder="Enter your Message" required class="form-control"></textarea>
+        </div>
+        <!--=================== Submit button ============================ -->
+            <button class="btn form-button w-25 mb-3" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+
+    </form>
+
+
+</div>
+        <!--=================== Footer ============================ -->
+<footer>
+    <div th:replace="partials/footer :: footerFragment"></div>
+</footer>
+</body>
+</html>
