@@ -9,7 +9,6 @@ body{
     height: 420px;
     background: #707070;
     color: #ffffff;
-    position: absolute;
     box-sizing: border-box;
     margin-top: 5%;
 
@@ -18,7 +17,7 @@ body{
     position: absolute;
     height: 90px;
     width: 90px;
-    top: -25px;
+    top: 115px;
     border-radius: 50%;
     background: #ffffff;
     text-align: center;
