@@ -11,12 +11,12 @@ public class LoginController {
     @GetMapping("/login")
     private String login(){
 
-        return "login";
+        return "login/login";
     }
 
     @GetMapping("/register")
     private String register(){
-        return "register";
+        return "login/register";
     }
 
     @GetMapping("/usertype")

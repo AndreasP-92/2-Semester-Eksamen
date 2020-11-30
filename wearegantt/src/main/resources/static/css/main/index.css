@@ -1,0 +1,81 @@
+body{
+    background: #ffffff !important;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+.loginbox{
+    width: 320px;
+    background: #707070;
+    color: #ffffff;
+    position: absolute;
+    box-sizing: border-box;
+    margin-top: 5%;
+
+}
+.brand_logo_container {
+    position: absolute;
+    height: 90px;
+    width: 90px;
+    top: -25px;
+    border-radius: 50%;
+    background: #ffffff;
+    text-align: center;
+}
+.brand_logo {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+
+}
+.loginbox input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+
+
+.loginbox input[type="button"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #34d4b1;
+    color: black;
+    font-size: 18px;
+
+}
+.loginbox input[type="button"]:hover{
+    cursor: pointer;
+    background: #ffc107;
+    color: black;
+}
+
+
+.loginbox a:hover{
+    color: #ffc107;
+
+}
+
+/*button Start*/
+
+.form_container {
+    margin-top: 100px;
+}
+.login_btn{
+    width: 100%;
+    background: #34d4b1 !important;
+    color: black !important;
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 18px;
+}
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+.login_container {
+    padding: 0 2rem;
+}
+/*Button End*/

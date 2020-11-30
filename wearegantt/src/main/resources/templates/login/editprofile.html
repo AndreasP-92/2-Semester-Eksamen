@@ -1,10 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="css/main/editprofile.css" type="text/css" rel="stylesheet">
+    <title>Edit Your Profile</title>
 </head>
 <body>
+        <!--=================== Body Start ============================ -->
+    <header>
+        <!--=================== NAVIGATION Start ============================ -->
+        <div th:replace="partials/navbar :: navigation">
+
+        </div>
+        <!--=================== NAVIGATION End ============================ -->
+    </header>
+
+    <div class="container main p-2" align="center">
+        <div class="row">
+            <div class="col-sm">
+                <div class="d-flex justify-content-center">
+                    <div class="logo_brand p-4">
+                        <img  srcset="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                    </div>
+                </div>
+                <br>
+                <h3>Admin<br> since 27/11/20</h3>
+            </div>
+            <div class="col-sm">
+                <div class="d-flex justify-content-center h-100">
+                    <div class="loginbox">
+                        <div class="d-flex justify-content-center">
+                            <div class="logo_brand">
+                                <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                            </div>
+                        </div>
+                        <h4>Edit Your Profile</h4>
+                        <form class="">
+                            <input class="text-center p-3 mb-1" type="text" name="" placeholder="Email">
+
+                            <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">
+
+                            <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">
+
+                            <input class="text-center p-3 mb-1" type="text" name="" placeholder="Firstname">
+
+                            <input class="text-center p-3 mb-1" type="text" name="" placeholder="Address">
+
+                            <input class="text-center p-3 mb-1" type="text" name="" placeholder="Zip Code">
+
+                            <input class="text-center p-3 mb-5" type="text" name="" placeholder="Country">
+
+
+                                        <a class="w-100" href="/register"> <button type="button" name="button" class="btn login_btn">Edit</button></a>
+
+                                        <a class="w-100 " href="/login"><button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button></a>
+
+                            <h2>Change Subscription</h2>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm row align-items-end">
+                <div class="row rightcol mb-5">
+                    <div class="col-6">
+
+                    </div>
+                    <div class="col-6">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-end">
+            <div class="col">
+                <input type="checkbox" id="trails" name="trails" value="trails">
+                <label for="trails">trails</label><br>
+            </div>
+            <div class="col">
+                <input type="checkbox" id="Normal User" name="Normal User" value="Normal User">
+                <label for="Normal User">Normal User</label><br>
+                <input type="checkbox" id="Cancel" name="Cancel" value="Cancel">
+                <label for="trails">Cancel</label><br>
+            </div>
+            <div class="col">
+                <input type="checkbox" id="Super User" name="Super User" value="Super User">
+                <label for="trails">Super User</label><br>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!--=================== Body End ============================ -->
+
+    <!--=================== Footer ============================ -->
+
+
+        <div th:replace="partials/footer :: footerFragment"></div>
+
+
+    <!--&lt;!&ndash;=================== Footer ============================ &ndash;&gt;-->
 
 </body>
 </html>

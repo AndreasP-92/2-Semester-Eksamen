@@ -12,9 +12,9 @@ public class ProfileController {
 
 
 
-    @GetMapping("/profile")
+    @GetMapping("/editprofile")
     private String profile(){
-        return "profile";
+        return "login/editprofile";
     }
 
 
