@@ -79,8 +79,10 @@ p {
 p1 {
     margin-top: -90px;
     margin-bottom: 5rem;
+
 }
-img {
+
+.homer {
     vertical-align: middle;
     border-style: none;
     width: 50px;
