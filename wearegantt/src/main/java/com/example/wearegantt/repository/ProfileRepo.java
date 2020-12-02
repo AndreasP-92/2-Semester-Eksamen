@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ProfileDAO {
+public class ProfileRepo {
 
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
 
-    public ProfileDAO(JdbcTemplate jdbcTemplate){
+    public ProfileRepo(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
 

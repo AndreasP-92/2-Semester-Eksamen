@@ -1,10 +1,15 @@
 package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.Authorities;
+import com.example.wearegantt.model.Order;
 import com.example.wearegantt.model.Profile;
 import com.example.wearegantt.model.User;
-import com.example.wearegantt.repository.ProfileDAO;
-import com.example.wearegantt.repository.UserDAO;
+import com.example.wearegantt.repository.ProfileRepo;
+import com.example.wearegantt.repository.UserRepo;
+import com.example.wearegantt.service.PaypalService;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +21,11 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class LoginController {
 
+    UserRepo userRepo = new UserRepo();
+
     @Autowired
-    private UserDAO daoUser;
-    @Autowired
-    private ProfileDAO daoProfile;
+    PaypalService service;
+
 
 //    GET ROUTES ==================
 
@@ -30,11 +36,23 @@ public class LoginController {
     }
 
     @GetMapping("/register")
-    private String register(Model model){
-        User user = new User();
-        model.addAttribute("user",user);
+    private String register(){
+
         return "login/register";
     }
+
+    @GetMapping("/usertype")
+    private String userType(){
+
+        return "login/userType";
+    }
+
+    @GetMapping("/paypal")
+    private String paypal(){
+
+        return "paypal";
+    }
+//    POST ROUTES ==================
 
     @PostMapping("/saveUser")
     public String postSaveUser(WebRequest dataFromForm){
@@ -53,28 +71,35 @@ public class LoginController {
         int zipParsed = Integer.parseInt(zipcode);
         int phoneParsed = Integer.parseInt(phone);
 
-        User user = new User(email,password,1);
-        daoUser.save(user);
-        User userObj = daoUser.getUser(email);
+        userRepo.insertUser(email, password, 1);
+        User userObj = userRepo.getOneUser(email);
 
-        Profile profile = new Profile(firstname,lastname, address, phoneParsed, country, zipParsed, "", jobTitle ,userObj.getUser_id());
-        daoProfile.save(profile);
+        System.out.println(userObj);
 
-        Authorities auth = new Authorities("ROLE_USER", userObj.getUser_mail());
-        daoUser.saveAuth(auth);
+        userRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed,jobTitle, userObj.getUser_id());
+
+        userRepo.insertAuthUser("ROLE_USER", userObj.getUser_mail());
 
 
         return "redirect:/";
     }
 
+    public static final String SUCCESS_URL ="pay/success";
+    public static final String CANCEL_URL ="pay/cancel";
 
-
-    @GetMapping("/usertype")
-    private String userType(){
-
-        return "login/userType";
+    @GetMapping("/pay")
+    public String payment(@ModelAttribute("order") Order order){
+        try {
+            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(), order.getIntent(), order.getDescription(), "http://localhost:1338/"+CANCEL_URL, "http://localhost:1338/"+SUCCESS_URL);
+            for(Links link : payment.getLinks()){
+                if(link.getRel().equals("approval_url")){
+                    return "redirect:"+link.getHref();
+                }
+            }
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/";
     }
-//    POST ROUTES ==================
-
 }
 //"DELETE  FROM app_user WHERE user_mail = ?";

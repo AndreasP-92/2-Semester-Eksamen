@@ -6,13 +6,11 @@ public class User {
     private String user_password;
     private int user_enabled;
 
-    public User(String user_mail, String user_password, int user_enabled) {
+    public User(int user_id, String user_mail, String user_password, int user_enabled) {
+        this.user_id = user_id;
         this.user_mail = user_mail;
         this.user_password = user_password;
         this.user_enabled = user_enabled;
-    }
-
-    public User() {
     }
 
     public int getUser_id() {

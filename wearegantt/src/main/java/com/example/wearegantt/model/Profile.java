@@ -12,7 +12,8 @@ public class Profile {
     private String profile_jobTitle;
     private int fk_userId;
 
-    public Profile(String profile_firstname, String profile_lastname, String profile_adress, int profile_phone, String profile_country, int profile_zip, String profile_desc, String profile_jobTitle, int fk_userId) {
+    public Profile(int profile_id, String profile_firstname, String profile_lastname, String profile_adress, int profile_phone, String profile_country, int profile_zip, String profile_desc, String profile_jobTitle, int fk_userId) {
+        this.profile_id = profile_id;
         this.profile_firstname = profile_firstname;
         this.profile_lastname = profile_lastname;
         this.profile_adress = profile_adress;
@@ -22,9 +23,6 @@ public class Profile {
         this.profile_desc = profile_desc;
         this.profile_jobTitle = profile_jobTitle;
         this.fk_userId = fk_userId;
-    }
-
-    public Profile() {
     }
 
     public int getProfile_id() {

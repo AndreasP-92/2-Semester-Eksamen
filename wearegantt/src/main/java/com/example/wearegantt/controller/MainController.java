@@ -1,15 +1,22 @@
 package com.example.wearegantt.controller;
 
+import com.example.wearegantt.model.User;
+import com.example.wearegantt.repository.ProfileRepo;
+import com.example.wearegantt.repository.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+import java.util.List;
+
+@org.springframework.stereotype.Controller
 public class MainController {
+
 
 //    GET ROUTES ==================
 
     @GetMapping("/")
     private String index(){
+
         return "main/index";
     }
 

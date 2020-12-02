@@ -5,12 +5,10 @@ public class Authorities {
     private String auth_role;
     private String fk_userMail;
 
-    public Authorities(String auth_role, String fk_userMail) {
+    public Authorities(int auth_id, String auth_role, String fk_userMail) {
+        this.auth_id = auth_id;
         this.auth_role = auth_role;
         this.fk_userMail = fk_userMail;
-    }
-
-    public Authorities() {
     }
 
     public int getAuth_id() {

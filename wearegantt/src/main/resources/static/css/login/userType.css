@@ -20,3 +20,15 @@ main > div{
 .terms{
     text-decoration: underline;
 }
+#paypal-button01{
+    color: green!important;
+}
+#freebutton{
+    background: #009cde;;
+    border-radius: 25px;
+    border: 2px solid #009cde;;
+    height: 33px;
+    width: 161px;
+    color:white;
+    font-weight: bold;
+}
