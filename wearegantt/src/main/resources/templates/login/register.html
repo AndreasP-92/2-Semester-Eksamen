@@ -26,20 +26,26 @@
                     <img  th:src="@{/images/smallLogo.png/}"  class ="brand_logo" alt="logo">
                 </div>
             </div>
-            <form action="/register"  class="pt-5">
-                <input class="text-center p-3 mb-1" type="text" name="" placeholder="Email">
+            <form th:action="@{/saveUser}" method="post" class="pt-5">
+                <input class="text-center p-3 mb-1" type="text"  name="email" placeholder="Email">
 
-                <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">
+                <input class="text-center p-3 mb-1" type="password"  name="password" placeholder="Password">
 
-                <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">
+                <input class="text-center p-3 mb-1" type="password"  name="password" placeholder="Password">
 
-                <input class="text-center p-3 mb-1" type="text" name="" placeholder="Firstname">
+                <input class="text-center p-3 mb-1" type="text" name="firstname" placeholder="Firstname">
 
-                <input class="text-center p-3 mb-1" type="text" name="" placeholder="Address">
+                <input class="text-center p-3 mb-1" type="text" name="lastname" placeholder="Lastname">
 
-                <input class="text-center p-3 mb-1" type="text" name="" placeholder="Zip Code">
+                <input class="text-center p-3 mb-1" type="text" name="address" placeholder="Address">
 
-                <input class="text-center p-3 mb-1" type="text" name="" placeholder="Country">
+                <input class="text-center p-3 mb-1" type="text" name="phone" placeholder="Phone">
+
+                <input class="text-center p-3 mb-1" type="text" name="country" placeholder="Country">
+
+                <input class="text-center p-3 mb-1" type="text" name="zipcode" placeholder="Zipcode">
+
+                <input class="text-center p-3 mb-1" type="text" name="jobTitle" placeholder="JobTitle">
 
                 <div class="d-flex justify-content-center mt--3 p-3 login_container">
                      <button  type="submit" name="button" class="btn login_btn">Create Account</button>
