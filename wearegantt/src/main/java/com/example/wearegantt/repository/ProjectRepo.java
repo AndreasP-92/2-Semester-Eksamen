@@ -1,12 +1,15 @@
 package com.example.wearegantt.repository;
 
 import com.example.wearegantt.model.Project;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepo {
+
+
 
     // GET ALL Projects
 
@@ -16,7 +19,7 @@ public class ProjectRepo {
         try {
 
             //lavet et statement
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM projects");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project");
 
             //eksekvere en query
             ResultSet rs = ps.executeQuery();
@@ -43,6 +46,10 @@ public class ProjectRepo {
         }
         return allProject;
     }
+
+    // FIND ONE PROJECT
+
+
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse
         Connection conn = DriverManager.getConnection("jdbc:mysql://138.197.186.159:3306/wag_app","captain","Uxr56vem.captain");

@@ -11,7 +11,9 @@ public class Project {
     private int fk_taskId;
     private int fk_jobTitleId;
 
-    public Project(int anInt, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId, int fk_taskId, int fk_jobTitleId) {
+
+    public Project(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId, int fk_taskId, int fk_jobTitleId) {
+        this.project_id = project_id;
         this.project_name = project_name;
         this.project_desc = project_desc;
         this.project_duration = project_duration;

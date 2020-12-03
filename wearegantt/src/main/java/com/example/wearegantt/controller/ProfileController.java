@@ -43,12 +43,14 @@ public class ProfileController {
         List<Project> listProjects = projectRepo.getAllProjects();
         model.addAttribute("listProjects", listProjects);
 
+        System.out.println(listProjects);
+
         return "profile/project";
     }
 
 
     @GetMapping("/projects/{id}")
-    private ModelAndView projects(@PathVariable(name = "id")int id){
+    private ModelAndView project(@PathVariable(name = "id")int id){
         ModelAndView mav = new ModelAndView("profile/project");
 //        Project project = ProjectRepo.getOneProject(id);
 //        mav.addObject("profile", project);
