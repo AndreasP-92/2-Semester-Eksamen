@@ -57,19 +57,19 @@ public class ProfileController {
         return mav;
     }
 
-//    @GetMapping("/profile/organization/{org_id}")
-//    public ModelAndView organization(@PathVariable(name = "org_id")int org_id){
-//        ModelAndView mav = new ModelAndView("profile/organization");
-//        Organization org = orgRep.getOneOrg(org_id);
-//
-//        mav.addObject("org", org);
-//
-//        System.out.println(org);
-//        //      udskriv alle projekter her!!
-////      Og send ojektet til html her
-//
-//        return mav;
-//    }
+    @GetMapping("/profile/organization/{org_id}")
+    public ModelAndView organization(@PathVariable(name = "org_id")int org_id){
+        ModelAndView mav = new ModelAndView("profile/organization");
+        Organization org = orgRep.getOneOrg(org_id);
+
+        mav.addObject("org", org);
+
+        System.out.println(org);
+        //      udskriv alle projekter her!!
+//      Og send ojektet til html her
+
+        return mav;
+    }
 
 //    POST ROUTES ==================
 
