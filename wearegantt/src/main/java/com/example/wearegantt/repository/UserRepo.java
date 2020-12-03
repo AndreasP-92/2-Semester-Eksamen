@@ -1,15 +1,7 @@
 package com.example.wearegantt.repository;
 
-
-import com.example.wearegantt.model.Authorities;
-import com.example.wearegantt.model.Profile;
 import com.example.wearegantt.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,7 +17,7 @@ public class UserRepo {
         try {
 
             //lavet et statement
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM wag_user");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users");
 
             //eksekvere en query
             ResultSet rs = ps.executeQuery();
@@ -55,13 +47,12 @@ public class UserRepo {
     public User getOneUser(String user_mail){
         User userToReturn = null;
 
+
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM wag_user WHERE user_mail = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE user_mail = ?");
             ps.setString(1 , user_mail);
 
             ResultSet rs = ps.executeQuery();
-
-            System.out.println(rs);
 
             while(rs.next()){
                 userToReturn = new User(
@@ -78,14 +69,16 @@ public class UserRepo {
             System.out.println(e);
             return null;
         }
+        System.out.println(userToReturn);
         return userToReturn;
+
     }
 
 //    ================== INSERT USER ================
 
     public void insertUser(String user_mail, String user_pass, int user_enabled){
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO wag_user(user_mail, user_password, user_enabled) VALUES (?, ?, ?)");
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO users(user_mail, user_password, user_enabled) VALUES (?, ?, ?)");
             ps.setString(1, user_mail);
             ps.setString(2, user_pass);
             ps.setInt(3, user_enabled);
@@ -104,7 +97,7 @@ public class UserRepo {
 
 
     public void insertAuthUser(String user_role, String user_mail){
-        String sql = "INSERT INTO wag_auth(auth_role, fk_userMail) VALUES (?, ?)";
+        String sql = "INSERT INTO auth(auth_role, fk_userMail) VALUES (?, ?)";
 
         try {
             PreparedStatement ps = establishConnection().prepareStatement(sql);
@@ -126,7 +119,7 @@ public class UserRepo {
 
 
     public void insertProfile(String firstname, String lastname, String address, int phone, String country,int zipParsed, String jobTitle, int fk_userId){
-        String sql = "INSERT INTO wag_profile(profile_firstname,profile_lastname,profile_adress,profile_phone, profile_country, profile_zip, profile_desc, profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO profile(profile_firstname,profile_lastname,profile_adress,profile_phone, profile_country, profile_zip, profile_desc, profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = establishConnection().prepareStatement(sql);

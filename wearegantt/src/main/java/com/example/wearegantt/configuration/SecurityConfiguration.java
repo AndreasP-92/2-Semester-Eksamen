@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin").hasAnyRole("ADMIN")
                 .antMatchers("/newsfeed").hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
+                .antMatchers("/projects").hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
                 .antMatchers("/profile/{profile_mail}").hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
 //                .antMatchers("/").permitAll()
                 .and().formLogin()
@@ -59,6 +60,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
                         String name = authentication.getName();
                         System.out.println("Logged in user: " + name);
+
+                        String url = "/projects";
+
+                        httpServletResponse.sendRedirect(url);
 
                     }
                 })
