@@ -5,6 +5,8 @@ import com.example.wearegantt.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ProfileController {
@@ -30,9 +32,14 @@ public class ProfileController {
     }
 
 
-    @GetMapping("/projects")
-    private String projects(){
-        return "profile/project";
+    @GetMapping("/projects/{id}")
+    private ModelAndView projects(@PathVariable(name = "id")int id){
+        ModelAndView mav = new ModelAndView("profile/project");
+
+//      udskriv alle projekter her!!
+//      Og send ojektet til html her
+
+        return mav;
     }
 
 //    POST ROUTES ==================
