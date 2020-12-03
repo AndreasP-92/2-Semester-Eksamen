@@ -1,10 +1,8 @@
 package com.example.wearegantt.controller;
 
-import com.example.wearegantt.model.Authorities;
+import com.example.wearegantt.model.LoginForm;
 import com.example.wearegantt.model.Order;
-import com.example.wearegantt.model.Profile;
 import com.example.wearegantt.model.User;
-import com.example.wearegantt.repository.ProfileRepo;
 import com.example.wearegantt.repository.UserRepo;
 import com.example.wearegantt.service.PaypalService;
 import com.paypal.api.payments.Links;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-
 
 
 @Controller
@@ -30,42 +27,41 @@ public class LoginController {
 //    GET ROUTES ==================
 
     @GetMapping("/login")
-    private String login(){
-
+    private String login() {
+        System.out.println("login test");
         return "login/login";
     }
 
     @GetMapping("/register")
-    private String register(){
+    private String register() {
 
         return "login/register";
     }
 
     @GetMapping("/usertype")
-    private String userType(){
+    private String userType() {
 
         return "login/userType";
     }
 
     @GetMapping("/paypal")
-    private String paypal(){
+    private String paypal() {
 
         return "paypal";
     }
 //    POST ROUTES ==================
 
     @PostMapping("/saveUser")
-    public String postSaveUser(WebRequest dataFromForm){
-        String firstname          = (dataFromForm.getParameter("firstname"));
-        String lastname           = (dataFromForm.getParameter("lastname"));
-        String address            = (dataFromForm.getParameter("address"));
-        String phone              = (dataFromForm.getParameter("phone"));
-        String country            = (dataFromForm.getParameter("country"));
-        String zipcode            = (dataFromForm.getParameter("zipcode"));
-        String jobTitle           = (dataFromForm.getParameter("jobTitle"));
-        String password           = (dataFromForm.getParameter("password"));
-        String email              = (dataFromForm.getParameter("email"));
-
+    public String postSaveUser(WebRequest dataFromForm) {
+        String firstname = (dataFromForm.getParameter("firstname"));
+        String lastname = (dataFromForm.getParameter("lastname"));
+        String address = (dataFromForm.getParameter("address"));
+        String phone = (dataFromForm.getParameter("phone"));
+        String country = (dataFromForm.getParameter("country"));
+        String zipcode = (dataFromForm.getParameter("zipcode"));
+        String jobTitle = (dataFromForm.getParameter("jobTitle"));
+        String password = (dataFromForm.getParameter("password"));
+        String email = (dataFromForm.getParameter("email"));
 
 
         int zipParsed = Integer.parseInt(zipcode);
@@ -76,7 +72,7 @@ public class LoginController {
 
         System.out.println(userObj);
 
-        userRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed,jobTitle, userObj.getUser_id());
+        userRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed, jobTitle, userObj.getUser_id());
 
         userRepo.insertAuthUser("ROLE_USER", userObj.getUser_mail());
 
@@ -84,16 +80,16 @@ public class LoginController {
         return "redirect:/";
     }
 
-    public static final String SUCCESS_URL ="pay/success";
-    public static final String CANCEL_URL ="pay/cancel";
+    public static final String SUCCESS_URL = "pay/success";
+    public static final String CANCEL_URL = "pay/cancel";
 
     @GetMapping("/pay")
-    public String payment(@ModelAttribute("order") Order order){
+    public String payment(@ModelAttribute("order") Order order) {
         try {
-            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(), order.getIntent(), order.getDescription(), "http://localhost:1338/"+CANCEL_URL, "http://localhost:1338/"+SUCCESS_URL);
-            for(Links link : payment.getLinks()){
-                if(link.getRel().equals("approval_url")){
-                    return "redirect:"+link.getHref();
+            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(), order.getIntent(), order.getDescription(), "http://localhost:1338/" + CANCEL_URL, "http://localhost:1338/" + SUCCESS_URL);
+            for (Links link : payment.getLinks()) {
+                if (link.getRel().equals("approval_url")) {
+                    return "redirect:" + link.getHref();
                 }
             }
         } catch (PayPalRESTException e) {
@@ -101,5 +97,24 @@ public class LoginController {
         }
         return "redirect:/";
     }
+
+//    @RequestMapping(value = "login/login", method = RequestMethod.GET)
+//    public String getLoginForm() {
+//        return "login/login";
+//    }
+
+    @RequestMapping(value = "/login/login", method = RequestMethod.POST)
+    public String login(@ModelAttribute(name = "loginForm") LoginForm loginForm, Model model) {
+        String user_mail = loginForm.getUser_mail();
+        String user_password = loginForm.getUser_password();
+        System.out.println("test");
+
+        if (user_mail.equals(user_mail) && user_password.equals(user_password)) {
+            return "main/index";
+        }
+        model.addAttribute("invalidCredentials", true);
+        return "login/login";
+    }
 }
+
 //"DELETE  FROM app_user WHERE user_mail = ?";

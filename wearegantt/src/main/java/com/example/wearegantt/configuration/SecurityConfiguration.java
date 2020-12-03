@@ -30,28 +30,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("SELECT user_mail, user_password, user_enabled "
-                        + "FROM app_user "
+                        + "FROM users "
                         + "WHERE user_mail = ?")
-                .authoritiesByUsernameQuery("SELECT usermail, authority "
-                        + "FROM authorities "
-                        + "WHERE usermail = ?");
+                .authoritiesByUsernameQuery("SELECT fk_userMail, auth_role "
+                        + "FROM auth "
+                        + "WHERE fk_userMail = ?");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin").permitAll()
-                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/profile/{profile_mail}").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/").permitAll()
+                .antMatchers("/admin").hasAnyRole("ADMIN")
+                .antMatchers("/newsfeed").hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
+                .antMatchers("/profile/{profile_mail}").hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
+//                .antMatchers("/").permitAll()
                 .and().formLogin()
                 .permitAll()
                 .loginPage("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
+                .usernameParameter("user_mail")
+                .passwordParameter("user_password")
                 .loginProcessingUrl("/doLogin")
-                .defaultSuccessUrl("/profile02")
-                .failureUrl("/login_error")
+                .defaultSuccessUrl("/profile")
+                .failureUrl("/")
 //                    .successForwardUrl("/login_success_handler")
 //                    .failureForwardUrl("/login_failure_handler")
                 .successHandler(new AuthenticationSuccessHandler() {

@@ -25,12 +25,17 @@
             <div class="loginbox p-5">
                 <div class="d-flex justify-content-center">
                 </div>
-                <form class="pt-5">
-                 <input class="text-center p-3 mb-4" type="text" name="" placeholder="Email">
+                <form th:action="@{/doLogin}" method="post" class="pt-5">
+                    <input class="text-center p-3 mb-4" type="text" name="user_mail" placeholder="Email">
 
-                    <input class="text-center p-3 mb-5" type="password" name="" placeholder="Password">
+                    <input class="text-center p-3 mb-5" type="password" name="user_password" placeholder="Password">
 
-                    <input class="text-center" type="submit" name="" value="Login">
+                    <input class="text-center" type="submit" name="action" id="submit" value="Login">
+
+
+
+
+                    <!--                    <input class="text-center" type="submit" name="" value="Login">-->
 
                     <!--=================== Links Start ============================ -->
                     <a class="text-center" href="/contact">Lost your password?</a><br>
