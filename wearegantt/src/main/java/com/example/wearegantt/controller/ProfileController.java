@@ -31,6 +31,13 @@ public class ProfileController {
         return "profile/gantt";
     }
 
+    @GetMapping("/projects")
+    private String projects(){
+
+
+        return "profile/project";
+    }
+
 
     @GetMapping("/projects/{id}")
     private ModelAndView projects(@PathVariable(name = "id")int id){

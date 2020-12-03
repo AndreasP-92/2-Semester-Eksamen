@@ -119,7 +119,7 @@ public class UserRepo {
 
 
     public void insertProfile(String firstname, String lastname, String address, int phone, String country,int zipParsed, String jobTitle, int fk_userId){
-        String sql = "INSERT INTO profile(profile_firstname,profile_lastname,profile_adress,profile_phone, profile_country, profile_zip, profile_desc, profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO profile(profile_firstname,profile_lastname,profile_adress,profile_phone, profile_country, profile_zip profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = establishConnection().prepareStatement(sql);
@@ -130,8 +130,7 @@ public class UserRepo {
             ps.setString(5, country);
             ps.setInt(6, zipParsed);
             ps.setString(7,  jobTitle);
-            ps.setString(8,  "");
-            ps.setInt(9,  fk_userId);
+            ps.setInt(8,  fk_userId);
 
 
             int row = ps.executeUpdate();

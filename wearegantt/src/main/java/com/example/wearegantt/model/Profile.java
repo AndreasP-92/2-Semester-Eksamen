@@ -4,23 +4,21 @@ public class Profile {
     private int profile_id;
     private String profile_firstname;
     private String profile_lastname;
-    private String profile_adress;
+    private String profile_address;
     private int profile_phone;
     private String profile_country;
     private int profile_zip;
-    private String profile_desc;
     private String profile_jobTitle;
     private int fk_userId;
 
-    public Profile(int profile_id, String profile_firstname, String profile_lastname, String profile_adress, int profile_phone, String profile_country, int profile_zip, String profile_desc, String profile_jobTitle, int fk_userId) {
+    public Profile(int profile_id, String profile_firstname, String profile_lastname, String profile_address, int profile_phone, String profile_country, int profile_zip, String profile_jobTitle, int fk_userId) {
         this.profile_id = profile_id;
         this.profile_firstname = profile_firstname;
         this.profile_lastname = profile_lastname;
-        this.profile_adress = profile_adress;
+        this.profile_address = profile_address;
         this.profile_phone = profile_phone;
         this.profile_country = profile_country;
         this.profile_zip = profile_zip;
-        this.profile_desc = profile_desc;
         this.profile_jobTitle = profile_jobTitle;
         this.fk_userId = fk_userId;
     }
@@ -50,11 +48,11 @@ public class Profile {
     }
 
     public String getProfile_adress() {
-        return profile_adress;
+        return profile_address;
     }
 
     public void setProfile_adress(String profile_adress) {
-        this.profile_adress = profile_adress;
+        this.profile_address = profile_adress;
     }
 
     public int getProfile_phone() {
@@ -81,14 +79,6 @@ public class Profile {
         this.profile_zip = profile_zip;
     }
 
-    public String getProfile_desc() {
-        return profile_desc;
-    }
-
-    public void setProfile_desc(String profile_desc) {
-        this.profile_desc = profile_desc;
-    }
-
     public String getProfile_jobTitle() {
         return profile_jobTitle;
     }
@@ -111,11 +101,10 @@ public class Profile {
                 "profile_id=" + profile_id +
                 ", profile_firstname='" + profile_firstname + '\'' +
                 ", profile_lastname='" + profile_lastname + '\'' +
-                ", profile_adress='" + profile_adress + '\'' +
+                ", profile_adress='" + profile_address + '\'' +
                 ", profile_phone=" + profile_phone +
                 ", profile_country='" + profile_country + '\'' +
                 ", profile_zip=" + profile_zip +
-                ", profile_desc='" + profile_desc + '\'' +
                 ", profile_jobTitle='" + profile_jobTitle + '\'' +
                 ", fk_userId=" + fk_userId +
                 '}';
