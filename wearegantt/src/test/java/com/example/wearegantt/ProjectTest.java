@@ -9,17 +9,19 @@ public class ProjectTest {
     ProjectRepo projectRepo = new ProjectRepo();
 
 
-//    @Test
-//    public void getOneProject(){
-//        ProjectRepo projectObj = projectRepo.getOneProject(1);
-//
-//        System.out.println(projectObj);
-//    }
+    @Test
+    public void getOneProject(){
+        Project projectObj = projectRepo.getOneProject(1);
 
-//    @Test
-//    public void InsertOneProject(){
-//        ProjectRepo projectObj = projectRepo.InsertProject("Alle nødvendige fælter fra database her");
-//
-//
-//    }
+        System.out.println(projectObj);
+
+
+    }
+
+    @Test
+    public void InsertOneProject(){
+        Project projectObj = projectRepo.InsertProject(1);
+
+        System.out.println(projectObj);
+    }
 }
