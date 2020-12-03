@@ -8,9 +8,12 @@ import com.example.wearegantt.repository.ProjectRepo;
 import com.example.wearegantt.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -18,6 +21,8 @@ public class ProfileController {
     //REPOSITORIES ====================
 
     OrganizationRepo orgRep = new OrganizationRepo();
+
+    ProjectRepo projectRepo = new ProjectRepo();
 
 
 //    GET ROUTES ==================
@@ -34,9 +39,9 @@ public class ProfileController {
     }
 
     @GetMapping("/projects")
-    private String projects(){
-//      udskriv alle projekter her!!
-//      Og send ojektet til html her
+    private String projects(Model model){
+        List<Project> listProjects = projectRepo.getAllProjects();
+        model.addAttribute("listProjects", listProjects);
 
         return "profile/project";
     }
