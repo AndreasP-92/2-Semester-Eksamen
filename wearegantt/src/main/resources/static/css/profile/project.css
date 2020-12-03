@@ -14,12 +14,11 @@ a{
 }
 
 .buttons {
-    background: #009cde;;
+    background: #34d4b1;;
     border-radius: 10px;
-    border: 2px solid #009cde;;
+    border: 1px solid black;;
     height: 33px;
-    width: 161px;
-    color:white;
+    color:black;
     font-weight: bold;
     display: block;
     text-align: center;
