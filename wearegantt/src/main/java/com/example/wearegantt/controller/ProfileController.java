@@ -1,6 +1,8 @@
 package com.example.wearegantt.controller;
 
+import com.example.wearegantt.model.Project;
 import com.example.wearegantt.repository.ProfileRepo;
+import com.example.wearegantt.repository.ProjectRepo;
 import com.example.wearegantt.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +44,8 @@ public class ProfileController {
     @GetMapping("/projects/{id}")
     private ModelAndView projects(@PathVariable(name = "id")int id){
         ModelAndView mav = new ModelAndView("profile/project");
-
+//        Project project = ProjectRepo.getOneProject(id);
+//        mav.addObject("profile", project);
 //      udskriv alle projekter her!!
 //      Og send ojektet til html her
 
