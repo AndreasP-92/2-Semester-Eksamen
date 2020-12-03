@@ -35,7 +35,8 @@ public class ProfileController {
 
     @GetMapping("/projects")
     private String projects(){
-
+//      udskriv alle projekter her!!
+//      Og send ojektet til html her
 
         return "profile/project";
     }
@@ -46,9 +47,6 @@ public class ProfileController {
         ModelAndView mav = new ModelAndView("profile/project");
 //        Project project = ProjectRepo.getOneProject(id);
 //        mav.addObject("profile", project);
-//      udskriv alle projekter her!!
-//      Og send ojektet til html her
-
         return mav;
     }
 

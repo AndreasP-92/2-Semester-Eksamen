@@ -12,3 +12,15 @@ h4{
 a{
     text-decoration: none!important;
 }
+
+.buttons {
+    background: #009cde;;
+    border-radius: 10px;
+    border: 2px solid #009cde;;
+    height: 33px;
+    width: 161px;
+    color:white;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+}
