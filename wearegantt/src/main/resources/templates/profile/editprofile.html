@@ -66,7 +66,7 @@
                         </div>
                         <div th:if="${user.fk_orgId > 0}">
                             <li class="nav-item">
-                                <a class="nav-link text-truncate text-white btn login_btn mt-3 mb-3" th:href="@{'/profile/organization/' + ${user.fk_orgId}}">Edit Organization</a>
+                                <a class="nav-link text-truncate text-white btn login_btn mt-3 mb-3" th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
                             </li>
                         </div>
                     </div>

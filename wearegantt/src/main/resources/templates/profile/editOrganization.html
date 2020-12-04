@@ -29,30 +29,42 @@
                 <div class="col-sm">
                     <div class="d-flex justify-content-center h-100">
                         <div class="loginbox">
-                            <div class="d-flex justify-content-center">
-                                <div class="logo_brand">
-                                    <img  th:src="@{/images/logo.png/}"  alt="logo">
+
+                            <form th:action="@{/update/org}" th:object="${org}" method="post">
+                                <h3>Edit your Organization</h3>
+                                <div align="left">
+                                    <label for="emailinput">Your Organization ID</label>
+                                    <input class="text-center p-3 mb-1" id="emailinput" readonly type="text" th:field="*{org_id}">
                                 </div>
-                            </div>
+                                <div align="left">
+                                    <label for="emailinput">Organization Name</label>
+                                    <input class="text-center p-3 mb-1" id="nameinput" type="text" th:field="*{org_name}">
+                                </div>
 
-                            <form action="/edit/organization" th:object="${org}" method="post">
-                                <h1>edit org form</h1>
+                                <div align="left">
+                                    <label for="addressinput">Organization Address</label>
+                                    <input class="text-center p-3 mb-1" id="addressinput" type="text" th:field="*{org_address}">
+                                </div>
 
-                                <input class="text-center p-3 mb-1" type="text" name="" th:field="*{org_name}">
+                                <div align="left">
+                                    <label for="cvrinput">Organization CVR Number</label>
+                                    <input class="text-center p-3 mb-1" id="cvrinput" type="number" th:field="*{org_cvr}">
+                                </div>
 
-                                <input class="text-center p-3 mb-1" type="text" name="" th:field="*{org_address}">
+                                <input type="submit" value="Save" name="button" class="btn login_btn mt-3 mb-3">
 
-                                <input class="text-center p-3 mb-1" type="number" name="" th:field="*{org_cvr}">
-
-                                <button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button>
 
                             </form>
 
-                            <form>
-                                <h3>Add Another User</h3>
-                                <input class="text-center p-3 mb-1" type="text" name="" placeholder="User Mail">
+                            <h3>Add Another User</h3>
+                            <form th:action="@{/insert/org/user}" method="post" th:object="${org}">
 
-                                <button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button>
+                                <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{org_id}">
+
+
+                                <input class="text-center p-3 mb-1" type="text" name="user_mail" placeholder="User Mail">
+
+                                <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
                             </form>
 
                         </div>

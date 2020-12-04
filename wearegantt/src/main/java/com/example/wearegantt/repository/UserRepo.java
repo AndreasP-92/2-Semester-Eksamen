@@ -143,18 +143,44 @@ public class UserRepo {
         }
 
     }
+    //    ================== UPDATE USER ORG WITH ID ================
 
-    //    ================== UPDATE USER ORGANIZATION ================
-
-    public void updateUserOrg(int user_id){
+    public void updateUserWId(int user_id, int org_id){
         try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET fk_orgId = ? WHERE user_id = ?");
+            ps.setInt(1, org_id);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println( "user = "+user_id + " added to organization with ID = " + org_id);
+
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+//    ================== UPDATE USER ORG WITH MAIL ================
+
+
+    public void updateUserOrg(String user_mail, int fk_orgId){
+        try {
+            if(fk_orgId != 0){
+                PreparedStatement ps = establishConnection().prepareStatement("UPDATE user SET fk_orgId = ? WHERE user_mail = ?");
+                ps.setInt(1, fk_orgId);
+                ps.setString(2, user_mail);
+
+                int row = ps.executeUpdate();
+                System.out.println(user_mail + "added to organization" + fk_orgId);
+            } else{
+
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE jobTitle SET jobTitle_name = ? WHERE jobTitle_id = ?");
 //            ps.setString(1, jobTitle_name);
 //            ps.setInt(2, jobTitle_id);
 
             int row = ps.executeUpdate();
             System.out.println("Job Title insert");
-
+            }
         }catch (SQLException e){
             System.out.println(e);
         }

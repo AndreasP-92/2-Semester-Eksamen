@@ -13,9 +13,9 @@ public class OrganizationTest {
 
     @Test
     public void getOneOrg(){
-        Organization orgObj = orgRep.getOneOrg(1);
+//        Organization orgObj = orgRep.getOneOrg(1);
 
-        System.out.println(orgObj);
+//        System.out.println(orgObj);
     }
 
     @Test

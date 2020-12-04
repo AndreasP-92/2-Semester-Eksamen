@@ -41,9 +41,39 @@ public class OrganizationRepo {
         return allOrgs;
     }
 
-// =================== GET ONE ORG ==================
+// =================== GET ONE ORG WITH NAME ==================
 
-    public Organization getOneOrg(int org_id){
+    public Organization getOneOrg(String org_name){
+        Organization orgToReturn = null;
+
+        String sql = "SELECT * FROM org WHERE org_id = ?";
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM org WHERE org_name = ?");
+            ps.setString(1 , org_name);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                orgToReturn = new Organization(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4)
+                );
+            }
+
+        } catch (SQLException e){
+
+            System.out.println(e);
+            return null;
+        }
+        return orgToReturn;
+    }
+
+    // =================== GET ONE ORG WITH ID ==================
+
+    public Organization getOneOrgWId(int org_id){
         Organization orgToReturn = null;
 
         String sql = "SELECT * FROM org WHERE org_id = ?";
