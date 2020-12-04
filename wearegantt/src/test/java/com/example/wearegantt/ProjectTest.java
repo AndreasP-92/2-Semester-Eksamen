@@ -57,6 +57,13 @@ public class ProjectTest {
         projectRepo.InsertProject("name3","desc3", date, date, date, 1, 1, 1);
 
     }
+    // UPDATE ONE PROJECT
+    @Test
+    public void updateProject(){
+        projectRepo.updateProject(1,"Test Project Name");
+
+    }
+
 // INSERT JOB
     @Test
     public void insertJob(){

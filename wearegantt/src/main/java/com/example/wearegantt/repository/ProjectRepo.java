@@ -108,6 +108,24 @@ public class ProjectRepo {
             System.out.println(e);
         }
 
+
+
+    }
+
+//    ================== UPDATE Project ================
+
+    public void updateProject(int project_id, String project_name){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE project SET project_name = ? WHERE project_id = ?");
+            ps.setString(1, project_name);
+            ps.setInt(2, project_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Project insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
 // ============================================================= JOB TITLES =================================================================
