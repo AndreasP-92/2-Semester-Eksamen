@@ -117,6 +117,19 @@ public class ProfileController {
         return "redirect:/";
     }
 
+    @PostMapping("/delete/org")
+    public String deleteOrg(WebRequest dataFromForm) {
+        String org_id      = (dataFromForm.getParameter("org_id"));
+
+        int idParsed = Integer.parseInt(org_id);
+        System.out.println(idParsed);
+
+        orgRep.deleteOrg(idParsed);
+
+
+        return "redirect:/";
+    }
+
     @PostMapping("/insert/org/user")
     public String insertUserToOrg(WebRequest dataFromForm,  Principal principal) {
         String user_mail  = (dataFromForm.getParameter("user_mail"));
