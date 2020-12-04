@@ -90,7 +90,8 @@ public class ProjectRepo {
 
     public void InsertProject(String project_name, String project_desc, String project_duration, String project_start,String project_end, int project_fk_orgId, int project_fk_taskId, int project_fk_jobTitleId){
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name, project_desc, project_duration, project_start, project_end, project_fk_orgId, project_fk_taskId, fk_jobTitleId) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)");
+            System.out.println("PROJECT ===" + project_duration);
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name, project_desc, project_duration, project_start, project_end, fk_orgId, fk_taskId, fk_jobTitleId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, project_name);
             ps.setString(2, project_desc);
             ps.setString(3, project_duration);
