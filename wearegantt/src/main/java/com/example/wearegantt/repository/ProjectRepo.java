@@ -1,5 +1,7 @@
 package com.example.wearegantt.repository;
 
+import com.example.wearegantt.model.JobTitle;
+import com.example.wearegantt.model.Organization;
 import com.example.wearegantt.model.Project;
 import com.example.wearegantt.model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,7 +12,7 @@ import java.util.List;
 
 public class ProjectRepo {
 
-
+// ============================================================= PROJECTS =================================================================
 
     // GET ALL Projects
 
@@ -106,6 +108,99 @@ public class ProjectRepo {
         }
 
     }
+
+// ============================================================= JOB TITLES =================================================================
+
+//    ================== GET ALL JOB TITLES ================
+
+
+    public List<JobTitle> getAllJobTitles(){
+        List<JobTitle> allJobTitles = new ArrayList<>();
+
+        try {
+
+            //lavet et statement
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle");
+
+            //eksekvere en query
+            ResultSet rs = ps.executeQuery();
+
+            //Bruge resultatet til noget
+            while(rs.next()){
+                JobTitle tmp = new JobTitle(
+                        rs.getInt(1),
+                        rs.getString(2)
+                );
+                allJobTitles.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+        return allJobTitles;
+    }
+
+//    ================== INSERT JOB TITLE ================
+
+    public void insertJobTitle(String jobTitle_name){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO jobTitle(jobTitle_name) VALUES (?)");
+            ps.setString(1, jobTitle_name);
+
+            int row = ps.executeUpdate();
+            System.out.println("Job Title insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
+    // =================== GET ONE JOB TITLE ==================
+
+        public JobTitle getOneJobTitle(int jobTitle_id){
+        JobTitle jobTitleToReturn = null;
+
+        String sql = "SELECT * FROM org WHERE org_id = ?";
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE jobTitle_id = ?");
+            ps.setInt(1 , jobTitle_id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                jobTitleToReturn = new JobTitle(
+                        rs.getInt(1),
+                        rs.getString(2)
+                );
+            }
+
+        } catch (SQLException e){
+
+            System.out.println(e);
+            return null;
+        }
+        return jobTitleToReturn;
+    }
+
+    //    ================== UPDATE JOB TITLE ================
+
+    public void updateJobTitle(int jobTitle_id, String jobTitle_name){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE jobTitle SET jobTitle_name = ? WHERE jobTitle_id = ?");
+            ps.setString(1, jobTitle_name);
+            ps.setInt(2, jobTitle_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Job Title insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
 
 
     private Connection establishConnection() throws SQLException {
