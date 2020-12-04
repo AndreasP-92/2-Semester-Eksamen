@@ -60,7 +60,11 @@ public class ProjectTest {
     // UPDATE ONE PROJECT
     @Test
     public void updateProject(){
-        projectRepo.updateProject(1,"Test Project Name");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String date = sdf.format(timestamp);
+        System.out.println(date);
+
+        projectRepo.updateProject(1,"Gantt","desc4", date, date, date, 2, 1,2);
 
     }
 

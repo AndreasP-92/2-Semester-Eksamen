@@ -114,11 +114,20 @@ public class ProjectRepo {
 
 //    ================== UPDATE Project ================
 
-    public void updateProject(int project_id, String project_name){
+    public void updateProject(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId, int fk_taskId, int fk_jobTitleId){
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE project SET project_name = ? WHERE project_id = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE project SET project_name = ?, project_desc = ?, project_duration = ?, project_start = ?, project_end = ?, fk_orgId = ?, fk_taskId = ?, fk_jobTitleId = ? WHERE project_id = ?");
+
+
             ps.setString(1, project_name);
-            ps.setInt(2, project_id);
+            ps.setString(2, project_desc);
+            ps.setString(3, project_duration);
+            ps.setString(4, project_start);
+            ps.setString(5, project_end);
+            ps.setInt(6,    fk_orgId);
+            ps.setInt(7,    fk_taskId);
+            ps.setInt(8,    fk_jobTitleId);
+            ps.setInt(9,    project_id);
 
             int row = ps.executeUpdate();
             System.out.println("Project insert");
