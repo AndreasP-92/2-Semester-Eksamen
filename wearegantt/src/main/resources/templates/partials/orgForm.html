@@ -1,50 +1,26 @@
 <html xmlns:th = "http://www.thymeleaf.org">
 
-<form class="" th:fragment="newOrgForm">
+<form th:action="@{/insert/org}" th:fragment="newOrgForm" method="post">
     <h1>new org form</h1>
-    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Email">
+    <input class="text-center p-3 mb-1" type="text" name="org_name" placeholder="Organizatoin Name">
 
-    <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">
+    <input class="text-center p-3 mb-1" type="text" name="org_address" placeholder="Organization Address">
 
-    <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">
+    <input class="text-center p-3 mb-1" type="number" name="org_cvr" placeholder="Organization CVR">
 
-    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Firstname">
+    <input type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</input>
 
-    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Address">
-
-    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Zip Code">
-
-    <input class="text-center p-3 mb-5" type="text" name="" placeholder="Country">
-
-
-    <a class="w-100" href="/register"> <button type="button" name="button" class="btn login_btn">Edit</button></a>
-
-    <a class="w-100 " href="/login"><button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button></a>
-
-    <h2>Change Subscription</h2>
 </form>
 
-<!--<form class="" th:fragment="editOrgForm">-->
-<!--    <h1>edit org form</h1>-->
+<form th:action="/edit/organization" th:fragment="editOrgForm" th:object="${org}" method="post">
+    <h1>edit org form</h1>
 
-<!--    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Email">-->
+    <input class="text-center p-3 mb-1" type="text" name="" th:field="*{org_name}">
 
-<!--    <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">-->
+    <input class="text-center p-3 mb-1" type="text" name="" th:field="*{org_address}">
 
-<!--    <input class="text-center p-3 mb-1" type="password" name="" placeholder="Password">-->
+    <input class="text-center p-3 mb-1" type="number" name="" th:field="*{org_cvr}">
 
-<!--    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Firstname">-->
+    <button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button>
 
-<!--    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Address">-->
-
-<!--    <input class="text-center p-3 mb-1" type="text" name="" placeholder="Zip Code">-->
-
-<!--    <input class="text-center p-3 mb-5" type="text" name="" placeholder="Country">-->
-
-
-<!--    <a class="w-100" href="/register"> <button type="button" name="button" class="btn login_btn">Edit</button></a>-->
-
-<!--    <a class="w-100 " href="/login"><button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button></a>-->
-
-<!--    <h2>Change Subscription</h2>-->
-<!--</form>-->
+</form>

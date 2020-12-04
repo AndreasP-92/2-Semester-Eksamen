@@ -50,6 +50,42 @@ public class ProjectRepo {
         return allProjects;
     }
 
+    // GET ALL Projects
+
+    public List<Project> getAllProjectsWhere(int fk_orgId){
+        List<Project> allProjects = new ArrayList<>();
+
+        try {
+
+            //lavet et statement
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project");
+
+            //eksekvere en query
+            ResultSet rs = ps.executeQuery();
+
+            //Bruge resultatet til noget
+            while(rs.next()){
+                Project tmp = new Project(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getInt(9)
+                );
+                allProjects.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+        return allProjects;
+    }
+
     // Get ONE PROJECT
     public Project getOneProject(int project_id){
         Project ProjectToReturn = null;
@@ -88,7 +124,12 @@ public class ProjectRepo {
 
 //    ================== INSERT Project ================
 
+
     public void InsertProject(String project_name, String project_desc, String project_duration, String project_start,String project_end, int project_fk_orgId, int project_fk_taskId, int project_fk_jobTitleId){
+//    OPRET TASK FØRST OG HENT DYNAMISK TASK ID
+//    OPRET ORGANAZIATION FØRST OG HENT DYNAMISK ORG ID
+//    OPRET JOBTITLE FØRST OG HENT DYNAMISK JOB ID
+//    TÆNK OVER UI TIL DETTE
         try {
             System.out.println("PROJECT ===" + project_duration);
             PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name, project_desc, project_duration, project_start, project_end, fk_orgId, fk_taskId, fk_jobTitleId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");

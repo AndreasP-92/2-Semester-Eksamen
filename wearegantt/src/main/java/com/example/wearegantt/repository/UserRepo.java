@@ -28,7 +28,8 @@ public class UserRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4)
+                        rs.getInt(4),
+                        rs.getInt(5)
 
                 );
                 allUsers.add(tmp);
@@ -59,7 +60,8 @@ public class UserRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4)
+                        rs.getInt(4),
+                        rs.getInt(5)
                 );
             }
 
@@ -140,6 +142,22 @@ public class UserRepo {
             System.out.println(e);
         }
 
+    }
+
+    //    ================== UPDATE USER ORGANIZATION ================
+
+    public void updateUserOrg(int user_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE jobTitle SET jobTitle_name = ? WHERE jobTitle_id = ?");
+//            ps.setString(1, jobTitle_name);
+//            ps.setInt(2, jobTitle_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Job Title insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
 

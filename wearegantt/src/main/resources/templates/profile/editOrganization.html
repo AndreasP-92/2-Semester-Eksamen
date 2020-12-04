@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="css/main/editprofile.css" type="text/css" rel="stylesheet">
 
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link th:href="@{/css/profile/editOrganization.css}" type="text/css" rel="stylesheet">
     <title>Your Organization</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
 
         </div>
     </header>
-    <main class="">
+    <main>
         <div class="container main p-2" align="center">
             <div class="row">
                 <div class="col-sm">
@@ -35,14 +35,25 @@
                                 </div>
                             </div>
 
-<!--                            th:replace="partials/orgForm :: newOrgForm"-->
-                            <h4>Edit Your Organization</h4>
-                            <div th:if="${org == null}">
-                                <div th:replace="partials/orgForm :: newOrgForm"></div>
-                            </div>
-                            <div th:if="${org != null}">
-                                <div th:replace="partials/orgForm :: editOrgForm"></div>
-                            </div>
+                            <form action="/edit/organization" th:object="${org}" method="post">
+                                <h1>edit org form</h1>
+
+                                <input class="text-center p-3 mb-1" type="text" name="" th:field="*{org_name}">
+
+                                <input class="text-center p-3 mb-1" type="text" name="" th:field="*{org_address}">
+
+                                <input class="text-center p-3 mb-1" type="number" name="" th:field="*{org_cvr}">
+
+                                <button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button>
+
+                            </form>
+
+                            <form>
+                                <h3>Add Another User</h3>
+                                <input class="text-center p-3 mb-1" type="text" name="" placeholder="User Mail">
+
+                                <button type="button" name="button" class="btn login_btn mt-3 mb-3">Save</button>
+                            </form>
 
                         </div>
                     </div>
@@ -56,22 +67,6 @@
 
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row align-items-end">
-                <div class="col">
-                    <input type="checkbox" id="trails" name="trails" value="trails">
-                    <label for="trails">trails</label><br>
-                </div>
-                <div class="col">
-                    <input type="checkbox" id="Normal User" name="Normal User" value="Normal User">
-                    <label for="Normal User">Normal User</label><br>
-                    <input type="checkbox" id="Cancel" name="Cancel" value="Cancel">
-                    <label for="trails">Cancel</label><br>
-                </div>
-                <div class="col">
-                    <input type="checkbox" id="Super User" name="Super User" value="Super User">
-                    <label for="trails">Super User</label><br>
                 </div>
             </div>
         </div>
