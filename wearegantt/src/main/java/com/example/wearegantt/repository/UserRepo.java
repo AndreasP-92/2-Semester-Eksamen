@@ -121,7 +121,7 @@ public class UserRepo {
 
 
     public void insertProfile(String firstname, String lastname, String address, int phone, String country,int zipParsed, String jobTitle, int fk_userId){
-        String sql = "INSERT INTO profile(profile_firstname,profile_lastname,profile_adress,profile_phone, profile_country, profile_zip profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO profile(profile_firstname,profile_lastname,profile_address,profile_phone, profile_country, profile_zip, profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = establishConnection().prepareStatement(sql);
