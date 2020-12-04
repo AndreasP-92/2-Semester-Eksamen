@@ -8,7 +8,7 @@ public class Profile {
     private int profile_phone;
     private String profile_country;
     private int profile_zip;
-    private String profile_jobTitle;
+    private String profile_jobTitle; 
     private int fk_userId;
 
     public Profile(int profile_id, String profile_firstname, String profile_lastname, String profile_address, int profile_phone, String profile_country, int profile_zip, String profile_jobTitle, int fk_userId) {
