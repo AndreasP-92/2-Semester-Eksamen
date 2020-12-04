@@ -12,6 +12,13 @@ public class OrganizationTest {
     OrganizationRepo orgRep = new OrganizationRepo();
 
     @Test
+    public void getOneOrg(){
+        Organization orgObj = orgRep.getOneOrg(1);
+
+        System.out.println(orgObj);
+    }
+
+    @Test
     public void insertOrg(){
         Organization orgObj = orgRep.insertOrg("db", "asd", 123);
 
@@ -23,8 +30,6 @@ public class OrganizationTest {
         List<Organization> listOrgs = orgRep.getAllOrgs();
 
         System.out.println(listOrgs);
-
-
     }
 
     @Test
