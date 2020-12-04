@@ -29,7 +29,7 @@ public class ProfileController {
 
     @GetMapping("/editprofile")
     private String profile(){
-        return "login/editprofile";
+        return "profile/editprofile";
     }
 
 
@@ -65,8 +65,6 @@ public class ProfileController {
         mav.addObject("org", org);
 
         System.out.println(org);
-        //      udskriv alle projekter her!!
-//      Og send ojektet til html her
 
         return mav;
     }
