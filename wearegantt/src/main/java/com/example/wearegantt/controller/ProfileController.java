@@ -42,7 +42,7 @@ public class ProfileController {
 
     @GetMapping("/editprofile/{user_mail}")
     private ModelAndView profile(@PathVariable(name = "user_mail")String user_mail){
-        ModelAndView mav = new ModelAndView("profile/editprofile");
+        ModelAndView mav = new ModelAndView("editProfile");
 
 //        INNER JOIN HER?????
         User user = userRepo.getOneUser(user_mail);
@@ -73,6 +73,24 @@ public class ProfileController {
         return "profile/project";
     }
 
+    @GetMapping("/projects/create/{id}")
+    private ModelAndView createproject(@PathVariable(name = "id") int id, Principal principal){
+        ModelAndView mav = new ModelAndView("profile/createProject");
+
+        User user = userRepo.getOneUser(principal.getName());
+
+        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        mav.addObject("organization", organization);
+
+        return mav;
+    }
+
+    @GetMapping("/projects/opret")
+    private String opretproject(){
+
+        return "createproject";
+    }
 
     @GetMapping("/projects/{id}")
     private ModelAndView project(@PathVariable(name = "id")int id){
@@ -163,5 +181,33 @@ public class ProfileController {
 
         return "redirect:/";
     }
+// INSERT PROJECT
 
+    @PostMapping("/insert/project")
+    public String postProject(WebRequest dataFromForm) {
+        String project_name  = (dataFromForm.getParameter("project_name"));
+        String project_desc     = (dataFromForm.getParameter("project_desc"));
+        String project_duration      = (dataFromForm.getParameter("project_duration"));
+        String project_start      = (dataFromForm.getParameter("project_start"));
+        String project_end      = (dataFromForm.getParameter("project_end"));
+
+
+        projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, fk_orgId, fk_taskId, fk_jobTitle);
+
+        User user           = userRepo.getOneUser(principal.getName());
+        Organization org    = orgRep.getOneOrg(org_name);
+
+        userRepo.updateUserWId(user.getUser_id(), org.getOrg_id());
+
+        return "redirect:/";
+    }
+
+//    //  DELETE USER
+//    @RequestMapping("/projects/edit")
+//    public String delete(WebRequest webRequest){
+//        projectRepo.delete(project_id);
+//
+//        System.out.println();
+//        return "/projects/edit";
+//    }
 }

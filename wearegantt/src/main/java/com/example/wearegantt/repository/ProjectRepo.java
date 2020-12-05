@@ -5,6 +5,8 @@ import com.example.wearegantt.model.Organization;
 import com.example.wearegantt.model.Project;
 import com.example.wearegantt.model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -148,10 +150,9 @@ public class ProjectRepo {
         }catch (SQLException e){
             System.out.println(e);
         }
-
-
-
     }
+
+
 
 //    ================== UPDATE Project ================
 
@@ -176,6 +177,27 @@ public class ProjectRepo {
         }catch (SQLException e){
             System.out.println(e);
         }
+
+    }
+    //    ================== Delete Project ================
+    public void delete(int project_id){
+        String sql = "DELETE * FROM project WHERE project_id = ?";
+
+        ProjectRepo projectRepo = new ProjectRepo();
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE  FROM project WHERE project_id = ?");
+
+            ps.setInt(1,    project_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Project Deleted");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+
     }
 
 // ============================================================= JOB TITLES =================================================================

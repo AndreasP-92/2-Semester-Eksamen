@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Organization Projects</title>
+
+    <link th:href="@{/css/profile/opretproject.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <!--=================== NAVIGATION ============================ -->
+    <div th:replace="partials/navbar :: navigation">
+
+    </div>
+</header>
+
+
+<div class="container main p-2" align="center">
+    <div class="row">
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="logo_brand p-4">
+                    <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                </div>
+            </div>
+            <br>
+            <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
+        </div>
+        <div class="col-sm">
+            <div class="d-flex justify-content-center h-100">
+                <div class="loginbox">
+                    <div class="d-flex justify-content-center">
+                        <div class="logo_brand">
+                            <img  th:src="@{/images/logo.png/}"  alt="logo">
+                        </div>
+                    </div>
+                    <h4>Create Your Project</h4>
+                    <form class="">
+                        <input class="text-center p-3 mb-1" type="text" name="" placeholder="Project Name">
+
+                        <input class="text-center p-3 mb-1" type="text" name="" placeholder="Project Description">
+
+                        <input class="text-center p-3 mb-1" type="text" name="" placeholder="Project Duration">
+
+                        <input class="text-center p-3 mb-1" type="text" name="" placeholder="Project Start">
+
+                        <input class="text-center p-3 mb-1" type="text" name="" placeholder="Project End">
+
+
+
+                        <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Create</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm row align-items-end">
+            <div class="row rightcol mb-5">
+                <div class="col-6">
+
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+    </div>
+</div>
+
+<!--=================== Footer ============================ -->
+<div th:replace="partials/footer :: footerFragment"></div>
+</body>
+</html>

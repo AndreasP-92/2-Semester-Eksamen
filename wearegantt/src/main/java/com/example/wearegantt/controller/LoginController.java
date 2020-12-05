@@ -3,6 +3,7 @@ package com.example.wearegantt.controller;
 import com.example.wearegantt.model.LoginForm;
 import com.example.wearegantt.model.Order;
 import com.example.wearegantt.model.User;
+import com.example.wearegantt.repository.ProjectRepo;
 import com.example.wearegantt.repository.UserRepo;
 import com.example.wearegantt.service.PaypalService;
 import com.paypal.api.payments.Links;
@@ -115,6 +116,8 @@ public class LoginController {
         model.addAttribute("invalidCredentials", true);
         return "login/login";
     }
+
 }
 
-//"DELETE  FROM app_user WHERE user_mail = ?";
+
+
