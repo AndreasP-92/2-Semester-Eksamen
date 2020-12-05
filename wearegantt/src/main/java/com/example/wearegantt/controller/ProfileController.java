@@ -1,13 +1,7 @@
 package com.example.wearegantt.controller;
 
-import com.example.wearegantt.model.JobTitle;
-import com.example.wearegantt.model.Organization;
-import com.example.wearegantt.model.Project;
-import com.example.wearegantt.model.User;
-import com.example.wearegantt.repository.JobTitleRepo;
-import com.example.wearegantt.repository.OrganizationRepo;
-import com.example.wearegantt.repository.ProjectRepo;
-import com.example.wearegantt.repository.UserRepo;
+import com.example.wearegantt.model.*;
+import com.example.wearegantt.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,28 +24,23 @@ public class ProfileController {
 
     UserRepo userRepo = new UserRepo();
 
+    ProfileRepo profileRepo = new ProfileRepo();
+
     JobTitleRepo jobTitleRepo = new JobTitleRepo();
 
 
 //    GET ROUTES ==================
 
-//    @GetMapping("/profile/{profile_mail}")
-//    public ModelAndView profile(@PathVariable(name = "profile_mail") String profile_mail){
-//        ModelAndView mav = new ModelAndView("user/profile");
-//        Profile profile = daoProfile.get(profile_mail);
-//        mav.addObject("profile", profile);
-//
-//        return mav;
-//    }
-
     @GetMapping("/editprofile/{user_mail}")
     private ModelAndView profile(@PathVariable(name = "user_mail")String user_mail){
-        ModelAndView mav = new ModelAndView("editProfile");
+        ModelAndView mav = new ModelAndView("profile/editProfile");
 
 //        INNER JOIN HER?????
         User user = userRepo.getOneUser(user_mail);
         Organization org = orgRep.getOneOrgWId(user.getFk_orgId());
+        Profile profile = profileRepo.getOneProfile(user.getUser_id());
 
+        mav.addObject("profile", profile);
         mav.addObject("org", org);
         mav.addObject("user", user);
         System.out.println(user);
@@ -60,49 +49,7 @@ public class ProfileController {
     }
 
 
-    @GetMapping("/gantt")
-    private String gantt(){
-        return "profile/gantt";
-    }
 
-    @GetMapping("/projects")
-    private String projects(Model model){
-
-
-        List<Project> listProjects = projectRepo.getAllProjects();
-        model.addAttribute("listProjects", listProjects);
-
-
-
-        return "profile/project";
-    }
-
-    @GetMapping("/projects/create/{id}")
-    private ModelAndView createproject(@PathVariable(name = "id") int id, Principal principal){
-        ModelAndView mav = new ModelAndView("profile/createProject");
-
-        User user = userRepo.getOneUser(principal.getName());
-
-        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
-
-        mav.addObject("organization", organization);
-
-        return mav;
-    }
-
-    @GetMapping("/projects/opret")
-    private String opretproject(){
-
-        return "createProject";
-    }
-
-    @GetMapping("/projects/edit/{id}")
-    private ModelAndView project(@PathVariable(name = "id")int id){
-        ModelAndView mav = new ModelAndView("profile/editProject");
-        Project project = projectRepo.getOneProject(id);
-        mav.addObject("project", project);
-        return mav;
-    }
     @GetMapping("/profile/organization")
     private String newOrganization(){
         return "profile/newOrganization";
@@ -118,7 +65,7 @@ public class ProfileController {
         return mav;
     }
 
-//    POST ROUTES ==================
+//  =================================  POST ROUTES =============================
 
     @PostMapping("/insert/org")
     public String postOrg(WebRequest dataFromForm,  Principal principal) {
@@ -185,53 +132,7 @@ public class ProfileController {
 
         return "redirect:/";
     }
-// INSERT PROJECT
 
-    @PostMapping("/insert/project")
-    public String postProject(WebRequest dataFromForm, Principal principal) {
-        String project_name     = (dataFromForm.getParameter("project_name"));
-        String project_desc     = (dataFromForm.getParameter("project_desc"));
-        String project_duration = (dataFromForm.getParameter("project_duration"));
-        String project_start    = (dataFromForm.getParameter("project_start"));
-        String project_end      = (dataFromForm.getParameter("project_end"));
-
-
-
-
-        User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-        JobTitle jobTitle   = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
-
-        projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id(), jobTitle.getJobTitle_Id());
-
-//        userRepo.updateUserWId(user.getUser_id(), org.getOrg_id());
-
-        return "redirect:/";
-    }
-
-    // UPDATE PROJECT
-    @PostMapping("/update/project") //URL'en
-    public String updateProject(WebRequest dataFromForm,  Principal principal) {
-        // DataFromData objektet(WebRequest) gør man kan hente data fra en form(HTML).
-        String project_id         = (dataFromForm.getParameter("project_id"));
-        String project_name       = (dataFromForm.getParameter("project_name"));
-        String project_desc       = (dataFromForm.getParameter("project_desc"));
-        String project_duration   = (dataFromForm.getParameter("project_duration"));
-        String project_start      = (dataFromForm.getParameter("project_start"));
-        String project_end        = (dataFromForm.getParameter("project_end"));
-
-        // grunden til jeg converter, fordi URL er ALTID er en String.
-        int idParsed = Integer.parseInt(project_id);
-
-
-        User user = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
-        projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId(), jobTitle.getJobTitle_Id());
-
-
-
-        return "redirect:/";
-    }
 
 //    //  DELETE USER
 //    @RequestMapping("/projects/edit")
