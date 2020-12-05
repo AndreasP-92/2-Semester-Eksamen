@@ -3,10 +3,12 @@ package com.example.wearegantt.model;
 public class JobTitle {
     int jobTitle_Id;
     String jobTitle_name;
+    int fk_orgId;
 
-    public JobTitle(int jobTitle_Id, String jobTitle_name) {
+    public JobTitle(int jobTitle_Id, String jobTitle_name, int fk_orgId) {
         this.jobTitle_Id = jobTitle_Id;
         this.jobTitle_name = jobTitle_name;
+        this.fk_orgId = fk_orgId;
     }
 
     public int getJobTitle_Id() {
@@ -25,11 +27,20 @@ public class JobTitle {
         this.jobTitle_name = jobTitle_name;
     }
 
+    public int getFk_orgId() {
+        return fk_orgId;
+    }
+
+    public void setFk_orgId(int fk_orgId) {
+        this.fk_orgId = fk_orgId;
+    }
+
     @Override
     public String toString() {
         return "JobTitle{" +
                 "jobTitle_Id=" + jobTitle_Id +
                 ", jobTitle_name='" + jobTitle_name + '\'' +
+                ", fk_orgId=" + fk_orgId +
                 '}';
     }
 }

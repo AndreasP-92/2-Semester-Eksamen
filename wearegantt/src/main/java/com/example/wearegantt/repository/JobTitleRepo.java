@@ -27,8 +27,8 @@ public class JobTitleRepo {
             while(rs.next()){
                 JobTitle tmp = new JobTitle(
                         rs.getInt(1),
-                        rs.getString(2)
-
+                        rs.getString(2),
+                        rs.getInt(3)
                 );
                 allJobTile.add(tmp);
             }
@@ -42,20 +42,21 @@ public class JobTitleRepo {
 
     // =================== GET ONE JOBTITLES ==================
 
-    public JobTitle getOneJobTitle(int jobTitle_id){
+    public JobTitle getOneJobTitle(int fk_orgId){
         JobTitle JobTitleToReturn = null;
 
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobtitle WHERE jobtitle_id = ?");
-            ps.setInt(1 , jobTitle_id);
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobtitle WHERE fk_orgId = ?");
+            ps.setInt(1 , fk_orgId);
 
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
                 JobTitleToReturn = new JobTitle(
                         rs.getInt(1),
-                        rs.getString(2)
+                        rs.getString(2),
+                        rs.getInt(3)
                 );
             }
 

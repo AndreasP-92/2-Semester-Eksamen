@@ -38,16 +38,19 @@
                         </div>
                         <h4>Edit Your Project</h4>
 
-                        <form class="">
-                            <input class="text-center p-3 mb-1" type="text" name="project_name" placeholder="Project Name">
+                        <form th:action="@{/update/project}" th:object="${project}" method="post" >
+                            <input class="text-center p-3 mb-1" readonly type="text"  th:field="*{project_id}">
 
-                            <input class="text-center p-3 mb-1" type="text" name="project_desc" placeholder="Project Description">
+                            <input class="text-center p-3 mb-1" type="text"  th:field="*{project_name}">
 
-                            <input class="text-center p-3 mb-1" type="time" name="project_duration" step="1" placeholder="Project Duration">
+                            <input class="text-center p-3 mb-1" type="text"  th:field="*{project_desc}">
 
-                            <input class="text-center p-3 mb-1" type="time" name="project_start" step="2" placeholder="Project Start">
+                            <input class="form-control" type="date"  th:field="*{project_duration}">
 
-                            <input class="text-center p-3 mb-1" type="time" name="project_end"  step="3" placeholder="Project End">
+                            <input class="form-control" type="date"  th:field="*{project_start}">
+
+                            <input class="form-control" type="date"  th:field="*{project_end}">
+
 
                             <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
 
