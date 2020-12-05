@@ -39,8 +39,8 @@
                         </div>
                     </div>
                     <h4>Edit Your Profile</h4>
-                    <form th:action="@{/admin/edit}" th:object="${profile}" method="post">
-                        <input class="text-center p-3 mb-1" type="text" readonly th:field="*{profile_id}">
+                    <form th:action="@{/update/profile}" th:object="${profile}" method="post">
+                        <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{profile_id}">
 
                         <input class="text-center p-3 mb-1" type="text" th:field="*{profile_firstname}">
 
@@ -54,17 +54,25 @@
 
                         <input class="text-center p-3 mb-1" type="number" th:field="*{profile_zip}">
 
-                        <input class="text-center p-3 mb-1" type="text" th:field="*{profile_country}">
+                        <input class="text-center p-3 mb-1" type="text" th:field="*{profile_jobTitle}">
 
 
                         <button type="submit" name="button" class="btn login_btn">Save</button>
 
-                        <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Delete</button>
 
                         <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Change Subscription</button>
 
                         <h2>Change Subscription</h2>
                     </form>
+
+                    <form th:action="@{/delete/profile}" th:object="${user}" method="post">
+
+                        <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
+
+                        <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Delete</button>
+
+                    </form>
+
                     <div th:if="${user.fk_orgId == 0}">
                         <li class="nav-item">
                             <a class="nav-link text-truncate text-white btn login_btn mt-3 mb-3"

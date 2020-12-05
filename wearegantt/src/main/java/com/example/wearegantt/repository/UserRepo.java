@@ -117,7 +117,8 @@ public class UserRepo {
 
     //    ================== UPDATE User ================
 
-    public void enableUsers(int user_id, int user_enabled) {
+    public void disableUser(int user_id) {
+        int user_enabled = 0;
         try {
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_enabled = ? WHERE user_id = ?");
             ps.setInt(1, user_enabled);

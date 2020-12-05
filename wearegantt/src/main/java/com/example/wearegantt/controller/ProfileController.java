@@ -68,6 +68,8 @@ public class ProfileController {
 
 //  =================================  POST ROUTES =============================
 
+    //    INSERT ORGANIZATION =============
+
     @PostMapping("/insert/org")
     public String postOrg(WebRequest dataFromForm,  Principal principal) {
         String org_address  = (dataFromForm.getParameter("org_address"));
@@ -87,6 +89,8 @@ public class ProfileController {
         return "redirect:/";
     }
 
+//    DELETE ORGANIZATION =============
+
     @PostMapping("/delete/org")
     public String deleteOrg(WebRequest dataFromForm) {
         String org_id      = (dataFromForm.getParameter("org_id"));
@@ -100,8 +104,10 @@ public class ProfileController {
         return "redirect:/";
     }
 
+    //    INVITE USER ORGANIZATION =============
+
     @PostMapping("/insert/org/user")
-    public String insertUserToOrg(WebRequest dataFromForm,  Principal principal) {
+    public String inviteUserToOrg(WebRequest dataFromForm,  Principal principal) {
         String user_mail  = (dataFromForm.getParameter("user_mail"));
         String org_id     = (dataFromForm.getParameter("org_id"));
 
@@ -116,6 +122,7 @@ public class ProfileController {
         return "redirect:/";
     }
 
+    //    UPDATE ORGANIZATION =============
 
 
     @PostMapping("/update/org")
@@ -132,6 +139,45 @@ public class ProfileController {
 
 
         return "redirect:/";
+    }
+
+    //    UPDATE PROFILE =============
+
+    @PostMapping("/update/profile")
+    public String updateProfile(WebRequest dataFromForm,  Principal principal) {
+        String profile_id       = (dataFromForm.getParameter("profile_id"));
+        String profile_firstname  = (dataFromForm.getParameter("profile_firstname"));
+        String profile_lastname     = (dataFromForm.getParameter("profile_lastname"));
+        String profile_address      = (dataFromForm.getParameter("profile_address"));
+        String profile_phone      = (dataFromForm.getParameter("profile_phone"));
+        String profile_country      = (dataFromForm.getParameter("profile_country"));
+        String profile_zip      = (dataFromForm.getParameter("profile_zip"));
+        String profile_jobTitle      = (dataFromForm.getParameter("profile_jobTitle"));
+
+        int idParse = Integer.parseInt(profile_id);
+        int phoneParse = Integer.parseInt(profile_phone);
+        int zipParsed = Integer.parseInt(profile_zip);
+
+        User user = userRepo.getOneUser(principal.getName());
+
+        profileRepo.updateProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
+
+        return "redirect:/";
+    }
+
+    //    DELETE PROFILE ========
+
+    @PostMapping("/delete/profile")
+    public String deleteProfile(WebRequest dataFromForm) {
+        String user_id      = (dataFromForm.getParameter("user_id"));
+
+        int idParsed = Integer.parseInt(user_id);
+        System.out.println(idParsed);
+
+        userRepo.disableUser(idParsed);
+
+
+        return "redirect:/login?logout";
     }
 
 

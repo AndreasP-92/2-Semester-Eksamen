@@ -139,7 +139,4 @@ public class ProfileRepo {
 
         return conn;
     }
-
-    public void updateProfile(Profile profile) {
-    }
 }

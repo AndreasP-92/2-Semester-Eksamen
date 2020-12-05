@@ -47,12 +47,12 @@ public class Profile {
         this.profile_lastname = profile_lastname;
     }
 
-    public String getProfile_adress() {
+    public String getProfile_address() {
         return profile_address;
     }
 
-    public void setProfile_adress(String profile_adress) {
-        this.profile_address = profile_adress;
+    public void setProfile_address(String profile_address) {
+        this.profile_address = profile_address;
     }
 
     public int getProfile_phone() {
@@ -101,7 +101,7 @@ public class Profile {
                 "profile_id=" + profile_id +
                 ", profile_firstname='" + profile_firstname + '\'' +
                 ", profile_lastname='" + profile_lastname + '\'' +
-                ", profile_adress='" + profile_address + '\'' +
+                ", profile_address='" + profile_address + '\'' +
                 ", profile_phone=" + profile_phone +
                 ", profile_country='" + profile_country + '\'' +
                 ", profile_zip=" + profile_zip +
