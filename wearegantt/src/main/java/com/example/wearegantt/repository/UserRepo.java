@@ -115,7 +115,21 @@ public class UserRepo {
 
     }
 
+    //    ================== UPDATE User ================
 
+    public void enableUsers(int user_id, int user_enabled) {
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_enabled = ? WHERE user_id = ?");
+            ps.setInt(1, user_enabled);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("User enabled");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
 //    ================== INSERT PROFILE ================
 
@@ -185,6 +199,8 @@ public class UserRepo {
             System.out.println(e);
         }
     }
+
+
 
 
     private Connection establishConnection() throws SQLException {

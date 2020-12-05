@@ -43,6 +43,7 @@ public class ProfileController {
         mav.addObject("profile", profile);
         mav.addObject("org", org);
         mav.addObject("user", user);
+
         System.out.println(user);
 
         return mav;

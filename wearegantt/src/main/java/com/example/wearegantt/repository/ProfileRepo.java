@@ -51,18 +51,18 @@ public class ProfileRepo {
 
     // =================== GET ONE PROFILE ==================
 
-    public Profile getOneProfile(int profile_id){
-        Profile ProfileToReturn = null;
+    public Profile getOneProfile(int fk_userId){
+        Profile profileToReturn = null;
 
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profile WHERE profile_id = ?");
-            ps.setInt(1 , profile_id);
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profile WHERE fk_userId = ?");
+            ps.setInt(1 , fk_userId);
 
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                ProfileToReturn = new Profile(
+                profileToReturn = new Profile(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -75,14 +75,14 @@ public class ProfileRepo {
                 );
             }
 
-
+            System.out.println(profileToReturn);
         }
         catch(SQLException e){
             System.out.println(e);
             return null;
         }
 
-        return ProfileToReturn;
+        return profileToReturn;
 
     }
 
@@ -132,6 +132,7 @@ public class ProfileRepo {
         }
     }
 
+
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse
         Connection conn = DriverManager.getConnection("jdbc:mysql://138.197.186.159:3306/wag_app","captain","Uxr56vem.captain");
@@ -139,4 +140,6 @@ public class ProfileRepo {
         return conn;
     }
 
+    public void updateProfile(Profile profile) {
+    }
 }
