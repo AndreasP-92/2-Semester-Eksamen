@@ -36,7 +36,7 @@
                             <img  th:src="@{/images/logo.png/}"  alt="logo">
                         </div>
                     </div>
-                    <h4>Edit Your Project</h4>
+                    <h4>Edit Your Profile</h4>
 
                     <form th:action="@{/update/profile}" th:object="${profile}" method="post">
                         <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{profile_id}">
