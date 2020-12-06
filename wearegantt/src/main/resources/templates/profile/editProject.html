@@ -58,11 +58,13 @@
                                     <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-75">Save Project</button>
                             </form>
                             <div class="col-sm-6" align="left">
-                                <div th:each="jobtitle : ${jobTitlesList}" >
-                                    <form action="/update/projectJobTitle" method="post">
+                                <div th:each="jobtitle : ${jobTitlesList}" th:object="${project}">
+                                    <form th:action="@{/delete/projectJobTitle}" method="post">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <input style="display: none;" type="text" name="jobTitle_id" th:value="${jobtitle.getProjectJobTitle_id()}">
+                                                <input style="display: none;" type="text" th:field="*{project_id}">
+
+                                                <input style="display: none;" type="text" name="projectJobTitle_id" th:value="${jobtitle.getProjectJobTitle_id()}">
                                                 <p th:text="${jobtitle.getJobTitle_name()}"></p>
                                             </div>
                                             <div class="col-sm-6">

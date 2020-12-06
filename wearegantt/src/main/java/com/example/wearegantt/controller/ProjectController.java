@@ -72,8 +72,8 @@ public class ProjectController {
 
     @GetMapping("/projects/edit/{id}")
     private ModelAndView project(@PathVariable(name = "id")int id){
-        ModelAndView mav = new ModelAndView("profile/editProject");
-        Project project = projectRepo.getOneProject(id);
+        ModelAndView mav    = new ModelAndView("profile/editProject");
+        Project project     = projectRepo.getOneProject(id);
         List<GetProjectJobTitles> projectTitlesList = projectRepo.getOneProjectJobTitle(id);
 
         mav.addObject("jobTitlesList", projectTitlesList);
@@ -161,6 +161,21 @@ public class ProjectController {
 
 
         return "redirect:/";
+    }
+
+//    DELETE PROJECT JOB TITLE =============
+
+    @PostMapping("/delete/projectJobTitle")
+    public String deleteOrg(WebRequest dataFromForm) {
+        String projectJobTitle_id       = (dataFromForm.getParameter("projectJobTitle_id"));
+        String project_id               = (dataFromForm.getParameter("project_id"));
+
+        int idParsed = Integer.parseInt(projectJobTitle_id);
+
+        projectRepo.deleteProjectJobTitle(idParsed);
+
+
+        return "redirect:/projects/edit/"+project_id;
     }
 
 
