@@ -58,15 +58,9 @@ public class ProjectController {
 //    CREATE PROJECT =======================
 
     @GetMapping("/projects/create")
-    private ModelAndView createproject(Principal principal){
-        ModelAndView mav = new ModelAndView("profile/createProject");
+    private String createproject(){
 
-//        User user = userRepo.getOneUser(principal.getName());
-//        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
-
-//        mav.addObject("organization", organization);
-
-        return mav;
+        return "profile/createProject";
     }
 
 
@@ -135,6 +129,26 @@ public class ProjectController {
         projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
 
 
+
+        return "redirect:/";
+    }
+// INSERT PROJECT =======================
+    @PostMapping("/insert/project")
+    public String insertProject(WebRequest dataFromForm, Principal principal) {
+        String project_name     = (dataFromForm.getParameter("project_name"));
+        String project_desc     = (dataFromForm.getParameter("project_desc"));
+        String project_duration = (dataFromForm.getParameter("project_duration"));
+        String project_start    = (dataFromForm.getParameter("project_start"));
+        String project_end      = (dataFromForm.getParameter("project_end"));
+
+
+
+
+        User user           = userRepo.getOneUser(principal.getName());
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+        JobTitle jobTitle   = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
+
+        projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id());
 
         return "redirect:/";
     }
