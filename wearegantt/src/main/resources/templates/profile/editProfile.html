@@ -70,7 +70,9 @@
                             <button type="submit" name="button" class="btn login_btn1 mt-3 mb-3" >Delete</button>
 
                         </form>
-                        <a href="/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
+
+                        <a href="/partials/editProfileForm" class="btn login_btn mt-3 mb-3">Edit Email & Password</a>
+                        <a href="/login/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
 
                         <div th:if="${user.fk_orgId == 0}">
                             <li class="nav-item">
