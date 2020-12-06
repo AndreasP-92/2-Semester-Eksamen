@@ -115,17 +115,35 @@ public class UserRepo {
 
     }
 
-    //    ================== UPDATE User ================
+    //    ================== Delete User ================
 
     public void disableUser(int user_id) {
         int user_enabled = 0;
         try {
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_enabled = ? WHERE user_id = ?");
-            ps.setInt(1, user_enabled);
-            ps.setInt(2, user_id);
+            ps.setInt(1, user_id);
+            ps.setInt(2, user_enabled);
+
 
             int row = ps.executeUpdate();
             System.out.println("User enabled");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    //    ================== UPDATE Credentials ================
+
+    public void updateCredentials(int user_id, String user_mail, String user_password) {
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ?, user_password = ? WHERE user_id = ?");
+            ps.setString(1, user_mail);
+            ps.setString(2, user_password);
+            ps.setInt(3, user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("password changed");
 
         } catch (SQLException e) {
             System.out.println(e);

@@ -63,6 +63,24 @@
                         <input class="text-center p-3 mb-1" id="jobtitleinput" type="text" th:field="*{profile_jobTitle}">
 
                         <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
+                        </form>
+                    <h4>Edit Your Email & Password</h4>
+
+                    <form th:action="@{/update/credentials}" th:object="${user}" method="post">
+                        <label for="email">Change Your Email</label>
+                        <input class="text-center p-3 mb-1" id="email" type="text" th:field="*{user_mail}">
+
+                        <label for="password1">Change Your Password</label>
+                        <input class="text-center p-3 mb-1" id="password1" type="password" th:field="*{user_password}">
+
+                        <label for="password2">Confirm Your Password</label>
+                        <input class="text-center p-3 mb-1" id="password2" type="password" th:field="*{user_password}">
+
+
+                        <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
+
+
+                    </form>
 
                         <form th:action="@{/delete/profile}" th:object="${user}" method="post">
 
@@ -71,7 +89,6 @@
 
                         </form>
 
-                        <a href="/partials/editProfileForm" class="btn login_btn mt-3 mb-3">Edit Email & Password</a>
                         <a href="/login/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
 
                         <div th:if="${user.fk_orgId == 0}">
@@ -87,7 +104,6 @@
                             </li>
                         </div>
 
-                    </form>
                 </div>
             </div>
         </div>
