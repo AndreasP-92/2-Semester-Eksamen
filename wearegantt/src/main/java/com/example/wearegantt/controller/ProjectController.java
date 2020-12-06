@@ -44,13 +44,15 @@ public class ProjectController {
     @GetMapping("/projects")
     private String projects(Model model){
 
-
         List<Project> listProjects = projectRepo.getAllProjects();
         model.addAttribute("listProjects", listProjects);
 
-
-
         return "profile/project";
+    }
+// JOBTITLE =================
+    @GetMapping("/newjobtitle")
+    private String newjobtitle(){
+        return "profile/newjobtitle";
     }
 
 //    CREATE PROJECT =======================
@@ -63,6 +65,15 @@ public class ProjectController {
 //        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
 
 //        mav.addObject("organization", organization);
+
+        return mav;
+    }
+// CREATE JOBTITLE ===============================
+    @GetMapping("/projects/newjobtitel/{id}")
+    private ModelAndView newjobtitle(@PathVariable(name = "id") int id){
+        ModelAndView mav = new ModelAndView("profile/newjobtitle");
+        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(id);
+        mav.addObject("project", jobTitle);
 
         return mav;
     }

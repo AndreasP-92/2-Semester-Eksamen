@@ -37,18 +37,24 @@
                             </div>
                         </div>
                         <h4>Edit Your Project</h4>
-
+<!--                            tilføj label til dem nede under-->
                         <form th:action="@{/update/project}" th:object="${project}" method="post" >
+                            <label>Project Id</label>
                             <input class="text-center p-3 mb-1" readonly type="text"  th:field="*{project_id}">
 
+                            <label>Project Name</label>
                             <input class="text-center p-3 mb-1" type="text"  th:field="*{project_name}">
 
+                            <label>Project Description</label>
                             <input class="text-center p-3 mb-1" type="text"  th:field="*{project_desc}">
 
+                            <label>Project Duration</label>
                             <input class="form-control" type="date"  th:field="*{project_duration}">
 
+                            <label>Project Start</label>
                             <input class="form-control" type="date"  th:field="*{project_start}">
 
+                            <label>Project End</label>
                             <input class="form-control" type="date"  th:field="*{project_end}">
 
 

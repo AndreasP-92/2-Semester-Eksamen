@@ -26,8 +26,20 @@ body{
 /*Logo Slut*/
 
 /*Headers Start*/
+h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
 
-.userHeadline,h4{
+h2{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+.userHeadline{
     margin: -25px;
     padding: 0 0 20px;
     text-align: center;
@@ -35,6 +47,12 @@ body{
     color: #ffffff;
 }
 
+h4 {
+    margin: 30px;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
 /*Headers Slut*/
 
 /*input indstillinger Start*/
@@ -47,7 +65,7 @@ body{
 
 }
 
-.cInput{
+.loginbox input{
     width: 100%;
     margin-bottom: 20px;
 }
@@ -109,42 +127,4 @@ body{
 .main{
     margin-top: 5%;
     background: #707070;
-}
-
-
-.titelbox{
-    background: #707070;
-    color: #ffffff;
-    box-sizing: border-box;
-    margin-top: 5%;
-
-}
-
-.titelbox input{
-    margin-bottom: 20px;
-}
-
-.titelbox input[type="text"], input[type="password"], input[type="number"]{
-    border:none;
-    border-bottom: 1px solid #ffffff;
-    outline: none;
-    height: 40px;
-    color: black;
-    font-size: 16px;
-}
-
-
-.titelbox input[type="submit"]{
-    border: none;
-    outline: none;
-    height: 40px;
-    background: #34d4b1;
-    color: black;
-    font-size: 18px;
-
-}
-.titelbox input[type="submit"]:hover{
-    cursor: pointer;
-    background: #ffc107;
-    color: black;
 }
