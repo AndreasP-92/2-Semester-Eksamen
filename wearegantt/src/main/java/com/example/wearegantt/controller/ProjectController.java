@@ -1,9 +1,6 @@
 package com.example.wearegantt.controller;
 
-import com.example.wearegantt.model.JobTitle;
-import com.example.wearegantt.model.Organization;
-import com.example.wearegantt.model.Project;
-import com.example.wearegantt.model.User;
+import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.JobTitleRepo;
 import com.example.wearegantt.repository.OrganizationRepo;
 import com.example.wearegantt.repository.ProjectRepo;
@@ -77,6 +74,9 @@ public class ProjectController {
     private ModelAndView project(@PathVariable(name = "id")int id){
         ModelAndView mav = new ModelAndView("profile/editProject");
         Project project = projectRepo.getOneProject(id);
+        List<GetProjectJobTitles> projectTitlesList = projectRepo.getOneProjectJobTitle(id);
+
+        mav.addObject("jobTitlesList", projectTitlesList);
         mav.addObject("project", project);
         return mav;
     }
