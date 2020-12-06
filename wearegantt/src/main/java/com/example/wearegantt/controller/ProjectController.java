@@ -53,22 +53,22 @@ public class ProjectController {
         return "profile/project";
     }
 
-//    CREATE PROJECT ===========
+//    CREATE PROJECT =======================
 
-    @GetMapping("/projects/create/{id}")
-    private ModelAndView createproject(@PathVariable(name = "id") int id, Principal principal){
+    @GetMapping("/projects/create")
+    private ModelAndView createproject(Principal principal){
         ModelAndView mav = new ModelAndView("profile/createProject");
 
-        User user = userRepo.getOneUser(principal.getName());
+//        User user = userRepo.getOneUser(principal.getName());
 
-        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
-
-        mav.addObject("organization", organization);
+//        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
+//
+//        mav.addObject("organization", organization);
 
         return mav;
     }
 
-//    UPDATE PROJECT
+//    UPDATE PROJECT ======================
 
     @GetMapping("/projects/edit/{id}")
     private ModelAndView project(@PathVariable(name = "id")int id){
@@ -80,7 +80,7 @@ public class ProjectController {
 
 //  =================================  POST ROUTES =============================
 
-    // INSERT PROJECT
+// INSERT PROJECT =======================
 
     @PostMapping("/insert/project")
     public String postProject(WebRequest dataFromForm, Principal principal) {
@@ -99,12 +99,11 @@ public class ProjectController {
 
         projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id(), jobTitle.getJobTitle_Id());
 
-//        userRepo.updateUserWId(user.getUser_id(), org.getOrg_id());
-
         return "redirect:/";
     }
 
-    // UPDATE PROJECT
+// UPDATE PROJECT =======================
+
     @PostMapping("/update/project") //URL'en
     public String updateProject(WebRequest dataFromForm,  Principal principal) {
         // DataFromData objektet(WebRequest) gør man kan hente data fra en form(HTML).

@@ -3,7 +3,6 @@ package com.example.wearegantt.controller;
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,25 +10,23 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class ProfileController {
 
-    //REPOSITORIES ====================
+//REPOSITORIES ====================
 
     OrganizationRepo orgRep = new OrganizationRepo();
-
-    ProjectRepo projectRepo = new ProjectRepo();
 
     UserRepo userRepo = new UserRepo();
 
     ProfileRepo profileRepo = new ProfileRepo();
 
-    JobTitleRepo jobTitleRepo = new JobTitleRepo();
-
 
 //    GET ROUTES ==================
+
+// EDIT PROFILE =================
+
 
     @GetMapping("/editprofile/{user_mail}")
     private ModelAndView profile(@PathVariable(name = "user_mail")String user_mail){
@@ -50,14 +47,18 @@ public class ProfileController {
     }
 
 
+// NEW ORGANIZATION =================
 
     @GetMapping("/profile/organization")
     private String newOrganization(){
         return "profile/newOrganization";
     }
 
+// UPDATE ORGANIZATION =================
+
+
     @GetMapping("/profile/organization/{org_name}")
-    public ModelAndView Organization(@PathVariable(name = "org_name")String org_name, Principal principal){
+    public ModelAndView Organization(@PathVariable(name = "org_name")String org_name){
         ModelAndView mav = new ModelAndView("profile/editOrganization");
         Organization org = orgRep.getOneOrg(org_name);
 
@@ -68,7 +69,7 @@ public class ProfileController {
 
 //  =================================  POST ROUTES =============================
 
-    //    INSERT ORGANIZATION =============
+//    INSERT ORGANIZATION =============
 
     @PostMapping("/insert/org")
     public String postOrg(WebRequest dataFromForm,  Principal principal) {
@@ -77,7 +78,6 @@ public class ProfileController {
         String org_cvr      = (dataFromForm.getParameter("org_cvr"));
 
         int cvrParsed = Integer.parseInt(org_cvr);
-        int fk_orgId = 0;
 
         orgRep.insertOrg(org_name, org_address, cvrParsed);
 
@@ -96,7 +96,6 @@ public class ProfileController {
         String org_id      = (dataFromForm.getParameter("org_id"));
 
         int idParsed = Integer.parseInt(org_id);
-        System.out.println(idParsed);
 
         orgRep.deleteOrg(idParsed);
 
@@ -107,26 +106,24 @@ public class ProfileController {
     //    INVITE USER ORGANIZATION =============
 
     @PostMapping("/insert/org/user")
-    public String inviteUserToOrg(WebRequest dataFromForm,  Principal principal) {
+    public String inviteUserToOrg(WebRequest dataFromForm) {
         String user_mail  = (dataFromForm.getParameter("user_mail"));
         String org_id     = (dataFromForm.getParameter("org_id"));
 
         int idParsed = Integer.parseInt(org_id);
 
-        System.out.println(user_mail + org_id);
-//
         User user = userRepo.getOneUser(user_mail);
-//
+
         userRepo.updateUserWId(user.getUser_id(), idParsed);
 
         return "redirect:/";
     }
 
-    //    UPDATE ORGANIZATION =============
+//    UPDATE ORGANIZATION =============
 
 
     @PostMapping("/update/org")
-    public String updateOrg(WebRequest dataFromForm,  Principal principal) {
+    public String updateOrg(WebRequest dataFromForm) {
         String org_id       = (dataFromForm.getParameter("org_id"));
         String org_address  = (dataFromForm.getParameter("org_address"));
         String org_name     = (dataFromForm.getParameter("org_name"));
@@ -141,7 +138,7 @@ public class ProfileController {
         return "redirect:/";
     }
 
-    //    UPDATE PROFILE =============
+//    UPDATE PROFILE =============
 
     @PostMapping("/update/profile")
     public String updateProfile(WebRequest dataFromForm,  Principal principal) {
@@ -172,7 +169,6 @@ public class ProfileController {
         String user_id      = (dataFromForm.getParameter("user_id"));
 
         int idParsed = Integer.parseInt(user_id);
-        System.out.println(idParsed);
 
         userRepo.disableUser(idParsed);
 

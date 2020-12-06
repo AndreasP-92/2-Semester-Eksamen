@@ -47,7 +47,7 @@ public class JobTitleRepo {
 
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobtitle WHERE fk_orgId = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE fk_orgId = ?");
             ps.setInt(1 , fk_orgId);
 
             ResultSet rs = ps.executeQuery();
