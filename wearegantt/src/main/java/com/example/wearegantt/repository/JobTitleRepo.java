@@ -12,8 +12,8 @@ public class JobTitleRepo {
 
     // =================== GET ALL JOBTITLES ==================
 
-    public List<JobTitle> getAllJobTitle(){
-        List<JobTitle> allJobTile = new ArrayList<>();
+    public List<JobTitle> getAllJobTitles(){
+        List<JobTitle> allJobTitles = new ArrayList<>();
 
         try {
 
@@ -30,14 +30,14 @@ public class JobTitleRepo {
                         rs.getString(2),
                         rs.getInt(3)
                 );
-                allJobTile.add(tmp);
+                allJobTitles.add(tmp);
             }
 
         } catch (SQLException e) {
             System.out.println(e);
             return null;
         }
-        return allJobTile;
+        return allJobTitles;
     }
 
     // =================== GET ONE JOBTITLES ==================
@@ -73,15 +73,15 @@ public class JobTitleRepo {
 
     //    ================== INSERT JOBTITLE ================
 
-    public void InsertJobTitle(String jobtitle_name){
+    public void InsertJobTitle(String jobTitle_name, int jobTitle_fk_orgId){
         try {
-            System.out.println("JOBTITLE ===" + jobtitle_name);
-            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name) VALUES (?,)");
-            ps.setString(1, jobtitle_name);
-
+            System.out.println("JOBTITLE ===" + jobTitle_name);
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO jobTitle(jobTitle_name, fk_orgId) VALUES (?,?)");
+            ps.setString(1, jobTitle_name);
+            ps.setInt(2, jobTitle_fk_orgId);
 
             int row = ps.executeUpdate();
-            System.out.println("jobtitle insert");
+            System.out.println("jobTitle insert");
 
         }catch (SQLException e){
             System.out.println(e);
@@ -91,7 +91,7 @@ public class JobTitleRepo {
 
     //    ================== UPDATE JOBTITLE ================
 
-    public void updateProject(int jobTitle_id, String jobTitle_name){
+    public void updateJobTitle(String jobTitle_name, int jobTitle_id){
         try {
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE jobTitle SET jobTitle_name = ? WHERE jobTitle_id = ?");
             ps.setString(1, jobTitle_name);

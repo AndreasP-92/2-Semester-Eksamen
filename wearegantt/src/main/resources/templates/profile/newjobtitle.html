@@ -35,12 +35,14 @@
                 <div class="loginbox">
 
                     <h4>Add Jobtitle</h4>
-                    <form th:action="@{/update/jobtitle}" method="post">
+                    <form th:action="@{/update/jobtitle}" th:object="jobTitle" method="post">
 <!--                        th:field erstatter id, name, value i indput tag-->
 
-                        <input class="text-center p-3 mb-1" type="text" name="jobTitle_name" placeholder="Jobtitle">
+                        <input class="text-center p-3 mb-1" type="text" name="jobTitle_name" placeholder="Job Title">
 
                         <button type="submit" name="button" class="btn login_btn">Save</button>
+
+                        <button type="submit" name="button" class="btn login_btn">Delete</button>
                     </form>
                 </div>
             </div>

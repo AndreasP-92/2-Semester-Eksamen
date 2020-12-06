@@ -30,7 +30,7 @@ public class ProjectTest {
         System.out.println(time.format(timestamp));
     }
 
-// GET ONE PROJECT
+// GET ALL PROJECT
     @Test
     public void getAllProjects(){
         List<Project> projectList = projectRepo.getAllProjects();

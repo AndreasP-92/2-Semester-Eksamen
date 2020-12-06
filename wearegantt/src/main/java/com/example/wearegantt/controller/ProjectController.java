@@ -1,6 +1,9 @@
 package com.example.wearegantt.controller;
 
-import com.example.wearegantt.model.*;
+import com.example.wearegantt.model.JobTitle;
+import com.example.wearegantt.model.Organization;
+import com.example.wearegantt.model.Project;
+import com.example.wearegantt.model.User;
 import com.example.wearegantt.repository.JobTitleRepo;
 import com.example.wearegantt.repository.OrganizationRepo;
 import com.example.wearegantt.repository.ProjectRepo;
@@ -42,7 +45,6 @@ public class ProjectController {
     private String projects(Model model){
 
         List<Project> listProjects = projectRepo.getAllProjects();
-        System.out.println(listProjects);
         model.addAttribute("listProjects", listProjects);
 
         return "profile/project";
@@ -56,9 +58,15 @@ public class ProjectController {
 //    CREATE PROJECT =======================
 
     @GetMapping("/projects/create")
-    private String createproject(){
+    private ModelAndView createproject(Principal principal){
+        ModelAndView mav = new ModelAndView("profile/createProject");
 
-        return "profile/createProject";
+//        User user = userRepo.getOneUser(principal.getName());
+//        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
+
+//        mav.addObject("organization", organization);
+
+        return mav;
     }
 
 
@@ -69,25 +77,40 @@ public class ProjectController {
     private ModelAndView project(@PathVariable(name = "id")int id){
         ModelAndView mav = new ModelAndView("profile/editProject");
         Project project = projectRepo.getOneProject(id);
-        List<GetProjectJobTitles> jobTitlesList  = projectRepo.getOneProjectJobTitle(id);
-
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(project.getFk_orgId());
-
-        System.out.println(jobTitlesList);
-
-
         mav.addObject("project", project);
-            mav.addObject("jobTitlesList", jobTitlesList);
-
         return mav;
     }
 
 //  =================================  POST ROUTES =============================
 
     // INSERT JOBTITLE ===============================
-    @PostMapping("/insert/newtitlejob")
+    @PostMapping("/insert/newjobtitle")
     public String postNewTitleJob(WebRequest dataFromForm, Principal principal) {
-        String project_name     = (dataFromForm.getParameter("project_name"));
+        String jobTitle_name     = (dataFromForm.getParameter("jobTitle_name"));
+
+        User user = userRepo.getOneUser(principal.getName());
+        Organization org = orgRep.getOneOrgWId(user.getFk_orgId());
+        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
+
+        jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());
+
+        return "redirect:/";
+    }
+
+    //    UPDATE JOBTITLE ======================
+
+    @PostMapping("/update/newjobtitle")
+    public String updateJobTitle(WebRequest dataFromForm,  Principal principal) {
+        // DataFromData objektet(WebRequest klasse) gør man kan hente data fra en form(HTML).
+        String jobTitle_name = (dataFromForm.getParameter("jobTitle_name"));
+        String jobTitle_id   = (dataFromForm.getParameter("jobTitle_id"));
+
+        // grunden til jeg converter, fordi URL er ALTID er en String.
+        int idParsed = Integer.parseInt(jobTitle_id);
+
+        User user = userRepo.getOneUser(principal.getName());
+        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
+        jobTitleRepo.updateJobTitle(jobTitle_name, idParsed);
 
         return "redirect:/";
     }
@@ -139,5 +162,7 @@ public class ProjectController {
 
         return "redirect:/";
     }
+
+
 
 }
