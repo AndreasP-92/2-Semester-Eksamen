@@ -8,11 +8,9 @@ public class Project {
     private String project_start;
     private String project_end;
     private int fk_orgId;
-    private int fk_taskId;
-    private int fk_jobTitleId;
 
 
-    public Project(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId, int fk_taskId, int fk_jobTitleId) {
+    public Project(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId) {
         this.project_id = project_id;
         this.project_name = project_name;
         this.project_desc = project_desc;
@@ -20,8 +18,6 @@ public class Project {
         this.project_start = project_start;
         this.project_end = project_end;
         this.fk_orgId = fk_orgId;
-        this.fk_taskId = fk_taskId;
-        this.fk_jobTitleId = fk_jobTitleId;
     }
 
     public int getProject_id() {
@@ -80,22 +76,6 @@ public class Project {
         this.fk_orgId = fk_orgId;
     }
 
-    public int getFk_taskId() {
-        return fk_taskId;
-    }
-
-    public void setFk_taskId(int fk_taskId) {
-        this.fk_taskId = fk_taskId;
-    }
-
-    public int getFk_jobTitleId() {
-        return fk_jobTitleId;
-    }
-
-    public void setFk_jobTitleId(int fk_jobTitleId) {
-        this.fk_jobTitleId = fk_jobTitleId;
-    }
-
     @Override
     public String toString() {
         return "Project{" +
@@ -106,8 +86,6 @@ public class Project {
                 ", project_start='" + project_start + '\'' +
                 ", project_end='" + project_end + '\'' +
                 ", fk_orgId=" + fk_orgId +
-                ", fk_taskId=" + fk_taskId +
-                ", fk_jobTitleId=" + fk_jobTitleId +
                 '}';
     }
 }

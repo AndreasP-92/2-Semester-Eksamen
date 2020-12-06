@@ -54,7 +54,7 @@ public class ProjectTest {
         System.out.println(date);
 
 //        System.out.println(timestamp);
-        projectRepo.InsertProject("name3","desc3", date, date, date, 1, 1);
+        projectRepo.InsertProject("name3","desc3", date, date, date, 1);
 
     }
     // UPDATE ONE PROJECT
@@ -64,7 +64,7 @@ public class ProjectTest {
         String date = sdf.format(timestamp);
         System.out.println(date);
 
-        projectRepo.updateProject(1,"Gantt","desc4", date, date, date, 2, 1);
+        projectRepo.updateProject(1,"Gantt","desc4", date, date, date, 2);
 
     }
 

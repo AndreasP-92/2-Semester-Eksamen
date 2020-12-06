@@ -60,9 +60,8 @@ public class ProjectController {
         ModelAndView mav = new ModelAndView("profile/createProject");
 
 //        User user = userRepo.getOneUser(principal.getName());
-
 //        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
-//
+
 //        mav.addObject("organization", organization);
 
         return mav;
@@ -97,7 +96,7 @@ public class ProjectController {
         Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
         JobTitle jobTitle   = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
 
-        projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id(), jobTitle.getJobTitle_Id());
+        projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id());
 
         return "redirect:/";
     }
@@ -120,7 +119,7 @@ public class ProjectController {
 
         User user = userRepo.getOneUser(principal.getName());
         JobTitle jobTitle = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
-        projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId(), jobTitle.getJobTitle_Id());
+        projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
 
 
 
