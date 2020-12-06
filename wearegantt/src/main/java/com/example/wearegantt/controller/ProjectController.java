@@ -1,9 +1,6 @@
 package com.example.wearegantt.controller;
 
-import com.example.wearegantt.model.JobTitle;
-import com.example.wearegantt.model.Organization;
-import com.example.wearegantt.model.Project;
-import com.example.wearegantt.model.User;
+import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.JobTitleRepo;
 import com.example.wearegantt.repository.OrganizationRepo;
 import com.example.wearegantt.repository.ProjectRepo;
@@ -45,6 +42,7 @@ public class ProjectController {
     private String projects(Model model){
 
         List<Project> listProjects = projectRepo.getAllProjects();
+        System.out.println(listProjects);
         model.addAttribute("listProjects", listProjects);
 
         return "profile/project";
@@ -71,7 +69,16 @@ public class ProjectController {
     private ModelAndView project(@PathVariable(name = "id")int id){
         ModelAndView mav = new ModelAndView("profile/editProject");
         Project project = projectRepo.getOneProject(id);
+        List<GetProjectJobTitles> jobTitlesList  = projectRepo.getOneProjectJobTitle(id);
+
+        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(project.getFk_orgId());
+
+        System.out.println(jobTitlesList);
+
+
         mav.addObject("project", project);
+            mav.addObject("jobTitlesList", jobTitlesList);
+
         return mav;
     }
 
@@ -132,27 +139,5 @@ public class ProjectController {
 
         return "redirect:/";
     }
-// INSERT PROJECT =======================
-    @PostMapping("/insert/project")
-    public String insertProject(WebRequest dataFromForm, Principal principal) {
-        String project_name     = (dataFromForm.getParameter("project_name"));
-        String project_desc     = (dataFromForm.getParameter("project_desc"));
-        String project_duration = (dataFromForm.getParameter("project_duration"));
-        String project_start    = (dataFromForm.getParameter("project_start"));
-        String project_end      = (dataFromForm.getParameter("project_end"));
-
-
-
-
-        User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-        JobTitle jobTitle   = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
-
-        projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id());
-
-        return "redirect:/";
-    }
-
-
 
 }

@@ -1,12 +1,6 @@
 package com.example.wearegantt.repository;
 
-import com.example.wearegantt.model.JobTitle;
-import com.example.wearegantt.model.Organization;
-import com.example.wearegantt.model.Project;
-import com.example.wearegantt.model.User;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.wearegantt.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -284,7 +278,54 @@ public class ProjectRepo {
         }
     }
 
+// ============================================================= PROJECT JOB TITLES =================================================================
 
+    //    ================== INSERT PROJECT JOB TITLE ================
+
+    public void insertOneProjectJobTitle(int jobTitle_id, int project_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project_title(project_id, jobTitle_id) VALUES (?, ?)");
+            ps.setInt(1, jobTitle_id);
+            ps.setInt(2, project_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Job Title insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
+    // =================== GET ONE PROJECT JOB TITLE ==================
+
+    public List<GetProjectJobTitles> getOneProjectJobTitle(int prject_id){
+        List<GetProjectJobTitles> AlljobTitles = new ArrayList<>();
+
+//        WHERE project_id = ?
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT project_jobTitle.projectJobTitle_id, project_jobTitle.project_id, jobTitle.jobTitle_name FROM project_jobTitle INNER JOIN jobTitle ON project_jobTitle.jobTitle_id = jobTitle.jobTitle_id WHERE project_id = ?");
+            ps.setInt(1, prject_id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                GetProjectJobTitles tmp = new GetProjectJobTitles(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3)
+                );
+                AlljobTitles.add(tmp);
+            }
+
+        } catch (SQLException e){
+
+            System.out.println(e);
+            return null;
+        }
+        return AlljobTitles;
+    }
 
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse

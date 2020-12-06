@@ -93,4 +93,11 @@ public class ProjectTest {
         projectRepo.updateJobTitle(1,"Test Job Title");
 
     }
+//    GET ONE PROJECT JOB TITLE
+    @Test
+    public void getProjecJobTitle(){
+        System.out.println(projectRepo.getOneProjectJobTitle(5));
+
+
+    }
 }

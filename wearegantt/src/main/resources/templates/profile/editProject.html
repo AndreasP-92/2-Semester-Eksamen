@@ -19,7 +19,7 @@
 
     <div class="container main p-2" align="center">
         <div class="row">
-            <div class="col-sm">
+            <div class="col-sm-4">
                 <div class="d-flex justify-content-center">
                     <div class="logo_brand p-4">
                         <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
@@ -28,50 +28,52 @@
                 <br>
                 <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-8">
                 <div class="d-flex justify-content-center h-100">
                     <div class="loginbox">
-                        <div class="d-flex justify-content-center">
-                            <div class="logo_brand">
-                                <img  th:src="@{/images/logo.png/}"  alt="logo">
+                        <div class="w-100" style="text-align: center !important;">
+                            <h4 style="text-align: center !important;">Edit Your Project</h4>
+                        </div>
+<!--                            tilføj label til dem nede under-->
+                        <div class="row">
+                            <form class="col-sm-6" th:action="@{/update/project}" th:object="${project}" method="post" >
+                                    <label>Project Id</label>
+                                    <input class="form-control cInpu" readonly type="text"  th:field="*{project_id}">
+
+                                    <label>Project Name</label>
+                                    <input class="form-control cInpu" type="text"  th:field="*{project_name}">
+
+                                    <label>Project Description</label>
+                                    <input class="form-control cInpu" type="text"  th:field="*{project_desc}">
+
+                                    <label>Project Duration</label>
+                                    <input class="form-control cInpu" type="date"  th:field="*{project_duration}">
+
+                                    <label>Project Start</label>
+                                    <input class="form-control cInpu" type="date"  th:field="*{project_start}">
+
+                                    <label>Project End</label>
+                                    <input class="form-control" type="date"  th:field="*{project_end}">
+
+                                    <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-75">Save Project</button>
+                            </form>
+                            <div class="col-sm-6" align="left">
+                                <div th:each="jobtitle : ${jobTitlesList}" >
+                                    <form action="/update/projectJobTitle" method="post">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input style="display: none;" type="text" name="jobTitle_id" th:value="${jobtitle.getProjectJobTitle_id()}">
+                                                <p th:text="${jobtitle.getJobTitle_name()}"></p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button type="submit" class="btn login_btn">Remove</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <a class="btn login_btn mt-3 mb-3 100" href="/projects/create/newJobtitles">Add More Job Titles</a>
                             </div>
                         </div>
-                        <h4>Edit Your Project</h4>
-<!--                            tilføj label til dem nede under-->
-                        <form th:action="@{/update/project}" th:object="${project}" method="post" >
-                            <label>Project Id</label>
-                            <input class="text-center p-3 mb-1" readonly type="text"  th:field="*{project_id}">
-
-                            <label>Project Name</label>
-                            <input class="text-center p-3 mb-1" type="text"  th:field="*{project_name}">
-
-                            <label>Project Description</label>
-                            <input class="text-center p-3 mb-1" type="text"  th:field="*{project_desc}">
-
-                            <label>Project Duration</label>
-                            <input class="form-control" type="date"  th:field="*{project_duration}">
-
-                            <label>Project Start</label>
-                            <input class="form-control" type="date"  th:field="*{project_start}">
-
-                            <label>Project End</label>
-                            <input class="form-control" type="date"  th:field="*{project_end}">
-
-
-                            <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
-
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm row align-items-end">
-                <div class="row rightcol mb-5">
-                    <div class="col-6">
-
-                    </div>
-                    <div class="col-6">
-
                     </div>
                 </div>
             </div>
