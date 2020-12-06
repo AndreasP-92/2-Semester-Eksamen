@@ -26,20 +26,8 @@ body{
 /*Logo Slut*/
 
 /*Headers Start*/
-h1{
-    margin: 0;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-}
 
-h2{
-    margin: 0;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-}
-.userHeadline{
+.userHeadline,h4{
     margin: -25px;
     padding: 0 0 20px;
     text-align: center;
@@ -47,12 +35,6 @@ h2{
     color: #ffffff;
 }
 
-h4 {
-    margin: 30px;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-}
 /*Headers Slut*/
 
 /*input indstillinger Start*/
