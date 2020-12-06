@@ -88,6 +88,7 @@ public class ProjectController {
     public String postNewTitleJob(WebRequest dataFromForm, Principal principal) {
         String project_name     = (dataFromForm.getParameter("project_name"));
 
+        return "redirect:/";
     }
 
 
