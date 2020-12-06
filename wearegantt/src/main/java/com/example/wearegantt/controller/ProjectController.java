@@ -68,15 +68,8 @@ public class ProjectController {
 
         return mav;
     }
-// CREATE JOBTITLE ===============================
-    @GetMapping("/projects/newjobtitel/{id}")
-    private ModelAndView newjobtitle(@PathVariable(name = "id") int id){
-        ModelAndView mav = new ModelAndView("profile/newjobtitle");
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(id);
-        mav.addObject("project", jobTitle);
 
-        return mav;
-    }
+
 
 //    UPDATE PROJECT ======================
 
@@ -89,6 +82,14 @@ public class ProjectController {
     }
 
 //  =================================  POST ROUTES =============================
+
+    // INSERT JOBTITLE ===============================
+    @PostMapping("/insert/newtitlejob")
+    public String postNewTitleJob(WebRequest dataFromForm, Principal principal) {
+        String project_name     = (dataFromForm.getParameter("project_name"));
+
+    }
+
 
 // INSERT PROJECT =======================
 
