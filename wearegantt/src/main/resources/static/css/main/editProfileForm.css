@@ -114,19 +114,6 @@ h4 {
     box-shadow: none !important;
     outline: 0px !important;
 }
-.login_btn1{
-    width: 100%;
-    background: #ff0618 !important;
-    color: black !important;
-    border: none;
-    outline: none;
-    height: 40px;
-    font-size: 18px;
-}
-.login_btn1:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
-}
 .login_container {
     padding: 0 2rem;
 }
@@ -137,7 +124,7 @@ h4 {
     padding-bottom: 5%;
 }
 
-.main{
+.main {
     margin-top: 5%;
     background: #707070;
 }

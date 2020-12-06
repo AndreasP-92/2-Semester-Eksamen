@@ -1,30 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Your Organization Projects</title>
+
     <link th:href="@{/css/main/editprofile.css}" type="text/css" rel="stylesheet">
-    <title>Edit Your Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
-<!--=================== Body Start ============================ -->
 <header>
-    <!--=================== NAVIGATION Start ============================ -->
+    <!--=================== NAVIGATION ============================ -->
     <div th:replace="partials/navbar :: navigation">
 
     </div>
-    <!--=================== NAVIGATION End ============================ -->
 </header>
+
 
 <div class="container main p-2" align="center">
     <div class="row">
         <div class="col-sm">
             <div class="d-flex justify-content-center">
                 <div class="logo_brand p-4">
-                    <img src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png"
-                         class="brand_logo" alt="logo">
+                    <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
                 </div>
             </div>
             <br>
@@ -35,72 +33,78 @@
                 <div class="loginbox">
                     <div class="d-flex justify-content-center">
                         <div class="logo_brand">
-                            <img th:src="@{/images/logo.png/}" alt="logo">
+                            <img  th:src="@{/images/logo.png/}"  alt="logo">
                         </div>
                     </div>
-                    <h4>Edit Your Profile</h4>
+                    <h4>Edit Your Project</h4>
+
                     <form th:action="@{/update/profile}" th:object="${profile}" method="post">
                         <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{profile_id}">
 
-                        <input class="text-center p-3 mb-1" type="text" th:field="*{profile_firstname}">
+                        <label for="firstnameinput">Change Your Firstname</label>
+                        <input class="text-center p-3 mb-1" id="firstnameinput" type="text" th:field="*{profile_firstname}">
 
-                        <input class="text-center p-3 mb-1" type="text" th:field="*{profile_lastname}">
+                        <label for="lastnameinput">Change Your Lastname</label>
+                        <input class="text-center p-3 mb-1" id="lastnameinput" type="text" th:field="*{profile_lastname}">
 
-                        <input class="text-center p-3 mb-1" type="text" th:field="*{profile_address}">
+                        <label for="addressinput">Change Your Organization ID</label>
+                        <input class="text-center p-3 mb-1" id="addressinput" type="text" th:field="*{profile_address}">
 
-                        <input class="text-center p-3 mb-1" type="number" th:field="*{profile_phone}">
+                        <label for="phoneinput">Change Your Phone number</label>
+                        <input class="text-center p-3 mb-1" id="phoneinput" type="number" th:field="*{profile_phone}">
 
-                        <input class="text-center p-3 mb-1" type="text" th:field="*{profile_country}">
+                        <label for="countryinput">Change Your Country</label>
+                        <input class="text-center p-3 mb-1" id="countryinput" type="text" th:field="*{profile_country}">
 
-                        <input class="text-center p-3 mb-1" type="number" th:field="*{profile_zip}">
+                        <label for="zipinput">Change Your Zipcode</label>
+                        <input class="text-center p-3 mb-1" id="zipinput" type="number" th:field="*{profile_zip}">
 
-                        <input class="text-center p-3 mb-1" type="text" th:field="*{profile_jobTitle}">
+                        <label for="jobtitleinput">Change Your Job title</label>
+                        <input class="text-center p-3 mb-1" id="jobtitleinput" type="text" th:field="*{profile_jobTitle}">
 
+                        <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
 
-                        <button type="submit" name="button" class="btn login_btn">Save</button>
+                        <form th:action="@{/delete/profile}" th:object="${user}" method="post">
 
+                            <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
+                            <button type="submit" name="button" class="btn login_btn1 mt-3 mb-3" >Delete</button>
 
-                        <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Change Subscription</button>
+                        </form>
+                        <a href="/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
 
-                        <h2>Change Subscription</h2>
+                        <div th:if="${user.fk_orgId == 0}">
+                            <li class="nav-item">
+                                <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
+                                   href="/profile/organization">New Organization</a>
+                            </li>
+                        </div>
+                        <div th:if="${user.fk_orgId > 0}">
+                            <li class="nav-item">
+                                <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
+                                   th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
+                            </li>
+                        </div>
+
                     </form>
-
-                    <form th:action="@{/delete/profile}" th:object="${user}" method="post">
-
-                        <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
-
-                        <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Delete</button>
-
-                    </form>
-
-                    <div th:if="${user.fk_orgId == 0}">
-                        <li class="nav-item">
-                            <a class="nav-link text-truncate text-white btn login_btn mt-3 mb-3"
-                               href="/profile/organization">New Organization</a>
-                        </li>
-                    </div>
-                    <div th:if="${user.fk_orgId > 0}">
-                        <li class="nav-item">
-                            <a class="nav-link text-truncate text-white btn login_btn mt-3 mb-3"
-                               th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
-                        </li>
-                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-sm row align-items-end">
+            <div class="row rightcol mb-5">
+                <div class="col-6">
 
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+        </div>
     </div>
-
+    <div class="row align-items-end">
+    </div>
 </div>
-<!--=================== Body End ============================ -->
 
 <!--=================== Footer ============================ -->
-
-
 <div th:replace="partials/footer :: footerFragment"></div>
-
-
-<!--&lt;!&ndash;=================== Footer ============================ &ndash;&gt;-->
-
 </body>
 </html>

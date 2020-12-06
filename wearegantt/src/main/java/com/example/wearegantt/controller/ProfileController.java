@@ -46,6 +46,26 @@ public class ProfileController {
         return mav;
     }
 
+    @GetMapping("/editprofileform/{user_mail}")
+    private ModelAndView profilePassword(@PathVariable(name = "user_mail")String user_mail){
+        ModelAndView mav = new ModelAndView("partials/editProfileForm");
+
+//        INNER JOIN HER?????
+        User user = userRepo.getOneUser(user_mail);
+        Organization org = orgRep.getOneOrgWId(user.getFk_orgId());
+        Profile profile = profileRepo.getOneProfile(user.getUser_id());
+
+        mav.addObject("profile", profile);
+        mav.addObject("org", org);
+        mav.addObject("user", user);
+
+        System.out.println(user);
+
+        return mav;
+    }
+
+
+
 
 // NEW ORGANIZATION =================
 
@@ -175,6 +195,31 @@ public class ProfileController {
 
         return "redirect:/login?logout";
     }
+
+    //    UPDATE PROFILE =============
+
+    @PostMapping("/update/user")
+    public String updateUser(WebRequest dataFromForm,  Principal principal) {
+        String profile_id       = (dataFromForm.getParameter("profile_id"));
+        String profile_firstname  = (dataFromForm.getParameter("profile_firstname"));
+        String profile_lastname     = (dataFromForm.getParameter("profile_lastname"));
+        String profile_address      = (dataFromForm.getParameter("profile_address"));
+        String profile_phone      = (dataFromForm.getParameter("profile_phone"));
+        String profile_country      = (dataFromForm.getParameter("profile_country"));
+        String profile_zip      = (dataFromForm.getParameter("profile_zip"));
+        String profile_jobTitle      = (dataFromForm.getParameter("profile_jobTitle"));
+
+        int idParse = Integer.parseInt(profile_id);
+        int phoneParse = Integer.parseInt(profile_phone);
+        int zipParsed = Integer.parseInt(profile_zip);
+
+        User user = userRepo.getOneUser(principal.getName());
+
+        profileRepo.updateProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
+
+        return "redirect:/";
+    }
+
 
 
 //    //  DELETE USER
