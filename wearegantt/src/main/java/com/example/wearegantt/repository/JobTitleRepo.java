@@ -40,6 +40,37 @@ public class JobTitleRepo {
         return allJobTitles;
     }
 
+    // =================== GET ONE WITH NAME ==================
+
+    public JobTitle getOneJobTitleWName(String jobTitle_name){
+        JobTitle JobTitleToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE jobTitle_name = ?");
+            ps.setString(1 , jobTitle_name);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                JobTitleToReturn = new JobTitle(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return JobTitleToReturn;
+
+    }
+
     // =================== GET ONE JOBTITLES ==================
 
     public JobTitle getOneJobTitle(int fk_orgId){

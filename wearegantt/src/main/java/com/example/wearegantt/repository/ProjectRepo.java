@@ -163,7 +163,9 @@ public class ProjectRepo {
         }
 
     }
-    //    ================== Delete Project ================
+
+//    ================== Delete Project ================
+
     public void delete(int project_id){
         String sql = "DELETE * FROM project WHERE project_id = ?";
 
@@ -230,22 +232,17 @@ public class ProjectRepo {
         }catch (SQLException e){
             System.out.println(e);
         }
-
     }
 
     // =================== GET ONE JOB TITLE ==================
 
         public JobTitle getOneJobTitle(int jobTitle_id){
         JobTitle jobTitleToReturn = null;
-
         String sql = "SELECT * FROM org WHERE org_id = ?";
-
         try {
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE jobTitle_id = ?");
             ps.setInt(1 , jobTitle_id);
-
             ResultSet rs = ps.executeQuery();
-
             while(rs.next()){
                 jobTitleToReturn = new JobTitle(
                         rs.getInt(1),
@@ -253,9 +250,7 @@ public class ProjectRepo {
                         rs.getInt(3)
                 );
             }
-
         } catch (SQLException e){
-
             System.out.println(e);
             return null;
         }
@@ -269,10 +264,8 @@ public class ProjectRepo {
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE jobTitle SET jobTitle_name = ? WHERE jobTitle_id = ?");
             ps.setString(1, jobTitle_name);
             ps.setInt(2, jobTitle_id);
-
             int row = ps.executeUpdate();
             System.out.println("Job Title insert");
-
         }catch (SQLException e){
             System.out.println(e);
         }
@@ -284,25 +277,21 @@ public class ProjectRepo {
 
     public void insertOneProjectJobTitle(int jobTitle_id, int project_id){
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project_title(project_id, jobTitle_id) VALUES (?, ?)");
-            ps.setInt(1, jobTitle_id);
-            ps.setInt(2, project_id);
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project_jobTitle(project_id, jobTitle_id) VALUES (?, ?)");
+            ps.setInt(1, project_id);
+            ps.setInt(2, jobTitle_id);
 
             int row = ps.executeUpdate();
             System.out.println("Job Title insert");
-
         }catch (SQLException e){
             System.out.println(e);
         }
-
     }
 
     // =================== GET ONE PROJECT JOB TITLE ==================
 
     public List<GetProjectJobTitles> getOneProjectJobTitle(int prject_id){
         List<GetProjectJobTitles> AlljobTitles = new ArrayList<>();
-
-//        WHERE project_id = ?
 
         try {
             PreparedStatement ps = establishConnection().prepareStatement("SELECT project_jobTitle.projectJobTitle_id, project_jobTitle.project_id, jobTitle.jobTitle_name FROM project_jobTitle INNER JOIN jobTitle ON project_jobTitle.jobTitle_id = jobTitle.jobTitle_id WHERE project_id = ?");
@@ -318,9 +307,7 @@ public class ProjectRepo {
                 );
                 AlljobTitles.add(tmp);
             }
-
         } catch (SQLException e){
-
             System.out.println(e);
             return null;
         }
@@ -330,7 +317,6 @@ public class ProjectRepo {
     //    ================== DELETE PROJECT JOB TITLE ================
 
     public void deleteProjectJobTitle(int projectJobTitle_id){
-
         try {
             PreparedStatement ps = establishConnection().prepareStatement("DELETE FROM project_jobTitle WHERE projectJobTitle_id = ?");
             ps.setInt(1, projectJobTitle_id);
@@ -341,14 +327,11 @@ public class ProjectRepo {
         }catch (SQLException e){
             System.out.println(e);
         }
-
     }
-
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse
         Connection conn = DriverManager.getConnection("jdbc:mysql://138.197.186.159:3306/wag_app","captain","Uxr56vem.captain");
 
         return conn;
     }
-
 }
