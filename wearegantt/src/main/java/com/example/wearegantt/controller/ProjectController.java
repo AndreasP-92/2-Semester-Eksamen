@@ -47,9 +47,17 @@ public class ProjectController {
         return "profile/project";
     }
 // JOBTITLE =================
-    @GetMapping("/newjobtitle")
-    private String newjobtitle(){
-        return "profile/newjobtitle";
+    @GetMapping("/projects/create/newJobtitles/{project_id}")
+    private ModelAndView newjobtitle(@PathVariable(name = "project_id")String project_id ){
+        ModelAndView mav = new ModelAndView("profile/newjobtitle");
+
+        int idParsed = Integer.parseInt(project_id);
+
+        Project project = projectRepo.getOneProject(idParsed);
+
+        mav.addObject("project", project);
+
+        return mav;
     }
 
 //    CREATE PROJECT =======================
@@ -87,14 +95,24 @@ public class ProjectController {
     @PostMapping("/insert/newjobtitle")
     public String postNewTitleJob(WebRequest dataFromForm, Principal principal) {
         String jobTitle_name     = (dataFromForm.getParameter("jobTitle_name"));
+        String project_id        = (dataFromForm.getParameter("project_id"));
+
+        System.out.println(project_id);
+
+        int idParsed = Integer.parseInt(project_id);
 
         User user = userRepo.getOneUser(principal.getName());
-        Organization org = orgRep.getOneOrgWId(user.getFk_orgId());
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
+        JobTitle jobTitleCheck = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
 
-        jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());
-
-        return "redirect:/";
+        if(jobTitleCheck == null){
+            jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());
+            JobTitle jobTitle = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
+            System.out.println(jobTitle);
+            projectRepo.insertOneProjectJobTitle(jobTitle.getJobTitle_Id(), idParsed);
+        }else{
+            projectRepo.insertOneProjectJobTitle(jobTitleCheck.getJobTitle_Id(), idParsed);
+        }
+        return "redirect:/projects/edit/"+idParsed;
     }
 
     //    UPDATE JOBTITLE ======================
@@ -130,8 +148,7 @@ public class ProjectController {
 
 
         User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-        JobTitle jobTitle   = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());;
 
         projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id());
 
