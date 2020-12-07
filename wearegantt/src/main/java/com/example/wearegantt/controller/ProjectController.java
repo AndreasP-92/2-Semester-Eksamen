@@ -195,6 +195,4 @@ public class ProjectController {
         return "redirect:/projects/edit/"+project_id;
     }
 
-
-
 }
