@@ -16,7 +16,7 @@ public class JobTitleTest {
 //   Virker!!!
     @Test
     public void getOneJobTitle(){
-        JobTitle jobTitleObj = jobTitleRepo.getOneJobTitle(6);
+        JobTitle jobTitleObj = jobTitleRepo.getOneJobTitleWOrgId(6);
 
         System.out.println(jobTitleObj);
     }

@@ -84,9 +84,7 @@ body{
     margin-top: 100px;
 }
 .login_btn{
-    width: 100%;
     background: #34d4b1 !important;
-    color: black !important;
     border: none;
     outline: none;
     height: 40px;

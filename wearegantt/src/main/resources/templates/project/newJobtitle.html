@@ -36,15 +36,13 @@
 
                     <h4>Add Jobtitle</h4>
                     <form th:action="@{/insert/newjobtitle}" th:object="${project}" method="post">
-<!--                        th:field erstatter id, name, value i indput tag-->
+                        <!--                        th:field erstatter id, name, value i indput tag-->
 
                         <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_id" th:value="${project.project_id}">
 
                         <input class="text-center p-3 mb-1" type="text" name="jobTitle_name" placeholder="Job Title">
 
                         <button type="submit" name="button" class="btn login_btn">Save</button>
-
-                        <button type="submit" name="button" class="btn login_btn">Delete</button>
                     </form>
                 </div>
             </div>

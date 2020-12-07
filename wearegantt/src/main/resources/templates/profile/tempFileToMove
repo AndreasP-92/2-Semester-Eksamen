@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link th:href="@{/css/profile/newjobtitle.css}" type="text/css" rel="stylesheet">
+    <title>Edit Your Profile</title>
+</head>
+<body>
+<!--=================== Body Start ============================ -->
+<header>
+    <!--=================== NAVIGATION Start ============================ -->
+    <div th:replace="partials/navbar :: navigation">
+
+    </div>
+    <!--=================== NAVIGATION End ============================ -->
+</header>
+
+<div class="container main p-2" align="center">
+    <div class="row">
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <div class="logo_brand p-4">
+                    <img src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png"
+                         class="brand_logo" alt="logo">
+                </div>
+            </div>
+            <br>
+            <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
+        </div>
+        <div class="col-sm">
+            <div class="d-flex justify-content-center h-100">
+                <div class="loginbox">
+
+                    <h4>Add Jobtitle</h4>
+                    <form th:action="@{/insert/newjobtitle}" th:object="${project}" method="post">
+<!--                        th:field erstatter id, name, value i indput tag-->
+
+                        <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_id" th:value="${project.project_id}">
+
+                        <input class="text-center p-3 mb-1" type="text" name="jobTitle_name" placeholder="Job Title">
+
+                        <button type="submit" name="button" class="btn login_btn">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--=================== Body End ============================ -->
+
+<!--=================== Footer ============================ -->
+
+
+<div th:replace="partials/footer :: footerFragment"></div>
+
+
+<!--&lt;!&ndash;=================== Footer ============================ &ndash;&gt;-->
+
+</body>
+</html>

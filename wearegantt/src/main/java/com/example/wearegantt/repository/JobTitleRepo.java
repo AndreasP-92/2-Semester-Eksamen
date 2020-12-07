@@ -1,5 +1,6 @@
 package com.example.wearegantt.repository;
 
+import com.example.wearegantt.model.GetProjectJobTitles;
 import com.example.wearegantt.model.JobTitle;
 import com.example.wearegantt.model.Project;
 import com.example.wearegantt.model.User;
@@ -10,6 +11,9 @@ import java.util.List;
 
 public class JobTitleRepo {
 
+    // =================================================================== JOB TITLES =================================================================
+
+
     // =================== GET ALL JOBTITLES ==================
 
     public List<JobTitle> getAllJobTitles(){
@@ -19,6 +23,38 @@ public class JobTitleRepo {
 
             //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle");
+
+            //eksekvere en query
+            ResultSet rs = ps.executeQuery();
+
+            //Bruge resultatet til noget
+            while(rs.next()){
+                JobTitle tmp = new JobTitle(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3)
+                );
+                allJobTitles.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+        return allJobTitles;
+    }
+
+    //    ================== GET ALL JOB TITLES WITH ORG ID================
+
+
+    public List<JobTitle> getAllJobTitlesWOrg(int fk_orgId){
+        List<JobTitle> allJobTitles = new ArrayList<>();
+
+        try {
+
+            //lavet et statement
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE fk_orgId = ?");
+            ps.setInt(1, fk_orgId);
 
             //eksekvere en query
             ResultSet rs = ps.executeQuery();
@@ -71,9 +107,32 @@ public class JobTitleRepo {
 
     }
 
-    // =================== GET ONE JOBTITLES ==================
+//       =================== GET ONE JOB TITLE WITH JOBTITLE ID ==================
 
-    public JobTitle getOneJobTitle(int fk_orgId){
+    public JobTitle getOneJobTitle(int jobTitle_id){
+        JobTitle jobTitleToReturn = null;
+        String sql = "SELECT * FROM org WHERE org_id = ?";
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE jobTitle_id = ?");
+            ps.setInt(1 , jobTitle_id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                jobTitleToReturn = new JobTitle(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3)
+                );
+            }
+        } catch (SQLException e){
+            System.out.println(e);
+            return null;
+        }
+        return jobTitleToReturn;
+    }
+
+    // =================== GET ONE JOBTITLES WITH ORGANIZATION ID ==================
+
+    public JobTitle getOneJobTitleWOrgId(int fk_orgId){
         JobTitle JobTitleToReturn = null;
 
 
@@ -135,6 +194,65 @@ public class JobTitleRepo {
             System.out.println(e);
         }
     }
+
+    // ============================================================= PROJECT JOB TITLES =================================================================
+
+    //    ================== INSERT PROJECT JOB TITLE ================
+
+    public void insertOneProjectJobTitle(int jobTitle_id, int project_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project_jobTitle(project_id, jobTitle_id) VALUES (?, ?)");
+            ps.setInt(1, project_id);
+            ps.setInt(2, jobTitle_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Job Title insert");
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    // =================== GET ONE PROJECT JOB TITLE ==================
+
+    public List<GetProjectJobTitles> getOneProjectJobTitle(int prject_id){
+        List<GetProjectJobTitles> AlljobTitles = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT project_jobTitle.projectJobTitle_id, project_jobTitle.project_id, jobTitle.jobTitle_name FROM project_jobTitle INNER JOIN jobTitle ON project_jobTitle.jobTitle_id = jobTitle.jobTitle_id WHERE project_id = ?");
+            ps.setInt(1, prject_id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                GetProjectJobTitles tmp = new GetProjectJobTitles(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3)
+                );
+                AlljobTitles.add(tmp);
+            }
+        } catch (SQLException e){
+            System.out.println(e);
+            return null;
+        }
+        return AlljobTitles;
+    }
+
+    //    ================== DELETE PROJECT JOB TITLE ================
+
+    public void deleteProjectJobTitle(int projectJobTitle_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE FROM project_jobTitle WHERE projectJobTitle_id = ?");
+            ps.setInt(1, projectJobTitle_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Række slettet");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
 
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse

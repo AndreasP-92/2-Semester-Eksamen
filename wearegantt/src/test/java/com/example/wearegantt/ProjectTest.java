@@ -2,6 +2,7 @@ package com.example.wearegantt;
 
 import com.example.wearegantt.model.JobTitle;
 import com.example.wearegantt.model.Project;
+import com.example.wearegantt.repository.JobTitleRepo;
 import com.example.wearegantt.repository.ProjectRepo;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public class ProjectTest {
 
     ProjectRepo projectRepo = new ProjectRepo();
+
+    JobTitleRepo jobTitleRepo = new JobTitleRepo();
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss.SSSSSS");
 
@@ -71,26 +74,26 @@ public class ProjectTest {
 // INSERT JOB
     @Test
     public void insertJob(){
-        projectRepo.insertJobTitle("job title test");
+        jobTitleRepo.InsertJobTitle("job title test",1);
     }
 //  GET ALL JOBS
     @Test
     public void getAllJobTitles(){
-        List<JobTitle> jobList = projectRepo.getAllJobTitles();
+        List<JobTitle> jobList = jobTitleRepo.getAllJobTitles();
 
         System.out.println(jobList);
     }
 //    GET ONE JOB
     @Test
     public void getOneJobTitle(){
-        JobTitle jobObj = projectRepo.getOneJobTitle(1);
+        JobTitle jobObj = jobTitleRepo.getOneJobTitle(1);
 
         System.out.println(jobObj);
     }
 //  UPDATE JOB
     @Test
     public void updateJob(){
-        projectRepo.updateJobTitle(1,"Test Job Title");
+        jobTitleRepo.updateJobTitle("Test Job Title",1);
 
     }
 //    GET ONE PROJECT JOB TITLE

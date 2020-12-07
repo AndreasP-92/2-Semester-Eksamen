@@ -44,12 +44,12 @@ public class ProjectController {
         List<Project> listProjects = projectRepo.getAllProjects();
         model.addAttribute("listProjects", listProjects);
 
-        return "profile/project";
+        return "project/project";
     }
 // JOBTITLE =================
     @GetMapping("/projects/create/newJobtitles/{project_id}")
     private ModelAndView newjobtitle(@PathVariable(name = "project_id")String project_id ){
-        ModelAndView mav = new ModelAndView("profile/newjobtitle");
+        ModelAndView mav = new ModelAndView("project/newJobtitle");
 
         int idParsed = Integer.parseInt(project_id);
 
@@ -64,7 +64,7 @@ public class ProjectController {
 
     @GetMapping("/projects/create")
     private ModelAndView createproject(Principal principal){
-        ModelAndView mav = new ModelAndView("profile/createProject");
+        ModelAndView mav = new ModelAndView("project/createProject");
 //        User user = userRepo.getOneUser(principal.getName());
 //        List<JobTitle> jobTitles = projectRepo.getAllJobTitlesWOrg(user.getFk_orgId());
 //
@@ -85,7 +85,7 @@ public class ProjectController {
 
     @GetMapping("/projects/edit/{id}")
     private ModelAndView project(@PathVariable(name = "id")int id){
-        ModelAndView mav    = new ModelAndView("profile/editProject");
+        ModelAndView mav    = new ModelAndView("project/editProject");
         Project project     = projectRepo.getOneProject(id);
         List<GetProjectJobTitles> projectTitlesList = projectRepo.getOneProjectJobTitle(id);
 
@@ -132,7 +132,7 @@ public class ProjectController {
         int idParsed = Integer.parseInt(jobTitle_id);
 
         User user = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
+        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
         jobTitleRepo.updateJobTitle(jobTitle_name, idParsed);
 
         return "redirect:/";
@@ -174,7 +174,7 @@ public class ProjectController {
 
 
         User user = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitle(user.getFk_orgId());
+        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
         projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
 
 
