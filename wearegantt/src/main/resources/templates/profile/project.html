@@ -21,8 +21,8 @@
         </div>
 <!--    PROJECT BOX    -->
        <div class="col-sm-8">
-           <div th:each="projects : ${listProjects}" class="row">
-               <div class="col-sm-4 mt-3" style="">
+           <div th:each="projects : ${listProjects}" class="row d-flex align-items-center">
+               <div class="col-sm-4 mt-3 " style="">
                    <a href="/gantt" alt="Gantt">
                        <div class="projectBox m3" align="center">
                            <h4 th:text="${projects.project_name}" class="pt-2" align="center"></h4>

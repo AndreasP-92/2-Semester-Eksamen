@@ -1,39 +1,58 @@
 package com.example.wearegantt.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+@Controller
 
 public class AdminController {
 
 //    GET ROUTES ==================
+    // Admin Index
 
-    @GetMapping("/adminindex")
-    private String adminIndex(){
-        return "adminIndex";
+    @GetMapping("/admin")
+    public String admin(){
+        return "admin/adminIndex";
     }
 
-    @GetMapping("/admin/users")
-    private String adminUsers(){
-        return "adminUsers";
+    // Admin Support
+    @GetMapping("/admin/support")
+    public String adminSupport(){
+        return "admin/adminSupport";
     }
 
-    @GetMapping("/admin/tickets")
-    private String adminTickets(){
-        return "adminTickets";
+    //Admin Chat
+    @GetMapping("/admin/support/chat")
+    public String adminChat(){
+        return "admin/adminChat";
     }
-    
+
+    // Admin Look Up User
+    @GetMapping("/admin/adminLookUpUser")
+    public String adminLookUpUser(){
+        return "admin/adminLookUpUser";
+    }
+
+    @GetMapping("/admin/admincreateuser")
+    public String adminCreateUser(){
+        return "admin/adminCreateUser";
+    }
+
+    //Admin organisation
     @GetMapping("/admin/organizations")
-    private String adminOrganizations(){
-        return "adminOrganizations";
+    public String adminOrganizations(){
+        return "admin/adminOrganizations";
     }
 
+    //Admin Projects
     @GetMapping("/admin/projects")
-    private String adminProjects(){
-        return "adminProjects";
+    public String adminProjects(){
+        return "admin/adminProjects";
     }
 
+    //Admin News
     @GetMapping("/admin/newuser")
-    private String adminNewuser(){
-        return "adminNewuser";
+    public String adminNewsUser(){
+        return "admin/adminNewsUser";
     }
 
 
