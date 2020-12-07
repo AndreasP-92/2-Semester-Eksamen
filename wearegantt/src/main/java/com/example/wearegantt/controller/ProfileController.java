@@ -184,9 +184,11 @@ public class ProfileController {
         String user_password      = (dataFromForm.getParameter("user_password"));
 
         int idParsed = Integer.parseInt(user_id);
-
-        userRepo.updateCredentials(idParsed,user_mail,user_password);
-
+        if(user_password==""){
+            userRepo.updateEmail(idParsed,user_mail);
+        }else {
+            userRepo.updateCredentials(idParsed,user_mail,user_password);
+        }
 
         return "redirect:/login?logout";
     }

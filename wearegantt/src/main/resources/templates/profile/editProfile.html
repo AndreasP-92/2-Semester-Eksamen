@@ -67,15 +67,24 @@
                     <h4>Edit Your Email & Password</h4>
 
                     <form th:action="@{/update/credentials}" th:object="${user}" method="post">
+                        <input class="text-center p-3 mb-1" style="display:none" type="text" th:field="*{user_id}">
+
                         <label for="email">Change Your Email</label>
                         <input class="text-center p-3 mb-1" id="email" type="text" th:field="*{user_mail}">
 
                         <label for="password1">Change Your Password</label>
-                        <input class="text-center p-3 mb-1" id="password1" type="password" th:field="*{user_password}">
+                        <input class="text-center p-3 mb-1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password1" type="password" th:field="*{user_password}">
 
                         <label for="password2">Confirm Your Password</label>
-                        <input class="text-center p-3 mb-1" id="password2" type="password" th:field="*{user_password}">
+                        <input class="text-center p-3 mb-1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password2" type="password" th:field="*{user_password}">
 
+                        <div id="message">
+                            <h3>Password must contain the following:</h3>
+                            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                            <p id="number" class="invalid">A <b>number</b></p>
+                            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                        </div>
 
                         <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
 

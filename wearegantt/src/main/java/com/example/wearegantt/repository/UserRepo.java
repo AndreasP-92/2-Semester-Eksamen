@@ -121,12 +121,11 @@ public class UserRepo {
         int user_enabled = 0;
         try {
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_enabled = ? WHERE user_id = ?");
-            ps.setInt(1, user_id);
-            ps.setInt(2, user_enabled);
-
+            ps.setInt(1, user_enabled);
+            ps.setInt(2, user_id);
 
             int row = ps.executeUpdate();
-            System.out.println("User enabled");
+            System.out.println("User disabled");
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -149,7 +148,21 @@ public class UserRepo {
             System.out.println(e);
         }
     }
+    //    ================== UPDATE Email ================
 
+    public void updateEmail(int user_id, String user_mail) {
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ? WHERE user_id = ?");
+            ps.setString(1, user_mail);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("email changed");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 //    ================== INSERT PROFILE ================
 
 
