@@ -10,7 +10,7 @@ public class ProjectRepo {
 
 // ============================================================= PROJECTS =================================================================
 
-    // GET ALL Projects
+    // GET ALL Projects ======================
 
     public List<Project> getAllProjects(){
         List<Project> allProjects = new ArrayList<>();
@@ -44,7 +44,7 @@ public class ProjectRepo {
         return allProjects;
     }
 
-    // GET ALL Projects
+// GET ALL Projects WHERE ORGANIZATION ==================
 
     public List<Project> getAllProjectsWhere(int fk_orgId){
         List<Project> allProjects = new ArrayList<>();
@@ -78,7 +78,8 @@ public class ProjectRepo {
         return allProjects;
     }
 
-    // Get ONE PROJECT
+// Get ONE PROJECT WHERE PROJECT ID ===========
+
     public Project getOneProject(int project_id){
         Project ProjectToReturn = null;
 
@@ -166,8 +167,8 @@ public class ProjectRepo {
 
 //    ================== Delete Project ================
 
-    public void delete(int project_id){
-        String sql = "DELETE * FROM project WHERE project_id = ?";
+    public void deleteProject(int project_id){
+
 
         ProjectRepo projectRepo = new ProjectRepo();
 
@@ -198,6 +199,38 @@ public class ProjectRepo {
 
             //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle");
+
+            //eksekvere en query
+            ResultSet rs = ps.executeQuery();
+
+            //Bruge resultatet til noget
+            while(rs.next()){
+                JobTitle tmp = new JobTitle(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3)
+                );
+                allJobTitles.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+        return allJobTitles;
+    }
+
+    //    ================== GET ALL JOB TITLES WITH ORG ID================
+
+
+    public List<JobTitle> getAllJobTitlesWOrg(int fk_orgId){
+        List<JobTitle> allJobTitles = new ArrayList<>();
+
+        try {
+
+            //lavet et statement
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE fk_orgId = ?");
+            ps.setInt(1, fk_orgId);
 
             //eksekvere en query
             ResultSet rs = ps.executeQuery();

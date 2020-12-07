@@ -76,6 +76,14 @@
                                 <a class="btn login_btn mt-3 mb-3 100" th:href="@{'/projects/create/newJobtitles/'+${project.project_id}}">Add More Job Titles</a>
                             </div>
                         </div>
+                        <div align="center">
+                            <form th:action="@{/delete/project}" method="post" th:object="${project}">
+
+                                <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{project_id}">
+
+                                <button type="submit" name="button" class="btn login_btn mt-3 mb-3">DELETE PROJECT</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

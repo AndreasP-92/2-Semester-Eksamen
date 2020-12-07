@@ -18,107 +18,35 @@
 
     <!--=================== Body ============================ -->
 <div class="container main p-2" align="center">
-    <div class="row">
         <div class="col-sm-4">
-            <div class="d-flex justify-content-center">
-                <div class="logo_brand p-4">
-                    <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                </div>
-            </div>
-            <br>
-            <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
-        </div>
-        <div class="col-sm-8">
-            <div class="d-flex justify-content-center h-100">
-                <div class="loginbox">
-<!--                    Rettelse af H4-->
-                    <div class="w-100" style="text-align: center !important;">
-                    <h4 style="text-align: center !important;">Create Your Project</h4>
+            <div class="loginbox">
+                <h4 style="text-align: center !important;">Create Your Project</h4>
+                <form th:action="@{/insert/project}" method="post">
+                    <div align="center" class="form-group">
+                        <input class="form-control w-75 text-center" type="text" name="project_name" placeholder="Project Name">
                     </div>
-                    <form class="row">
-                        <div th:class="col-sm-6">
-                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Name">
 
-                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Description">
+                    <div align="center" class="form-group">
+                        <textarea rows="3" class="form-control w-75 text-center" type="text" name="project_desc" placeholder="Project Description"></textarea>
+                    </div>
 
-                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Duration">
-
-                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Start">
-
-                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project End">
-                        </div>
-                       <div class="col-sm-6"  align="left">
-                           <input type="checkbox" id="vehicle1" name="vehicle1" th:value="Bike">-->
-                               <label for="vehicle1"> I have a bike</label><br>
-                               <div class="checkbox">
-                               <label><input type="checkbox" value="">ProjectLeader</label>
-                               </div>
-                               <div class="checkbox">
-                                   <label><input type="checkbox" value="">sourchef</label>
-                               </div>
-                               <div class="checkbox">
-                                   <label><input type="checkbox" value="">manager</label>
-                               </div>
-                               <div class="checkbox">
-                                   <label><input type="checkbox" value="">employed</label>
-                               </div>
-                               <div class="checkbox">
-                                   <label><input type="checkbox" value="">trainee</label>
-                               </div>
-                       </div>
-
-                            <div class="w-100 row" align="center">
-                                <div class="col-sm-6">
-                                    <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-50">Create Project</button>
-                                </div>
-                                <div class="col-sm-6" align="left">
-                                    <a class="btn login_btn mt-3 mb-3 w-50" href="/projects/create/newJobtitles">Add More Job Titles</a>
-                                </div>
-                            </div>
-
-
-
-                    </form>
-                </div>
+                    <div align="center" class="form-group mt-5">
+                        <label for="duration">Duration</label><br>
+                        <input id="duration" class="form-control w-75 text-center" type="date" name="project_duration" placeholder="Project Duration">
+                    </div>
+                    <div align="center" class="form-group">
+                        <label for="start">Duration</label><br>
+                        <input id="start" class="form-control w-75 text-center" type="date" name="project_start" placeholder="Project Start">
+                    </div>
+                    <div align="center" class="form-group">
+                        <label for="end">Duration</label><br>
+                        <input id="end" class="form-control w-75 text-center" type="date" name="project_end" placeholder="Project End">
+                    </div>
+                    <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-50">Create Project</button>
+                </form>
             </div>
         </div>
-        <div class="col-sm row">
-<!--            <div class="row rightcol mb-5">-->
-<!--                <div class="d-flex justify-content-center h-100">-->
-<!--                    <div class="loginbox">-->
-<!--                        <h4>Job Titles</h4>-->
-<!--                        <form>-->
-<!--                            <input type="checkbox" id="vehicle1" name="vehicle1" th:value="Bike">-->
-<!--                            <label for="vehicle1"> I have a bike</label><br>-->
-<!--                            <div class="checkbox">-->
-<!--                            <label><input type="checkbox" value="">ProjectLeader</label>-->
-<!--                            </div>-->
-<!--                            <div class="checkbox">-->
-<!--                                <label><input type="checkbox" value="">sourchef</label>-->
-<!--                            </div>-->
-<!--                            <div class="checkbox">-->
-<!--                                <label><input type="checkbox" value="">manager</label>-->
-<!--                            </div>-->
-<!--                            <div class="checkbox">-->
-<!--                                <label><input type="checkbox" value="">employed</label>-->
-<!--                            </div>-->
-<!--                            <div class="checkbox">-->
-<!--                                <label><input type="checkbox" value="">trainee</label>-->
-<!--                            </div>-->
-
-<!--                            <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Add Move</button>-->
-
-<!--                        </form>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--                    <div class="">-->
-
-<!--                    </div>-->
-<!--                </div>-->
-            </div>
-        </div>
-    <div class="row align-items-end">
+    <div>
     </div>
 </div>
 

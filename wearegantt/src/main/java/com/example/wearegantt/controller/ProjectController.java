@@ -65,11 +65,16 @@ public class ProjectController {
     @GetMapping("/projects/create")
     private ModelAndView createproject(Principal principal){
         ModelAndView mav = new ModelAndView("profile/createProject");
+//        User user = userRepo.getOneUser(principal.getName());
+//        List<JobTitle> jobTitles = projectRepo.getAllJobTitlesWOrg(user.getFk_orgId());
+//
+//        System.out.println(jobTitles);
+
 
 //        User user = userRepo.getOneUser(principal.getName());
 //        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
 
-//        mav.addObject("organization", organization);
+//        mav.addObject("jobTitlesList", jobTitles);
 
         return mav;
     }
@@ -144,9 +149,6 @@ public class ProjectController {
         String project_start    = (dataFromForm.getParameter("project_start"));
         String project_end      = (dataFromForm.getParameter("project_end"));
 
-
-
-
         User user           = userRepo.getOneUser(principal.getName());
         Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());;
 
@@ -183,7 +185,7 @@ public class ProjectController {
 //    DELETE PROJECT JOB TITLE =============
 
     @PostMapping("/delete/projectJobTitle")
-    public String deleteOrg(WebRequest dataFromForm) {
+    public String deleteJobTitle(WebRequest dataFromForm) {
         String projectJobTitle_id       = (dataFromForm.getParameter("projectJobTitle_id"));
         String project_id               = (dataFromForm.getParameter("project_id"));
 
@@ -193,6 +195,20 @@ public class ProjectController {
 
 
         return "redirect:/projects/edit/"+project_id;
+    }
+
+    //    DELETE PROJECT JOB TITLE =============
+
+    @PostMapping("/delete/project")
+    public String deleteProject(WebRequest dataFromForm) {
+        String project_id               = (dataFromForm.getParameter("project_id"));
+
+        int idParsed = Integer.parseInt(project_id);
+
+        projectRepo.deleteProject(idParsed);
+
+
+        return "redirect:/projects";
     }
 
 }

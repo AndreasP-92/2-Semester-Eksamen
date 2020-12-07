@@ -29,6 +29,8 @@
                            <p th:text="${projects.project_desc}" class="p-3"></p>
                            <a href="" class="buttons w-75 mt-5">View Gantt</a>
                            <a th:href="@{'/projects/edit/' + ${projects.project_id}}" class="buttons w-75 mt-1">Edit Project</a>
+                           <a th:href="@{'/gantt/' + ${projects.project_id}}" class="buttons w-75 mt-1">Go to Gantt</a>
+
                        </div>
                    </a>
                </div>
