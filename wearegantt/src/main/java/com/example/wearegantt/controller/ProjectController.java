@@ -31,9 +31,11 @@ public class ProjectController {
 
 // GANTT =================
 
-    @GetMapping("/gantt")
-    private String gantt(){
-        return "profile/gantt";
+    @GetMapping("/gantt/{project_id}")
+    private ModelAndView gantt(@PathVariable(name = "project_id") String project_id){
+        ModelAndView mav = new ModelAndView("project/gantt");
+
+        return mav;
     }
 
 // PROJECTS ================

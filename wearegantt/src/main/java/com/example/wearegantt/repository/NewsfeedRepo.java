@@ -45,38 +45,38 @@ public class NewsfeedRepo {
     }
 
     // Get ONE NEWS ===========
-
-    public Newsfeed getOneNews(int news_id){
-        Newsfeed NewsfeedToReturn = null;
-
-
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE news_id = ?");
-            ps.setInt(1 , news_id);
-
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                NewsfeedToReturn = new Newsfeed(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5), ,
-                        rs.getInt(7)
-                );
-            }
-
-
-        }
-        catch(SQLException e){
-            System.out.println(e);
-            return null;
-        }
-
-        return NewsfeedToReturn;
-
-    }
+//
+//    public Newsfeed getOneNews(int news_id){
+//        Newsfeed NewsfeedToReturn = null;
+//
+//
+//        try {
+//            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE news_id = ?");
+//            ps.setInt(1 , news_id);
+//
+//            ResultSet rs = ps.executeQuery();
+//
+//            while(rs.next()){
+//                NewsfeedToReturn = new Newsfeed(
+//                        rs.getInt(1),
+//                        rs.getString(2),
+//                        rs.getString(3),
+//                        rs.getString(4),
+//                        rs.getString(5), ,
+//                        rs.getInt(7)
+//                );
+//            }
+//
+//
+//        }
+//        catch(SQLException e){
+//            System.out.println(e);
+//            return null;
+//        }
+//
+//        return NewsfeedToReturn;
+//
+//    }
 
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse
