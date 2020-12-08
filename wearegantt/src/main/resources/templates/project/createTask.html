@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link th:href="@{/css/profile/newjobtitle.css}" type="text/css" rel="stylesheet">
+    <title>Create new Task</title>
+</head>
+<body>
+<header>
+    <!--=================== NAVIGATION Start ============================ -->
+    <div th:replace="partials/navbar :: navigation">
+
+    </div>
+    <!--=================== NAVIGATION End ============================ -->
+</header>
+
+<main class="container main p-2" align="center">
+    <div class="row">
+
+        <div class="col-sm-4">
+
+        </div>
+
+
+        <div class="loginbox col-sm-4">
+
+
+                <!-- == INSERT JOBTITLE FORM == -->
+                <form th:action="@{/insert/newTask}" method="post">
+
+                    <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_id" th:value="${project_id}">
+
+                    <h3>Edit your Organization</h3>
+                    <div align="left">
+                        <label for="taskName">Task Name</label>
+                        <input class="text-center p-3 mb-1" id="taskName" type="text"  name="task_name" placeholder="Task Name">
+                    </div>
+                    <div align="left">
+                        <label for="taskDuration">Task Duration</label>
+                        <input class="text-center p-3 mb-1" id="taskDuration" type="number" ame="task_duration" placeholder="Task Duration">
+                    </div>
+
+                    <div align="left">
+                        <label for="taskStart">Task Start</label>
+                        <input class="text-center p-3 mb-1" id="taskStart" type="datetime-local" name="task_start" placeholder="Task Start">
+                    </div>
+
+                    <div align="left">
+                        <label for="taskEnd">Task End</label>
+                        <input class="text-center p-3 mb-1" id="taskEnd" type="datetime-local" name="task_end" placeholder="taskEnd">
+                    </div>
+
+    <!--                        <input type="submit" value="Save" name="button" class="btn login_btn mt-3 mb-3">-->
+
+
+    <!--                        <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_id" th:value="${project_id}">-->
+
+    <!--                        <input class="text-center p-3 mb-1" type="text" name="task_name" placeholder="Task Name">-->
+
+    <!--                        <input class="text-center p-3 mb-1" type="text" name="task_duration" placeholder="Task Duration">-->
+
+    <!--                        <input class="text-center p-3 mb-1" type="datetime-local" name="task_start" placeholder="Task Start">-->
+
+    <!--                        <input class="text-center p-3 mb-1" type="datetime-local" name="task_end" placeholder="Job Title">-->
+
+                    <input type="submit" value="Save" name="button" class="btn login_btn mt-3 mb-3">
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!--=================== Footer ============================ -->
+
+
+<div th:replace="partials/footer :: footerFragment"></div>
+
+
+<!--&lt;!&ndash;=================== Footer ============================ &ndash;&gt;-->
+
+</body>
+</html>
