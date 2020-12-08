@@ -221,8 +221,6 @@ public class UserRepo {
             } else{
 
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE jobTitle SET jobTitle_name = ? WHERE jobTitle_id = ?");
-//            ps.setString(1, jobTitle_name);
-//            ps.setInt(2, jobTitle_id);
 
             int row = ps.executeUpdate();
             System.out.println("Job Title insert");
@@ -232,8 +230,7 @@ public class UserRepo {
         }
     }
 
-
-
+// ============================================================= ESTABLISH CONNECTION =================================================================
 
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse

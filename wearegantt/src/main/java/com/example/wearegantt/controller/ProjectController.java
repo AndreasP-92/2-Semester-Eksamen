@@ -19,7 +19,7 @@ import java.util.List;
 @Controller
 public class ProjectController {
 
-    //REPOSITORIES ====================
+//REPOSITORIES ====================
 
     OrganizationRepo orgRep = new OrganizationRepo();
 
@@ -31,9 +31,11 @@ public class ProjectController {
 
 // GANTT =================
 
-    @GetMapping("/gantt")
-    private String gantt(){
-        return "profile/gantt";
+    @GetMapping("/gantt/{project_id}")
+    private ModelAndView gantt(@PathVariable(name = "project_id") String project_id){
+        ModelAndView mav = new ModelAndView("project/gantt");
+
+        return mav;
     }
 
 // PROJECTS ================
@@ -63,7 +65,7 @@ public class ProjectController {
 //    CREATE PROJECT =======================
 
     @GetMapping("/projects/create")
-    private ModelAndView createproject(Principal principal){
+    private ModelAndView createproject(){
         ModelAndView mav = new ModelAndView("project/createProject");
 //        User user = userRepo.getOneUser(principal.getName());
 //        List<JobTitle> jobTitles = projectRepo.getAllJobTitlesWOrg(user.getFk_orgId());
@@ -87,10 +89,11 @@ public class ProjectController {
     private ModelAndView project(@PathVariable(name = "id")int id){
         ModelAndView mav    = new ModelAndView("project/editProject");
         Project project     = projectRepo.getOneProject(id);
-        List<GetProjectJobTitles> projectTitlesList = projectRepo.getOneProjectJobTitle(id);
+        List<GetProjectJobTitles> projectTitlesList = jobTitleRepo.getOneProjectJobTitle(id);
 
         mav.addObject("jobTitlesList", projectTitlesList);
         mav.addObject("project", project);
+
         return mav;
     }
 
@@ -113,10 +116,11 @@ public class ProjectController {
             jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());
             JobTitle jobTitle = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
             System.out.println(jobTitle);
-            projectRepo.insertOneProjectJobTitle(jobTitle.getJobTitle_Id(), idParsed);
+            jobTitleRepo.insertOneProjectJobTitle(jobTitle.getJobTitle_Id(), idParsed);
         }else{
-            projectRepo.insertOneProjectJobTitle(jobTitleCheck.getJobTitle_Id(), idParsed);
+            jobTitleRepo.insertOneProjectJobTitle(jobTitleCheck.getJobTitle_Id(), idParsed);
         }
+
         return "redirect:/projects/edit/"+idParsed;
     }
 
@@ -131,8 +135,8 @@ public class ProjectController {
         // grunden til jeg converter, fordi URL er ALTID er en String.
         int idParsed = Integer.parseInt(jobTitle_id);
 
-        User user = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
+//        User user = userRepo.getOneUser(principal.getName());
+//        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
         jobTitleRepo.updateJobTitle(jobTitle_name, idParsed);
 
         return "redirect:/";
@@ -150,7 +154,7 @@ public class ProjectController {
         String project_end      = (dataFromForm.getParameter("project_end"));
 
         User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());;
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
 
         projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id());
 
@@ -174,7 +178,7 @@ public class ProjectController {
 
 
         User user = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
+//        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
         projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
 
 
@@ -191,7 +195,7 @@ public class ProjectController {
 
         int idParsed = Integer.parseInt(projectJobTitle_id);
 
-        projectRepo.deleteProjectJobTitle(idParsed);
+        jobTitleRepo.deleteProjectJobTitle(idParsed);
 
 
         return "redirect:/projects/edit/"+project_id;

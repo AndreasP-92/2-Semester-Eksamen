@@ -46,8 +46,6 @@ public class OrganizationRepo {
     public Organization getOneOrg(String org_name){
         Organization orgToReturn = null;
 
-        String sql = "SELECT * FROM org WHERE org_id = ?";
-
         try {
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM org WHERE org_name = ?");
             ps.setString(1 , org_name);
@@ -75,8 +73,6 @@ public class OrganizationRepo {
 
     public Organization getOneOrgWId(int org_id){
         Organization orgToReturn = null;
-
-        String sql = "SELECT * FROM org WHERE org_id = ?";
 
         try {
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM org WHERE org_id = ?");
@@ -153,6 +149,9 @@ public class OrganizationRepo {
             System.out.println(e);
         }
     }
+
+// ============================================================= ESTABLISH CONNECTION =================================================================
+
 
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse

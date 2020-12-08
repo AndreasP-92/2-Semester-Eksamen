@@ -29,7 +29,7 @@
                 <div class="col-sm">
                     <div class="d-flex justify-content-center h-100">
                         <div class="loginbox">
-
+<!-- ==== UPDATE ORGANIZATION === -->
                             <form th:action="@{/update/org}" th:object="${org}" method="post">
                                 <h3>Edit your Organization</h3>
                                 <div align="left">
@@ -55,7 +55,7 @@
 
 
                             </form>
-
+<!-- ==== ADD ANOTHER USER TO ORGANIZATION === -->
                             <h3>Add Another User</h3>
                             <form th:action="@{/insert/org/user}" method="post" th:object="${org}">
 

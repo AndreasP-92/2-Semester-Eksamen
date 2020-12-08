@@ -9,7 +9,6 @@
     <title>Edit Your Profile</title>
 </head>
 <body>
-<!--=================== Body Start ============================ -->
 <header>
     <!--=================== NAVIGATION Start ============================ -->
     <div th:replace="partials/navbar :: navigation">
@@ -23,8 +22,7 @@
         <div class="col-sm">
             <div class="d-flex justify-content-center">
                 <div class="logo_brand p-4">
-                    <img src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png"
-                         class="brand_logo" alt="logo">
+                    <img src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class="brand_logo" alt="logo">
                 </div>
             </div>
             <br>
@@ -33,10 +31,10 @@
         <div class="col-sm">
             <div class="d-flex justify-content-center h-100">
                 <div class="loginbox">
-
                     <h4>Add Jobtitle</h4>
+
+<!-- == INSERT JOBTITLE FORM == -->
                     <form th:action="@{/insert/newjobtitle}" th:object="${project}" method="post">
-                        <!--                        th:field erstatter id, name, value i indput tag-->
 
                         <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_id" th:value="${project.project_id}">
 
@@ -51,7 +49,6 @@
     </div>
 
 </div>
-<!--=================== Body End ============================ -->
 
 <!--=================== Footer ============================ -->
 

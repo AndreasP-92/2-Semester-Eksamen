@@ -2,48 +2,46 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Contact Us</title>
+    <title>Create Newsfeed</title>
 
+    <link th:href="@{/css/main/createNewsfeed.css}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main/createNewsfeed.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <!--=================== NAVIGATION ============================ -->
-    <div th:replace="partials/navbar :: navigation">
+    <header>
+        <!--=================== NAVIGATION ============================ -->
+        <div th:replace="partials/navbar :: navigation">
 
-    </div>
-</header>
-<!--=================== Container + logo ============================ -->
-<div class="container" align="center">
-    <div class="col-sm-12" align="center">
-        <img th:src="@{/images/logo.png/}" style="">
-    </div>
-    <form id="contact" action="" method="post" class="w-50">
-
-        <!--=================== Input ============================ -->
-        <h3 style="text-align: center">Create Your News</h3>
-        <h4></h4>
-        <div class="form-group ml-5 mr-5">
-            <input placeholder="Enter Your name" type="text" required autofocus class="form-control" >
         </div>
-        <div class="form-group ml-5 mr-5">
-            <input placeholder="Enter Date and Time " type="DateTime" required class="form-control">
+    </header>
+    <main class="container" align="center">
+    <!--=================== logo ============================ -->
+        <div class="col-sm-12" align="center">
+            <img th:src="@{/images/logo.png/}" style="">
         </div>
-        <div class="form-group ml-5 mr-5">
 
-            <textarea maxlength="50" placeholder="Enter your News" required class="form-control"></textarea>
-        </div>
-        <!--=================== Submit button ============================ -->
-        <button class="btn form-button w-25 mb-3" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+        <form id="contact" action="" method="post" class="w-50">
+            <!--=================== Input ============================ -->
+            <h3 style="text-align: center">Create Your News</h3>
+            <h4></h4>
+            <div class="form-group ml-5 mr-5">
+                <input placeholder="Enter Your name" type="text" required autofocus class="form-control" >
+            </div>
+            <div class="form-group ml-5 mr-5">
+                <input placeholder="Enter Date and Time " type="DateTime" required class="form-control">
+            </div>
+            <div class="form-group ml-5 mr-5">
+                <textarea maxlength="50" placeholder="Enter your News" required class="form-control"></textarea>
+            </div>
+            <!--=================== Submit button ============================ -->
+            <button class="btn form-button w-25 mb-3" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+        </form>
 
-    </form>
+    </main>
+    <!--=================== Footer ============================ -->
 
-
-</div>
-<!--=================== Footer ============================ -->
-
-<div th:replace="partials/footer :: footerFragment"></div>
+    <div th:replace="partials/footer :: footerFragment"></div>
 
 </body>
 </html>

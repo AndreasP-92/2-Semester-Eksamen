@@ -22,6 +22,14 @@ body, html {
     margin: 0 auto;
     padding: 40px;
 }
+
+/* ======================================== GANTT TABEL ========================================= */
+
+.column{
+    cursor: cell;
+}
+
+/* ====================================== GANTT VISUAL ========================================== */
 .gantt {
     display: grid;
     border: 0;
@@ -145,9 +153,12 @@ body, html {
 }
 
 
-/*SIDE NAVBAR */
+/* ================================= SIDE NAVBAR ============================== */
 
-/* The side navigation menu */
+#sideNavBurger{
+    cursor: pointer;
+}
+
 .sidenav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
@@ -172,8 +183,14 @@ body, html {
     transition: 0.3s
 }
 
+/* color of sidenav checkboxes */
+.sidenavLabel{
+    color: #818181;
+    font-family: Gotham;
+}
+
 /* When you mouse over the navigation links, change their color */
-.sidenav a:hover, .offcanvas a:focus{
+.sidenav a:hover, .offcanvas a:focus {
     color: #f1f1f1;
 }
 
@@ -185,8 +202,16 @@ body, html {
     font-size: 36px;
     margin-left: 50px;
 }
+.submitbtn{
+    background: #34d4b1!important;
+}
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+/* Side navigation Headers */
+.sidenavHeaders{
+    color:white;
+}
+
+/* Style page content */
 main {
     transition: margin-left .5s;
     padding: 20px;
