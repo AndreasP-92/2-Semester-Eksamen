@@ -99,7 +99,7 @@ public class ProjectTest {
 //    GET ONE PROJECT JOB TITLE
     @Test
     public void getProjecJobTitle(){
-        System.out.println(projectRepo.getOneProjectJobTitle(5));
+        System.out.println(jobTitleRepo.getOneProjectJobTitle(5));
 
 
     }

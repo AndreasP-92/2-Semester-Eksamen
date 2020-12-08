@@ -12,7 +12,7 @@ import java.util.List;
 public class MainController {
 
 
-//    GET ROUTES ==================
+//    =================================== GET ROUTES ==================
 
     @GetMapping("/")
     private String index(){
@@ -20,20 +20,28 @@ public class MainController {
         return "main/index";
     }
 
+    // CONTACT ==========
+
     @GetMapping("/contact")
     private String contact(){
         return "main/contact";
     }
+
+    // FAQ ==========
 
     @GetMapping("/faq")
     private String faq(){
         return "main/faq";
     }
 
+    // PRIVACY ==========
+
     @GetMapping("/privacy")
     private String privacy(){
         return "main/privacy";
     }
+
+    // NEWSFEED ==========
 
     @GetMapping("/newsfeed")
     private String newsfeed(){
@@ -41,6 +49,6 @@ public class MainController {
     }
 
 
-//    POST ROUTES ==================
+//    ===================================  POST ROUTES ==================
 
 }

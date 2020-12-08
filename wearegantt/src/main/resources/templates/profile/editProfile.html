@@ -17,7 +17,7 @@
 </header>
 
 
-<div class="container main p-2" align="center">
+<main class="container main p-2" align="center">
     <div class="row">
         <div class="col-sm">
             <div class="d-flex justify-content-center">
@@ -31,13 +31,9 @@
         <div class="col-sm">
             <div class="d-flex justify-content-center h-100">
                 <div class="loginbox">
-                    <div class="d-flex justify-content-center">
-                        <div class="logo_brand">
-                            <img  th:src="@{/images/logo.png/}"  alt="logo">
-                        </div>
-                    </div>
                     <h4>Edit Your Profile</h4>
 
+<!-- ==== UPDATE PROFILE === -->
                     <form th:action="@{/update/profile}" th:object="${profile}" method="post">
                         <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{profile_id}">
 
@@ -64,9 +60,9 @@
 
                         <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
                         </form>
-                    <h4>Edit Your Email & Password</h4>
-<!--                    action="submit_path" th:action="@{/update/credentials}" method="post"-->
-                    <form th:object="${user}">
+                        <h4>Edit Your Email & Password</h4>
+
+                        <form th:object="${user}">
 
                         <input class="text-center p-3 mb-1" style="display:none" type="text" th:field="*{user_id}">
 
@@ -88,19 +84,16 @@
                         </div>
 
                         <button onclick="validate()" id="submitButton" type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
-
-
                     </form>
 
+<!-- === DELETE PROFILE === -->
                         <form th:action="@{/delete/profile}" th:object="${user}" method="post">
-
                             <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
                             <button type="submit" name="button" class="btn login_btn1 mt-3 mb-3" >Delete</button>
-
                         </form>
 
                         <a href="/login/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
-
+<!-- === EDIT / NEW ORGANIZATION === -->
                         <div th:if="${user.fk_orgId == 0}">
                             <li class="nav-item">
                                 <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
@@ -130,7 +123,7 @@
     </div>
     <div class="row align-items-end">
     </div>
-</div>
+</main>
 
 <!--=================== Footer ============================ -->
 <div th:replace="partials/footer :: footerFragment"></div>

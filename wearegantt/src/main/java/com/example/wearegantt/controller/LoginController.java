@@ -25,7 +25,7 @@ public class LoginController {
     PaypalService service;
 
 
-//    GET ROUTES ==================
+//    =================================== GET ROUTES ==================
 
     @GetMapping("/login")
     private String login() {
@@ -50,7 +50,9 @@ public class LoginController {
 
         return "paypal";
     }
-//    POST ROUTES ==================
+//    =================================== POST ROUTES ==================
+
+//    SAVE USER ==============
 
     @PostMapping("/saveUser")
     public String postSaveUser(WebRequest dataFromForm) {
@@ -84,6 +86,9 @@ public class LoginController {
     public static final String SUCCESS_URL = "pay/success";
     public static final String CANCEL_URL = "pay/cancel";
 
+//    PAY ==============
+
+
     @GetMapping("/pay")
     public String payment(@ModelAttribute("order") Order order) {
         try {
@@ -99,10 +104,7 @@ public class LoginController {
         return "redirect:/";
     }
 
-//    @RequestMapping(value = "login/login", method = RequestMethod.GET)
-//    public String getLoginForm() {
-//        return "login/login";
-//    }
+//    LOGIN ?????????????????
 
     @RequestMapping(value = "/login/login", method = RequestMethod.POST)
     public String login(@ModelAttribute(name = "loginForm") LoginForm loginForm, Model model) {

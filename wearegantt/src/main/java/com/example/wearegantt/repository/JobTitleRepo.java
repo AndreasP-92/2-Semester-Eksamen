@@ -111,7 +111,7 @@ public class JobTitleRepo {
 
     public JobTitle getOneJobTitle(int jobTitle_id){
         JobTitle jobTitleToReturn = null;
-        String sql = "SELECT * FROM org WHERE org_id = ?";
+
         try {
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE jobTitle_id = ?");
             ps.setInt(1 , jobTitle_id);
@@ -252,6 +252,8 @@ public class JobTitleRepo {
             System.out.println(e);
         }
     }
+
+// ============================================================= ESTABLISH CONNECTION =================================================================
 
 
     private Connection establishConnection() throws SQLException {

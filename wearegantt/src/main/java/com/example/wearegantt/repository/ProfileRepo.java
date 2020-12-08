@@ -132,6 +132,7 @@ public class ProfileRepo {
         }
     }
 
+// ============================================================= ESTABLISH CONNECTION =================================================================
 
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse

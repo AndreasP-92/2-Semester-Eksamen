@@ -15,9 +15,7 @@
 
     </div>
 </header>
-
-
-    <div class="container main p-2" align="center">
+    <main class="container main p-2" align="center">
         <div class="row">
             <div class="col-sm-4">
                 <div class="d-flex justify-content-center">
@@ -34,8 +32,9 @@
                         <div class="w-100" style="text-align: center !important;">
                             <h4 style="text-align: center !important;">Edit Your Project</h4>
                         </div>
-<!--                            tilføj label til dem nede under-->
                         <div class="row">
+
+<!-- == UPDATE PROJECT == -->
                             <form class="col-sm-6" th:action="@{/update/project}" th:object="${project}" method="post" >
                                     <label>Project Id</label>
                                     <input class="form-control cInpu" readonly type="text"  th:field="*{project_id}">
@@ -58,6 +57,8 @@
                                     <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-75">Save Project</button>
                             </form>
                             <div class="col-sm-6" align="left">
+
+<!-- == JOBTITLE OPTION == -->
                                 <div th:each="jobtitle : ${jobTitlesList}">
                                     <form th:action="@{/delete/projectJobTitle}" method="post" th:object="${project}">
                                         <div class="row">
@@ -77,6 +78,8 @@
                             </div>
                         </div>
                         <div align="left">
+
+<!-- == DELETE PROJECT == -->
                             <form th:action="@{/delete/project}" method="post" th:object="${project}">
 
                                 <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{project_id}">
@@ -90,7 +93,7 @@
         </div>
         <div class="row align-items-end">
         </div>
-    </div>
+    </main>
 
 <!--=================== Footer ============================ -->
 <div th:replace="partials/footer :: footerFragment"></div>

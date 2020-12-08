@@ -23,7 +23,7 @@ public class ProfileController {
     ProfileRepo profileRepo = new ProfileRepo();
 
 
-//    GET ROUTES ==================
+//   =========================================== GET ROUTES ===================================
 
 // EDIT PROFILE =================
 
@@ -192,13 +192,4 @@ public class ProfileController {
 
         return "redirect:/login?logout";
     }
-
-//    //  DELETE USER
-//    @RequestMapping("/projects/edit")
-//    public String delete(WebRequest webRequest){
-//        projectRepo.delete(project_id);
-//
-//        System.out.println();
-//        return "/projects/edit";
-//    }
 }
