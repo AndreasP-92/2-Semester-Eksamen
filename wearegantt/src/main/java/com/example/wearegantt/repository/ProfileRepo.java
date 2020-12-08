@@ -1,7 +1,6 @@
 package com.example.wearegantt.repository;
 
 import com.example.wearegantt.model.Profile;
-import com.example.wearegantt.model.Project;
 import com.example.wearegantt.model.User;
 import org.springframework.stereotype.Repository;
 

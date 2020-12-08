@@ -63,6 +63,9 @@
                         <h4>Edit Your Email & Password</h4>
 
                         <form th:object="${user}">
+                    <h4>Edit Your Email & Password</h4>
+
+                    <form id="registerForm" th:object="${user}" th:action="@{/update/credentials}" method="post">
 
                         <input class="text-center p-3 mb-1" style="display:none" type="text" th:field="*{user_id}">
 
@@ -70,34 +73,32 @@
                         <input class="text-center p-3 mb-1" id="email" type="text" th:field="*{user_mail}">
 
                         <label for="password">Enter Your Password</label>
-                        <input type="password" id="password" name="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Your password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required th:field="*{user_password}"/>
+                        <input type="password" id="password" name="pass"  required th:field="*{user_password}"/>
                         <div id="passwordValid" class="valid"></div>
 
                         <label for="confirm_password">Confirm Your Password</label>
-                        <input type="password" id="confirm_password" name="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Your password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required th:field="*{user_password}"/>
-
-                        <div id="checksField">
-                            <h3>Password must contain the following:</h3>
-                            <p id="letter" class="wrong">A <b>lowercase</b> letter</p>
-                            <p id="capital" class="wrong">A <b>capital (uppercase)</b>letter</p>
-                            <p id="number" class="wrong">A <b>number</b></p>
-                        </div>
+                        <input type="password" id="confirm_password" name="pass" required th:field="*{user_password}"/>
 
                         <button onclick="validate()" id="submitButton" type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
                     </form>
 
 <!-- === DELETE PROFILE === -->
                         <form th:action="@{/delete/profile}" th:object="${user}" method="post">
+
                             <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
                             <button type="submit" name="button" class="btn login_btn1 mt-3 mb-3" >Delete</button>
+
                         </form>
+
+                        <a      class="btn login_btn mt-3 mb-3"
+                                th:href="@{'/login/userType/'}">Change Subscription</a>
 
                         <a href="/login/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
 <!-- === EDIT / NEW ORGANIZATION === -->
                         <div th:if="${user.fk_orgId == 0}">
                             <li class="nav-item">
                                 <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
-                                   href="/profile/organization">New Organization</a>
+                                   th:href="@{'/profile/organization/' + ${org.org_id}}">New Organization</a>
                             </li>
                         </div>
                         <div th:if="${user.fk_orgId > 0}">
