@@ -1,0 +1,88 @@
+#news {
+    background: #707070;
+    margin-top:1%;
+    padding:30px;
+}
+
+#news h3 {
+    color: #ffffff;
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+#user1 {
+    background: #707070;
+    margin-top:1%;
+    padding:60px;
+}
+
+#user1 h3 {
+    color: #ffffff;
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.brand_logo_container {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: -75px;
+    border-radius: 50%;
+    background: #ffbdbd;
+    padding: 10px;
+    text-align: center;
+    margin-top:95px;
+    margin-left:-50px;
+}
+.brand_logo {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-top:-9px;
+    margin-left:-5px;
+
+}
+
+#admin {
+    background: #707070;
+    margin-top:1%;
+    padding:60px;
+}
+
+#admin h3 {
+    color: #ffffff;
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
+}
+#user2 {
+    background: #707070;
+    margin-top:1%;
+    padding:60px;
+}
+
+#user2 h3 {
+    color: #ffffff;
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+p {
+    margin-top: -90px;
+    margin-bottom: 5rem;
+}
+p1 {
+    margin-top: -90px;
+    margin-bottom: 5rem;
+
+}
+
+.homer {
+    vertical-align: middle;
+    border-style: none;
+    width: 50px;
+}

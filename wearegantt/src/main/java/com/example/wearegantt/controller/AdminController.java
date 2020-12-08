@@ -21,18 +21,18 @@ public class AdminController {
     }
 
     //Admin Chat
-    @GetMapping("/admin/support/chat")
+    @GetMapping("/admin/chat")
     public String adminChat(){
         return "admin/adminChat";
     }
 
     // Admin Look Up User
-    @GetMapping("/admin/adminLookUpUser")
+    @GetMapping("/admin/lookupuser")
     public String adminLookUpUser(){
         return "admin/adminLookUpUser";
     }
 
-    @GetMapping("/admin/admincreateuser")
+    @GetMapping("/admin/createuser")
     public String adminCreateUser(){
         return "admin/adminCreateUser";
     }
@@ -43,16 +43,28 @@ public class AdminController {
         return "admin/adminOrganizations";
     }
 
+    //Admin Edit Organisation
+    @GetMapping("/admin/organizations/edit")
+    public String adminOrganizationsEdit(){
+        return "admin/adminEditOrganizations";
+    }
+
     //Admin Projects
     @GetMapping("/admin/projects")
     public String adminProjects(){
-        return "admin/adminProjects";
+        return "admin/adminProject";
+    }
+
+    //Admin Edit Projects
+    @GetMapping("/admin/projects/edit")
+    public String adminProjectsEdit(){
+        return "admin/adminEditProjects";
     }
 
     //Admin News
-    @GetMapping("/admin/newuser")
-    public String adminNewsUser(){
-        return "admin/adminNewsUser";
+    @GetMapping("/admin/news")
+    public String adminNews(){
+        return "admin/adminNews";
     }
 
 

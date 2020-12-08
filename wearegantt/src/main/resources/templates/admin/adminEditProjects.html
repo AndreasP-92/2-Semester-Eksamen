@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Organization Projects</title>
+
+    <link th:href="@{/css/admin/adminEditProjects.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <!--=================== NAVIGATION ============================ -->
+    <div th:replace="partials/navbar :: navigation">
+
+    </div>
+</header>
+
+
+<div class="container main p-2" align="center">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="d-flex justify-content-center">
+                <div class="logo_brand p-4">
+                    <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                </div>
+            </div>
+            <br>
+            <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
+        </div>
+        <div class="col-sm-8">
+            <div class="d-flex justify-content-center h-100">
+                <div class="loginbox">
+                    <div class="w-100" style="text-align: center !important;">
+                        <h4 style="text-align: center !important;">Edit Your Project</h4>
+                    </div>
+                    <!--                            tilføj label til dem nede under-->
+                    <div class="row">
+                        <form>
+                            <label>Project Id</label>
+                            <input class="form-control cInpu" readonly type="text"  name="Project ID">
+
+                            <label>Project Name</label>
+                            <input class="form-control cInpu" type="text"  name="Project Name">
+
+                            <label>Project Description</label>
+                            <input class="form-control cInpu" type="text"  name="Project desc">
+
+                            <label>Project Duration</label>
+                            <input class="form-control cInpu" type="date"  name="Projects Duration">
+
+                            <label>Project Start</label>
+                            <input class="form-control cInpu" type="date"  name="Project Start">
+
+                            <label>Project End</label>
+                            <input class="form-control" type="date"  name="Projects End">
+
+                            <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-75">Save Project</button>
+                        </form>
+                        <div class="col-sm-6" align="left">
+                            <div>
+                                <form>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input style="display: none;" type="text" name="Project ID">
+
+                                            <input style="display: none;" type="text" name="projectJobTitle_id">
+<!--                                            <p th:text="${jobtitle.getJobTitle_name()}"></p>-->
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button type="submit" class="btn login_btn">Remove</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+<!--                            <a class="btn login_btn mt-3 mb-3 100" th:href="@{'/projects/create/newJobtitles/'+${project.project_id}}">Add More Job Titles</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-end">
+    </div>
+</div>
+
+<!--=================== Footer ============================ -->
+<div th:replace="partials/footer :: footerFragment"></div>
+</body>
+</html>

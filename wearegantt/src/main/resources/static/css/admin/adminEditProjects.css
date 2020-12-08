@@ -1,0 +1,150 @@
+body{
+    background: #ffffff !important;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+
+/*Logo Start*/
+
+.brand_logo_container {
+    position: absolute;
+    height: 90px;
+    width: 90px;
+    top: -25px;
+    border-radius: 50%;
+    background: #ffffff;
+    text-align: center;
+}
+.brand_logo {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+}
+
+
+/*Logo Slut*/
+
+/*Headers Start*/
+
+.userHeadline,h4{
+    margin: -25px;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+    color: #ffffff;
+}
+
+/*Headers Slut*/
+
+/*input indstillinger Start*/
+
+.loginbox{
+    background: #707070;
+    color: #ffffff;
+    box-sizing: border-box;
+    margin-top: 5%;
+
+}
+
+.cInput{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.loginbox input[type="text"], input[type="password"], input[type="number"]{
+    border:none;
+    border-bottom: 1px solid #ffffff;
+    outline: none;
+    height: 40px;
+    color: black;
+    font-size: 16px;
+}
+
+
+.loginbox input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #34d4b1;
+    color: black;
+    font-size: 18px;
+
+}
+.loginbox input[type="submit"]:hover{
+    cursor: pointer;
+    background: #ffc107;
+    color: black;
+}
+/*input indstillinger Slut*/
+
+/*button Start*/
+
+.form_container {
+    margin-top: 100px;
+}
+.login_btn{
+    width: 100%;
+    background: #34d4b1 !important;
+    color: black !important;
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 18px;
+}
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+.login_container {
+    padding: 0 2rem;
+}
+/*Button End*/
+
+
+.rightcol{
+    padding-bottom: 5%;
+}
+
+.main{
+    margin-top: 5%;
+    background: #707070;
+}
+
+
+.titelbox{
+    background: #707070;
+    color: #ffffff;
+    box-sizing: border-box;
+    margin-top: 5%;
+
+}
+
+.titelbox input{
+    margin-bottom: 20px;
+}
+
+.titelbox input[type="text"], input[type="password"], input[type="number"]{
+    border:none;
+    border-bottom: 1px solid #ffffff;
+    outline: none;
+    height: 40px;
+    color: black;
+    font-size: 16px;
+}
+
+
+.titelbox input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #34d4b1;
+    color: black;
+    font-size: 18px;
+
+}
+.titelbox input[type="submit"]:hover{
+    cursor: pointer;
+    background: #ffc107;
+    color: black;
+}

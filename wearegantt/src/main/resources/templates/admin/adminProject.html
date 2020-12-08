@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Organization Projects</title>
+
+    <link th:href="@{/css/profile/opretproject.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <!--=================== NAVIGATION ============================ -->
+    <div th:replace="partials/navbar :: navigation">
+
+    </div>
+</header>
+
+<!--=================== Body ============================ -->
+<div class="container main p-2" align="center">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="d-flex justify-content-center">
+                <div class="logo_brand p-4">
+                    <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                </div>
+            </div>
+            <br>
+            <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
+        </div>
+        <div class="col-sm-8">
+            <div class="d-flex justify-content-center h-100">
+                <div class="loginbox">
+                    <!--                    Rettelse af H4-->
+                    <div class="w-100" style="text-align: center !important;">
+                        <h4 style="text-align: center !important;">Create Your Project</h4>
+                    </div>
+                    <form class="row">
+                        <div th:class="col-sm-6">
+                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Name">
+
+                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Description">
+
+                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Duration">
+
+                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project Start">
+
+                            <input class="text-center p-3 mb-1 cInpu" type="text" name="" placeholder="Project End">
+                        </div>
+                        <div class="col-sm-6"  align="left">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">ProjectLeader</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">sourchef</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">manager</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">employed</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">trainee</label>
+                            </div>
+                        </div>
+
+                        <div class="w-100 row" align="center">
+                            <div class="col-sm-6">
+                                <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-50">Create Project</button>
+                            </div>
+                            <div class="col-sm-6" align="left">
+                                <a class="btn login_btn mt-3 mb-3 w-50" href="/projects/create/newJobtitles">Add More Job Titles</a>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm row">
+            <!--            <div class="row rightcol mb-5">-->
+            <!--                <div class="d-flex justify-content-center h-100">-->
+            <!--                    <div class="loginbox">-->
+            <!--                        <h4>Job Titles</h4>-->
+            <!--                        <form>-->
+            <!--                            <input type="checkbox" id="vehicle1" name="vehicle1" th:value="Bike">-->
+            <!--                            <label for="vehicle1"> I have a bike</label><br>-->
+            <!--                            <div class="checkbox">-->
+            <!--                            <label><input type="checkbox" value="">ProjectLeader</label>-->
+            <!--                            </div>-->
+            <!--                            <div class="checkbox">-->
+            <!--                                <label><input type="checkbox" value="">sourchef</label>-->
+            <!--                            </div>-->
+            <!--                            <div class="checkbox">-->
+            <!--                                <label><input type="checkbox" value="">manager</label>-->
+            <!--                            </div>-->
+            <!--                            <div class="checkbox">-->
+            <!--                                <label><input type="checkbox" value="">employed</label>-->
+            <!--                            </div>-->
+            <!--                            <div class="checkbox">-->
+            <!--                                <label><input type="checkbox" value="">trainee</label>-->
+            <!--                            </div>-->
+
+            <!--                            <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Add Move</button>-->
+
+            <!--                        </form>-->
+            <!--                    </div>-->
+
+            <!--                </div>-->
+            <!--                    <div class="">-->
+
+            <!--                    </div>-->
+            <!--                </div>-->
+        </div>
+    </div>
+    <div class="row align-items-end">
+    </div>
+</div>
+
+<!--=================== Footer ============================ -->
+<div th:replace="partials/footer :: footerFragment"></div>
+</body>
+</html>
