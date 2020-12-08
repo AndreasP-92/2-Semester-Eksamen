@@ -4,80 +4,155 @@
     <meta charset="UTF-8">
     <title>Whats New</title>
 
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="/css/main/newsfeed.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <!--=================== NAVIGATION ============================ -->
-    <div th:replace="partials/navbar :: navigation">
-    </div>
-</header>
-<!--=================== Block 1 ============================ -->
-<div class="container" align="center">
-    <div class="row">
-        <div class="col-sm">
-            <div class="container" align="center">
-                <div class="col-sm-12" align="center">
-                    <img th:src="@{/images/logo.png/}" style="">
-                </div>
-                <form id="news" action="" method="post" class="w-50">
-                    <h3 style="text-align: center">What's New?</h3>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--=================== Block 2 ============================ -->
-    <div class="row">
-        <div class="col-sm">
-            <div class="container" align="center">
-                <form id="user1" action="" method="post" class="w-50">
-                    <div class="brand_logo_container">
-                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                    </div>
-                    <h3 style="text-align: center"><small>Project "Wag" is updated</small></h3>
-                    <p class="text-left" style="color:#ffffff"> Admin </p>
-                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>
-
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--=================== Block 3 ============================ -->
-    <div class="row">
-        <div class="col-sm">
-            <div class="container" align="center">
-                <form id="admin" action="" method="post" class="w-50">
-                    <div class="brand_logo_container">
-                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                    </div>
-                    <h3 style="text-align: center"><small>Bug fixed version 2.5</small></h3>
-                    <p class="text-left" style="color:#ffffff"> Admin </p>
-                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--=================== Block 4 ============================ -->
-    <div class="row">
-        <div class="col-sm">
-            <div class="container" align="center">
-                <form id="user2" action="" method="post" class="w-50">
-                    <div class="brand_logo_container">
-                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                    </div>
-                    <h3 style="text-align: center"><small>Update Coming Soon</small></h3>
-                    <p class="text-left" style="color:#ffffff"> Admin </p>
+<!--&lt;!&ndash;=================== Block 1 ============================ &ndash;&gt;-->
+<main class="container">
+    <a href="/admin" style="color:black;">
+        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+    </a>
+        <div class="row">
+            <div class="col-sm">
+                <div class="container" align="center">
                     <div class="col-sm-12" align="center">
-                        <img th:src="@{/images/PhunTime.png/}" style="">
+                        <img th:src="@{/images/logo.png/}" style="">
                     </div>
-                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>
-
-                </form>
+                    <form id="news" action="" method="post" class="w-50">
+                        <h3 style="text-align: center">What's New?</h3>
+                    </form>
+                </div>
             </div>
         </div>
+        <!--=================== Block 2 ============================ -->
+        <div class="row">
+            <div class="col-sm">
+                <div class="container" align="center">
+                    <form id="user1" action="" method="post" class="w-50">
+                        <div class="brand_logo_container">
+                            <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                        </div>
+                        <h3 style="text-align: center"><small>Project "Wag" is updated</small></h3>
+                        <p class="text-left" style="color:#ffffff"> Admin </p>
+                        <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>
+<!---->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--=================== Block 3 ============================ -->
+        <div class="row">
+            <div class="col-sm">
+                <div class="container" align="center">
+                    <form id="admin" action="" method="post" class="w-50">
+                        <div class="brand_logo_container">
+                            <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                        </div>
+                        <h3 style="text-align: center"><small>Bug fixed version 2.5</small></h3>
+                        <p class="text-left" style="color:#ffffff"> Admin </p>
+                        <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--=================== Block 4 ============================ -->
+        <div class="row">
+            <div class="col-sm">
+                <div class="container" align="center">
+                    <form id="user2" action="" method="post" class="w-50">
+                        <div class="brand_logo_container">
+                            <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
+                        </div>
+                        <h3 style="text-align: center"><small>Update Coming Soon</small></h3>
+                        <p class="text-left" style="color:#ffffff"> Admin </p>
+                        <div class="col-sm-12" align="center">
+                            <img th:src="@{/images/PhunTime.png/}" style="">
+                        </div>
+                        <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>
+<!---->
+                    </form>
+                </div>
+            </div>
+        </div>
+<!---->
+    </main>
+
     </div>
 
-</div>
 </body>
 </html>
+
+
+
+
+<!--&lt;!&ndash;=================== Block 1 ============================ &ndash;&gt;-->
+<!--<div class="container" align="center">-->
+<!--    <a href="/admin" style="color:black;">-->
+<!--        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>-->
+<!--    </a>-->
+<!--    <div class="row">-->
+<!--        <div class="col-sm">-->
+<!--            <div class="container" align="center">-->
+<!--                <div class="col-sm-12" align="center">-->
+<!--                    <img th:src="@{/images/logo.png/}" style="">-->
+<!--                </div>-->
+<!--                <form id="news" action="" method="post" class="w-50">-->
+<!--                    <h3 style="text-align: center">What's New?</h3>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;=================== Block 2 ============================ &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="col-sm">-->
+<!--            <div class="container" align="center">-->
+<!--                <form id="user1" action="" method="post" class="w-50">-->
+<!--                    <div class="brand_logo_container">-->
+<!--                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
+<!--                    </div>-->
+<!--                    <h3 style="text-align: center"><small>Project "Wag" is updated</small></h3>-->
+<!--                    <p class="text-left" style="color:#ffffff"> Admin </p>-->
+<!--                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
+
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;=================== Block 3 ============================ &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="col-sm">-->
+<!--            <div class="container" align="center">-->
+<!--                <form id="admin" action="" method="post" class="w-50">-->
+<!--                    <div class="brand_logo_container">-->
+<!--                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
+<!--                    </div>-->
+<!--                    <h3 style="text-align: center"><small>Bug fixed version 2.5</small></h3>-->
+<!--                    <p class="text-left" style="color:#ffffff"> Admin </p>-->
+<!--                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;=================== Block 4 ============================ &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="col-sm">-->
+<!--            <div class="container" align="center">-->
+<!--                <form id="user2" action="" method="post" class="w-50">-->
+<!--                    <div class="brand_logo_container">-->
+<!--                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
+<!--                    </div>-->
+<!--                    <h3 style="text-align: center"><small>Update Coming Soon</small></h3>-->
+<!--                    <p class="text-left" style="color:#ffffff"> Admin </p>-->
+<!--                    <div class="col-sm-12" align="center">-->
+<!--                        <img th:src="@{/images/PhunTime.png/}" style="">-->
+<!--                    </div>-->
+<!--                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
+
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>-->
