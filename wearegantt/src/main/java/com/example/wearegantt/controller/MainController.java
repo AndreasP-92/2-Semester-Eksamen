@@ -7,7 +7,12 @@ import com.example.wearegantt.model.User;
 import com.example.wearegantt.repository.SupportTicketRepo;
 import com.example.wearegantt.repository.OrganizationRepo;
 import com.example.wearegantt.repository.TicketRepo;
+import com.example.wearegantt.repository.NewsfeedRepo;
+import com.example.wearegantt.repository.OrganizationRepo;
+import com.example.wearegantt.repository.ProfileRepo;
 import com.example.wearegantt.repository.UserRepo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
@@ -27,6 +32,11 @@ public class MainController {
     UserRepo userRepo = new UserRepo();
 
     TicketRepo ticketRepo = new TicketRepo();
+
+
+    NewsfeedRepo newsRepo = new NewsfeedRepo();
+
+//    OrganizationRepo orgRep = new OrganizationRepo();
 
 
 //    =================================== GET ROUTES ==================
@@ -61,36 +71,64 @@ public class MainController {
     // NEWSFEED ==========
 
     @GetMapping("/newsfeed")
-    private String newsfeed(){
-        //        List<Newsfeeds> listNewsfeeds = newsfeedRepo.getAllNewsfeeds();
-//        model.addAttribute("listNewsfeeds", listNewsfeeds);
-
-//        List<Newsfeeds> listNewsfeeds = newsfeedRepo.getAllNewsfeeds();
-//        model.addAttribute("listNewsfeeds", listNewsfeeds);
-
+    private String newsfeed(Model model){
+        List<Newsfeed> listNewsfeed = newsRepo.getAllNews();
+        model.addAttribute("listNewsfeed", listNewsfeed);
 
         return "main/newsfeed";
     }
 
+    @GetMapping("/createNewsfeed")
+    private String createNewsfeed(){
 
+        return "main/createNewsfeed";
+        //        private ModelAndView createNewsfeed(Model model){
+//            ModelAndView mav = new ModelAndView("newsfeed/createNewsfeed");
+//
+//            return mav;
+    }
+
+    @GetMapping("/editNewsfeed")
+    private String editNewsfeed(){
+
+        return "main/editNewsfeed";
+
+    }
 //    POST ROUTES ==================
 @GetMapping("/newsfeed/create")
-private ModelAndView createnewsfeed(Principal principal){
+private ModelAndView createnewsfeed(Principal principal) {
     ModelAndView mav = new ModelAndView("main/createNewsfeed");
 //        User user = userRepo.getOneUser(principal.getName());
 //        List<JobTitle> jobTitles = projectRepo.getAllJobTitlesWOrg(user.getFk_orgId());
 //
 //        System.out.println(jobTitles);
 
-//    ===================================  POST ROUTES ==================
+}
+// INSERT PROJECT =======================
 
+//    @PostMapping("/insert/news")
+//    public String postNews(WebRequest dataFromForm, Principal principal) {
+//        String newsfeed_news     = (dataFromForm.getParameter("newsfeed_news"));
+//        String newsfeed_title     = (dataFromForm.getParameter("newsfeed_title"));
+//        String newsfeed_img = (dataFromForm.getParameter("newsfeed_img"));
+//        String newsfeed_datetime    = (dataFromForm.getParameter("newsfeed_datetime"));
+//
+//
+//        Newsfeed news   = newsRepo.getOneNews(principal.getName());
+//        Organization org  = orgRep.getOneNews(news.getFk_orgName());
+//
+//        NewsfeedRepo.InsertNews(newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime, org.getOrg_id());
+//
+//        return "redirect:/";
+//    }
+//    }
 //        User user = userRepo.getOneUser(principal.getName());
 //        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
 
 //        mav.addObject("jobTitlesList", jobTitles);
 
-    return mav;
-}
+//    return mav;
+//}
 
     //  =================================  POST ROUTES For TICKETS =============================
 
