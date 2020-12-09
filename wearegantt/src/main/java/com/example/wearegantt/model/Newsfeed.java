@@ -26,7 +26,9 @@ public class Newsfeed {
 
     public void setNewsfeed_news(String newsfeed_news) { this.newsfeed_news = newsfeed_news; }
 
-    public String getNewsfeed_title() { return newsfeed_title; }
+    public String getNewsfeed_title() {
+        return newsfeed_title;
+    }
 
     public void setNewsfeed_title(String newsfeed_title) { this.newsfeed_title = newsfeed_title; }
 

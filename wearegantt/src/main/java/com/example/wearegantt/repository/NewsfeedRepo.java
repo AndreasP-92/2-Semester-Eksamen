@@ -13,14 +13,16 @@ public class NewsfeedRepo {
 
     // =================== GET ALL NEWS ==================
 
-    public List<Newsfeed> getAllNews(){
+    public List<Newsfeed> getAllNews(String fk_orgName){
         List<Newsfeed> allNews = new ArrayList<>();
 
         try {
 
             //lavet et statement
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE fk_orgName = ? ");
+           // metoden i ps objektet fortæller hvad der skal stå på QUERY plads nummer 1 (?).
 
+            ps.setString(1, fk_orgName);
             //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
@@ -34,12 +36,15 @@ public class NewsfeedRepo {
                         rs.getString(5),
                         rs.getInt(6)
                 );
+
+                System.out.println(tmp);
                 allNews.add(tmp);
             }
 
         } catch (SQLException e) {
             System.out.println(e);
             return null;
+
         }
         return allNews;
     }
@@ -51,8 +56,9 @@ public class NewsfeedRepo {
 
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE news_id = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE news_id = ?");
             ps.setInt(1 , news_id);
+
 
             ResultSet rs = ps.executeQuery();
 
@@ -122,14 +128,14 @@ public class NewsfeedRepo {
 
     //    ================== INSERT NEWS ================
 
-    public void InsertNews(String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime, int fk_orgName){
+    public void insertNews(String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime,String fk_orgName){
         try {
             PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO news(newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime, fk_orgName) VALUES (?, ?, ?, ?, ?)");
             ps.setString(1, newsfeed_news);
             ps.setString(2, newsfeed_title);
             ps.setString(3, newsfeed_img);
             ps.setString(4, newsfeed_datetime);
-            ps.setInt(5, fk_orgName);
+            ps.setString(5, fk_orgName);
 
             int row = ps.executeUpdate();
             System.out.println("news insert");
