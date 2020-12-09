@@ -1,98 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
+    <title>Your Organization Projects</title>
+
+    <link th:href="@{/css/admin/adminEditOrganizations.css}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link th:href="@{/css/admin/AdminEditOrganizations.css}" type="text/css" rel="stylesheet">
-    <title>Your Organization</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
-<header>
-    <!--=================== NAVIGATION ============================ -->
-    <div th:replace="partials/navbar :: navigation">
-
-    </div>
-</header>
-<main>
-    <div class="container main p-2" align="center">
-        <div class="row">
-            <div class="col-sm">
-                <div class="d-flex justify-content-center">
-                    <div class="logo_brand p-4">
-                        <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                    </div>
-                </div>
-                <br>
-                <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
-            </div>
-            <div class="col-sm">
-                <div class="d-flex justify-content-center h-100">
-                    <div class="loginbox">
-
-                        <form>
-                            <h3>Edit your Organization</h3>
-                            <div align="left">
-                                <label for="emailinput">Your Organization ID</label>
-                                <input class="text-center p-3 mb-1" id="emailinput" readonly type="text" name="Organization ID">
-                            </div>
-                            <div align="left">
-                                <label for="emailinput">Organization Name</label>
-                                <input class="text-center p-3 mb-1" id="nameinput" type="text" name="Organization Name">
-                            </div>
-
-                            <div align="left">
-                                <label for="addressinput">Organization Address</label>
-                                <input class="text-center p-3 mb-1" id="addressinput" type="text" name="Organization Address">
-                            </div>
-
-                            <div align="left">
-                                <label for="cvrinput">Organization CVR Number</label>
-                                <input class="text-center p-3 mb-1" id="cvrinput" type="number" name="Organization CVR Number">
-                            </div>
-
-                            <input type="submit" value="Save" name="button" class="btn login_btn mt-3 mb-3">
-
-
-                        </form>
-
-                        <h3>Add Another User</h3>
-                        <form>
-
-                            <input class="text-center p-3 mb-1" style="display: none" type="text" name="Organization ID">
-
-
-                            <input class="text-center p-3 mb-1" type="text" name="user_mail" placeholder="Organization Name">
-
-                            <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
-                        </form>
-
-                        <form>
-
-                            <input class="text-center p-3 mb-1" style="display: none" type="text" name="Organization ID">
-
-
-                            <button type="submit" name="button" class="btn login_btn mt-3 mb-3">DELETE ORGANIZATION</button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm row align-items-end">
-                <div class="row rightcol mb-5">
-                    <div class="col-6">
-
-                    </div>
-                    <div class="col-6">
-
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <a href="/admin" style="color:black;">
+        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+    </a>
+    <div class="row">
+        <div class="col-sm mt-5">
+            <h1 class="text-center mb-2">Edit Organizations</h1>
         </div>
     </div>
+    <div class="d-flex justify-content-center form_container">
 
+        <form>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control input_pass" placeholder="Organizations Name">
+            </div>
+
+            <div class="input-group mb-2">
+                <input type="text" class="form-control input_pass" placeholder="Organizations Address">
+            </div>
+
+            <div class="input-group mb-2">
+                <input type="text" class="form-control input_pass" placeholder="Organizations CVR">
+            </div>
+
+            <div class="d-flex justify-content-center mt--1 p-2 login_container">
+                <button  type="submit" name="button" class="btn login_btn">Save Organizations</button>
+            </div>
+
+            <div class="d-flex justify-content-center mt--1 p-2 login_container">
+                <button  type="submit" name="button" class="btn login_btn">Delete Organizations</button>
+            </div>
+        </form>
     </div>
-    <!--=================== Body End ============================ -->
-</main>
+</div>
 </body>
 </html>

@@ -88,3 +88,15 @@ p1 {
     width: 50px;
 }
 
+
+.btn {
+    background: #34d4b1;
+    color:black;
+}
+
+.btn-group, .btn-group-vertical {
+    position: absolute;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    vertical-align: middle;
+}

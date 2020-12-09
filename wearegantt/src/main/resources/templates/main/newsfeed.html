@@ -14,6 +14,12 @@
     <div th:replace="partials/navbar :: navigation">
     </div>
 </header>
+<main>
+    <div class="btn-group sm-2 mt-3 w-25" align="center" role="group" aria-label="" >
+        <a href="/createNewsfeed" type="button" class="btn btn-secondary">Create Newsfeed</a>
+        <a href="/editNewsfeed" type="button" class="btn btn-secondary">Edit Newsfeed</a>
+    </div>
+
     <!--=================== Block 1 ============================ -->
     <div class="container" align="center">
         <div class="row">
@@ -80,7 +86,7 @@
         </div>
 
     </div>
-
+</main>
     <!--=================== Footer ============================ -->
 
         <div th:replace="partials/footer :: footerFragment"></div>
