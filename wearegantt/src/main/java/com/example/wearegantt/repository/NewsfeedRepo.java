@@ -19,9 +19,8 @@ public class NewsfeedRepo {
         try {
 
             //lavet et statement
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE fk_orgName = ? ");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE fk_orgName = ?");
            // metoden i ps objektet fortæller hvad der skal stå på QUERY plads nummer 1 (?).
-
             ps.setString(1, fk_orgName);
             //eksekvere en query
             ResultSet rs = ps.executeQuery();
@@ -34,7 +33,7 @@ public class NewsfeedRepo {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)
+                        rs.getString(6)
                 );
 
                 System.out.println(tmp);
@@ -56,7 +55,7 @@ public class NewsfeedRepo {
 
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE news_id = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE newsfeed_id = ?");
             ps.setInt(1 , news_id);
 
 
@@ -69,7 +68,7 @@ public class NewsfeedRepo {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)
+                        rs.getString(6)
                 );
             }
 

@@ -136,8 +136,8 @@ public class ProjectController {
 
         int idParsed = Integer.parseInt(project_id);
 
-        User user = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitleCheck = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
+        User user               = userRepo.getOneUser(principal.getName());
+        JobTitle jobTitleCheck  = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
 
         if(jobTitleCheck == null){
             jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());

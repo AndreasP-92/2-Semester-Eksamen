@@ -40,7 +40,7 @@ public class MainController {
 //    =================================== GET ROUTES ==================
 
     @GetMapping("/")
-    private String index() {
+    private String index(){
 
         return "main/index";
     }
@@ -48,21 +48,21 @@ public class MainController {
     // CONTACT ==========
 
     @GetMapping("/contact")
-    private String contact() {
+    private String contact(){
         return "main/contact";
     }
 
     // FAQ ==========
 
     @GetMapping("/faq")
-    private String faq() {
+    private String faq(){
         return "main/faq";
     }
 
     // PRIVACY ==========
 
     @GetMapping("/privacy")
-    private String privacy() {
+    private String privacy(){
         return "main/privacy";
     }
 
@@ -75,13 +75,13 @@ public class MainController {
         List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
 
         System.out.println(listNewsfeed);
-        mav.addObject("listNewsfeed", "listNewsfeed");
+        mav.addObject("listNewsfeed", listNewsfeed);
 
             return mav;
     }
 
     @GetMapping("/createNewsfeed")
-    private String createNewsfeed() {
+    private String createNewsfeed(){
 
         return "main/createNewsfeed";
         //        private ModelAndView createNewsfeed(Model model){
@@ -91,7 +91,7 @@ public class MainController {
     }
 
     @GetMapping("/editNewsfeed")
-    private String editNewsfeed() {
+    private String editNewsfeed(){
 
         return "main/editNewsfeed";
 
@@ -132,10 +132,10 @@ public class MainController {
 
     @PostMapping("/insert/ticket")
     public String postTicket(WebRequest dataFromForm) {
-        String ticket_title = (dataFromForm.getParameter("ticket_title"));
-        String ticket_context = (dataFromForm.getParameter("ticket_context"));
-        String ticket_ownerMail = (dataFromForm.getParameter("ticket_ownerMail"));
-        String ticket_ownerName = (dataFromForm.getParameter("ticket_ownerName"));
+        String ticket_title       = (dataFromForm.getParameter("ticket_title"));
+        String ticket_context     = (dataFromForm.getParameter("ticket_context"));
+        String ticket_ownerMail   = (dataFromForm.getParameter("ticket_ownerMail"));
+        String ticket_ownerName   = (dataFromForm.getParameter("ticket_ownerName"));
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss.SSSSSS");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
