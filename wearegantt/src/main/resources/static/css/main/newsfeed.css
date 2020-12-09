@@ -12,17 +12,9 @@
     font-weight: 400;
 }
 
-#user1 {
-    background: #707070;
-    margin-top:1%;
-    padding:60px;
-}
-
-#user1 h3 {
-    color: #ffffff;
-    display: block;
-    font-size: 30px;
-    font-weight: 400;
+p {
+    margin-top: 0;
+    margin-bottom: 8rem;
 }
 
 .brand_logo_container {
@@ -47,47 +39,11 @@
 
 }
 
-#admin {
-    background: #707070;
-    margin-top:1%;
-    padding:60px;
+.newsBox{
+    background-color:grey; height:300px;
+    border-radius: 5%;
+    /*cursor: pointer;*/
 }
-
-#admin h3 {
-    color: #ffffff;
-    display: block;
-    font-size: 30px;
-    font-weight: 400;
-}
-#user2 {
-    background: #707070;
-    margin-top:1%;
-    padding:60px;
-}
-
-#user2 h3 {
-    color: #ffffff;
-    display: block;
-    font-size: 30px;
-    font-weight: 400;
-}
-
-p {
-    margin-top: -90px;
-    margin-bottom: 5rem;
-}
-p1 {
-    margin-top: -90px;
-    margin-bottom: 5rem;
-
-}
-
-.homer {
-    vertical-align: middle;
-    border-style: none;
-    width: 50px;
-}
-
 
 .btn {
     background: #34d4b1;
