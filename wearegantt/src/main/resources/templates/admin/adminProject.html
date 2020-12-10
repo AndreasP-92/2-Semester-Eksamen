@@ -36,25 +36,25 @@
     </div>
     <div class="d-flex justify-content-center form_container">
 
-        <form>
+        <form th:action="@{/admin/insert/project}" method="post">
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Name">
+                <input type="text" class="form-control input_pass" name="project_name" placeholder="Project Name">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Description">
+                <input type="text" class="form-control input_pass" name="project_desc" placeholder="Project Description">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Duration">
+                <input type="text" class="form-control input_pass" name="project_duration" placeholder="Project Duration">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Start">
+                <input type="text" class="form-control input_pass" name="project_start" placeholder="Project Start">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project End">
+                <input type="text" class="form-control input_pass" name="project_end" placeholder="Project End">
             </div>
 
             <div class="d-flex justify-content-center mt--1 p-0 login_container">

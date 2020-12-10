@@ -80,24 +80,31 @@ public class MainController {
             return mav;
     }
 
-    @GetMapping("/createNewsfeed")
+    @GetMapping("/create/newsfeed")
     private String createNewsfeed(){
 
-        return "main/createNewsfeed";
+        return "main/createnewsfeed";
         //        private ModelAndView createNewsfeed(Model model){
 //            ModelAndView mav = new ModelAndView("newsfeed/createNewsfeed");
 //
 //            return mav;
     }
 
-    @GetMapping("/editNewsfeed")
-    private String editNewsfeed(){
+    //    UPDATE NEWS ======================
 
-        return "main/editNewsfeed";
+    @GetMapping("/edit/newsfeed/{newsfeed_id}")
+    private ModelAndView updateNews(@PathVariable(name = "newsfeed_id") int newsfeed_id){
+        ModelAndView mav = new ModelAndView("main/editNewsfeed");
 
+        Newsfeed newsfeed = newsRepo.getOneNews(newsfeed_id);
+        mav.addObject("newsfeed", newsfeed);
+
+        System.out.println(newsfeed.getNewsfeed_datetime());
+
+        return mav;
     }
 
-    //    POST ROUTES ==================
+
     @GetMapping("/newsfeed/create")
     private ModelAndView createnewsfeed(Principal principal) {
         ModelAndView mav = new ModelAndView("main/createNewsfeed");
@@ -107,6 +114,32 @@ public class MainController {
 //        System.out.println(jobTitles);
         return mav;
     }
+
+//    POST ROUTES NEWS   ==================
+
+
+    //    UPDATE NEWS =============
+
+    @PostMapping("/update/newsfeed")
+    public String updateNews(WebRequest dataFromForm,  Principal principal) {
+        String newsfeed_id          = (dataFromForm.getParameter("newsfeed_id"));
+        String newsfeed_news        = (dataFromForm.getParameter("newsfeed_news"));
+        String newsfeed_title       = (dataFromForm.getParameter("newsfeed_title"));
+        String newsfeed_img         = (dataFromForm.getParameter("newsfeed_img"));
+        String newsfeed_datetime    = (dataFromForm.getParameter("newsfeed_datetime"));
+
+        int idParse         = Integer.parseInt(newsfeed_id);
+
+        User user           = userRepo.getOneUser(principal.getName());
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        newsRepo.updateNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime, org.getOrg_name());
+
+        return "redirect:/newsfeed/" + org.getOrg_name();
+    }
+
+
+
 // INSERT NEWS =======================
 
     @PostMapping("/insert/news")
@@ -123,7 +156,22 @@ public class MainController {
 
         newsRepo.insertNews(newsfeed_news, newsfeed_title, newsfeed_img, sdf.format(timestamp), org.getOrg_name());
 
-        return "redirect:/newsfeed";
+        return "redirect:/newsfeed/" + org.getOrg_name();
+    }
+
+    //    DELETE NEWS =============
+
+    @PostMapping("/delete/newsfeed")
+    public String deleteNews(WebRequest dataFromForm) {
+        String newsfeed_id               = (dataFromForm.getParameter("newsfeed_id"));
+
+        int idParsed = Integer.parseInt(newsfeed_id);
+
+        newsRepo.deleteNews(idParsed);
+
+        System.out.println(idParsed);
+
+        return "redirect:/";
     }
 
     //  =================================  POST ROUTES For TICKETS =============================

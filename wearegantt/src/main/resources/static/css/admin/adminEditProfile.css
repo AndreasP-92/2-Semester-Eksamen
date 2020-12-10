@@ -1,0 +1,30 @@
+/*Body*/
+body{
+    background: #ffffff !important;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+/*Header 1*/
+.text-center{
+    margin: -25px;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 40px;
+    color: black;
+}
+/*Buttons*/
+.login_btn{
+    width: 100%;
+    background: #707070 !important;
+    color: white !important;
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 18px;
+}
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
