@@ -69,6 +69,7 @@
                                 <th scope="col ">#</th>
                                 <th scope="col ">Task Name</th>
                                 <th scope="col ">Position</th>
+                                <th scope="col ">Task Owner</th>
                                 <th scope="col">Duration</th>
                                 <th scope="col">Start</th>
                                 <th scope="col">Dato</th>
@@ -76,70 +77,16 @@
                         </a>
                         </thead>
                         <tbody>
-                        <tr class="mt-5" onclick="location.href='/admin/support/chat'">
-                            <td>1</td>
-                            <th scope="row">1. Analysis</th>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>2</td>
-                            <td scope="row">SWOT Analysis</td>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>3</td>
-                            <td scope="row">Risk Management</td>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>4</td>
-                            <td scope="row">Class Diagram</td>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5" onclick="location.href='/admin/support/chat'">
-                            <td>5</td>
-                            <th scope="row">2. Design</th>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>6</td>
-
-                            <td scope="row">Design Database</td>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>7</td>
-                            <td scope="row">Spftware Design</td>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>8</td>
-                            <td>Interface Design</td>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
+                        <tr th:each="task : ${taskList}" class="mt-5" onclick="location.href='/admin/support/chat'">
+<!--                            <span th:each="profile : ${prof}"></span>-->
+                            <td class="number"></td>
+<!--                            <th scope="row">1. Analysis</th>-->
+                            <td th:text="${task.getTask_name()}"></td>
+                            <td th:text="${task.getFk_jobTitleName()}">Andreas</td>
+                            <td th:text="${task.getFk_profileName()}">31 days</td>
+                            <td th:text="${task.getTask_duration()}">11/23/2020</td>
+                            <td th:text="${task.getTask_start()}">11/23/2020</td>
+                            <td th:text="${task.getTask_end()}">11/23/2020</td>
                         </tr>
                         </tbody>
                     </table>
@@ -182,7 +129,7 @@
                                     Jeffrey Oechsner
                                 </div>
                                 <ul class="gantt__row-bars">
-                                    <li style="grid-column: 2/5; background-color: #2ecaac;">Start Februar 🙌</li>
+                                    <li style="grid-column: 11/13; background-color: #2ecaac;">Start Februar 🙌</li>
                                     <li style="grid-column: 1/6; background-color: #ff6252;" class="stripes"></li>
                                     <li style="grid-column: 7/11; background-color: #54c6f9;">Same line</li>
                                 </ul>

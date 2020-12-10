@@ -218,7 +218,7 @@ public class JobTitleRepo {
         List<GetProjectJobTitles> AlljobTitles = new ArrayList<>();
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT project_jobTitle.projectJobTitle_id, project_jobTitle.project_id, jobTitle.jobTitle_name FROM project_jobTitle INNER JOIN jobTitle ON project_jobTitle.jobTitle_id = jobTitle.jobTitle_id WHERE project_id = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT project_jobTitle.projectJobTitle_id, project_jobTitle.project_id,project_jobTitle.jobTitle_id, jobTitle.jobTitle_name FROM project_jobTitle INNER JOIN jobTitle ON project_jobTitle.jobTitle_id = jobTitle.jobTitle_id WHERE project_id = ?");
             ps.setInt(1, prject_id);
 
             ResultSet rs = ps.executeQuery();
@@ -227,7 +227,8 @@ public class JobTitleRepo {
                 GetProjectJobTitles tmp = new GetProjectJobTitles(
                         rs.getInt(1),
                         rs.getInt(2),
-                        rs.getString(3)
+                        rs.getInt(3),
+                        rs.getString(4)
                 );
                 AlljobTitles.add(tmp);
             }

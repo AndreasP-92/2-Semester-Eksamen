@@ -7,3 +7,13 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
+
+taskNumber();
+
+function taskNumber(){
+    const number = document.getElementsByClassName("number").length;
+
+    for(i = 0; i < number; i++){
+        document.getElementsByClassName("number")[i].innerHTML = i;
+    }
+}

@@ -48,6 +48,39 @@ public class ProfileRepo {
         return allProfiles;
     }
 
+    // =================== GET ALL PROFILES WITH ORGANIZATION ID ==================
+
+    public List<Profile> getAllProfilesWUserId(int fk_userId){
+        List<Profile> allProfiles = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profile WHERE fk_userId");
+
+            ResultSet rs = ps.executeQuery();
+
+            //Bruge resultatet til noget
+            while(rs.next()){
+                Profile tmp = new Profile(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getInt(9)
+                );
+                allProfiles.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+        return allProfiles;
+    }
+
     // =================== GET ONE PROFILE ==================
 
     public Profile getOneProfile(int fk_userId){
