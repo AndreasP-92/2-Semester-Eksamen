@@ -36,17 +36,24 @@
             <textarea maxlength="50" placeholder="Enter your News" th:field="*{newsfeed_news}"></textarea>
         </div>
         <!--=================== Submit button ============================ -->
+   <form>
         <div class="btn-group" role="group" aria-label="">
             <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="update-submit" data-submit="...Sending">Update</button>
-        </div>
-    </form>
-            <form th:action="@{/delete/newsfeed}" method="post" th:object="${newsfeed}">
+
+   </form>
+
+        <form th:action="@{/delete/newsfeed}" method="post" th:object="${newsfeed}">
             <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{newsfeed_id}">
             <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="delete-submit" data-submit="...Sending">Delete</button>
-            </form>
-            <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>
+        </form>
 
+        <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>
 
+    </form>
+
+<!--            <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>-->
+
+    </div>
 </main>
 <!--=================== Footer ============================ -->
 
