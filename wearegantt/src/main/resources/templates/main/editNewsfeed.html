@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Newsfeed</title>
+
+    <link th:href="@{/css/main/editNewsfeed.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main/editNewsfeed.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <!--=================== NAVIGATION ============================ -->
+    <div th:replace="partials/navbar :: navigation">
+
+    </div>
+</header>
+<main class="container" align="center">
+    <!--=================== logo ============================ -->
+    <div class="col-sm-12" align="center">
+        <img th:src="@{/images/logo.png/}" style="">
+    </div>
+
+    <form id="contact" th:action="@{/update/newsfeed}" th:object="${newsfeed}" class="w-50" method="post">
+        <!--=================== Input ============================ -->
+        <h3 style="text-align: center">Edit Your News</h3>
+        <h4></h4>
+        <input placeholder="Enter Your name" type="text" style="display:none" th:field="*{newsfeed_id}" >
+        <div class="form-group ml-5 mr-5">
+            <input placeholder="Enter Your name" type="text" th:field="*{newsfeed_title}" >
+        </div>
+        <div class="form-group ml-5 mr-5">
+            <input placeholder="Enter Date and Time " type="text" th:field="*{newsfeed_datetime}">
+        </div>
+        <div class="form-group ml-5 mr-5">
+            <textarea maxlength="50" placeholder="Enter your News" th:field="*{newsfeed_news}"></textarea>
+        </div>
+        <!--=================== Submit button ============================ -->
+   <form>
+        <div class="btn-group" role="group" aria-label="">
+            <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="update-submit" data-submit="...Sending">Update</button>
+
+   </form>
+
+        <form th:action="@{/delete/newsfeed}" method="post" th:object="${newsfeed}">
+            <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{newsfeed_id}">
+            <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="delete-submit" data-submit="...Sending">Delete</button>
+        </form>
+
+        <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>
+
+    </form>
+
+<!--            <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>-->
+
+    </div>
+</main>
+<!--=================== Footer ============================ -->
+
+<div th:replace="partials/footer :: footerFragment"></div>
+
+</body>
+</html>

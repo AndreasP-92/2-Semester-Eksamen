@@ -1,14 +1,17 @@
 package com.example.wearegantt.controller;
 
-import com.example.wearegantt.model.Organization;
-import com.example.wearegantt.model.SupportTicket;
-import com.example.wearegantt.model.TicketUser;
-import com.example.wearegantt.model.User;
+import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.SupportTicketRepo;
 import com.example.wearegantt.repository.OrganizationRepo;
 import com.example.wearegantt.repository.TicketRepo;
+import com.example.wearegantt.repository.NewsfeedRepo;
+import com.example.wearegantt.repository.OrganizationRepo;
+import com.example.wearegantt.repository.ProfileRepo;
 import com.example.wearegantt.repository.UserRepo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class MainController {
@@ -27,6 +31,10 @@ public class MainController {
     UserRepo userRepo = new UserRepo();
 
     TicketRepo ticketRepo = new TicketRepo();
+
+    NewsfeedRepo newsRepo = new NewsfeedRepo();
+
+//    OrganizationRepo orgRep = new OrganizationRepo();
 
 
 //    =================================== GET ROUTES ==================
@@ -60,37 +68,111 @@ public class MainController {
 
     // NEWSFEED ==========
 
-    @GetMapping("/newsfeed")
-    private String newsfeed(){
-        //        List<Newsfeeds> listNewsfeeds = newsfeedRepo.getAllNewsfeeds();
-//        model.addAttribute("listNewsfeeds", listNewsfeeds);
+    @GetMapping("/newsfeed/{fk_orgName}")
+    private ModelAndView newsfeed(@PathVariable(name = "fk_orgName") String fk_orgName){
+        ModelAndView mav = new ModelAndView("main/newsfeed");
 
-//        List<Newsfeeds> listNewsfeeds = newsfeedRepo.getAllNewsfeeds();
-//        model.addAttribute("listNewsfeeds", listNewsfeeds);
+        List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
 
+        System.out.println(listNewsfeed);
+        mav.addObject("listNewsfeed", listNewsfeed);
 
-        return "main/newsfeed";
+            return mav;
+    }
+
+    @GetMapping("/create/newsfeed")
+    private String createNewsfeed(){
+
+        return "main/createnewsfeed";
+        //        private ModelAndView createNewsfeed(Model model){
+//            ModelAndView mav = new ModelAndView("newsfeed/createNewsfeed");
+//
+//            return mav;
+    }
+
+    //    UPDATE NEWS ======================
+
+    @GetMapping("/edit/newsfeed/{newsfeed_id}")
+    private ModelAndView updateNews(@PathVariable(name = "newsfeed_id") int newsfeed_id){
+        ModelAndView mav = new ModelAndView("main/editNewsfeed");
+
+        Newsfeed newsfeed = newsRepo.getOneNews(newsfeed_id);
+        mav.addObject("newsfeed", newsfeed);
+
+        System.out.println(newsfeed.getNewsfeed_datetime());
+
+        return mav;
     }
 
 
-//    POST ROUTES ==================
-@GetMapping("/newsfeed/create")
-private ModelAndView createnewsfeed(Principal principal){
-    ModelAndView mav = new ModelAndView("main/createNewsfeed");
+    @GetMapping("/newsfeed/create")
+    private ModelAndView createnewsfeed(Principal principal) {
+        ModelAndView mav = new ModelAndView("main/createNewsfeed");
 //        User user = userRepo.getOneUser(principal.getName());
 //        List<JobTitle> jobTitles = projectRepo.getAllJobTitlesWOrg(user.getFk_orgId());
 //
 //        System.out.println(jobTitles);
+        return mav;
+    }
 
-//    ===================================  POST ROUTES ==================
+//    POST ROUTES NEWS   ==================
 
-//        User user = userRepo.getOneUser(principal.getName());
-//        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
 
-//        mav.addObject("jobTitlesList", jobTitles);
+    //    UPDATE NEWS =============
 
-    return mav;
-}
+    @PostMapping("/update/newsfeed")
+    public String updateNews(WebRequest dataFromForm,  Principal principal) {
+        String newsfeed_id          = (dataFromForm.getParameter("newsfeed_id"));
+        String newsfeed_news        = (dataFromForm.getParameter("newsfeed_news"));
+        String newsfeed_title       = (dataFromForm.getParameter("newsfeed_title"));
+        String newsfeed_img         = (dataFromForm.getParameter("newsfeed_img"));
+        String newsfeed_datetime    = (dataFromForm.getParameter("newsfeed_datetime"));
+
+        int idParse         = Integer.parseInt(newsfeed_id);
+
+        User user           = userRepo.getOneUser(principal.getName());
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        newsRepo.updateNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime, org.getOrg_name());
+
+        return "redirect:/newsfeed/" + org.getOrg_name();
+    }
+
+
+
+// INSERT NEWS =======================
+
+    @PostMapping("/insert/news")
+    public String postNews(WebRequest dataFromForm, Principal principal) {
+        String newsfeed_news     = (dataFromForm.getParameter("newsfeed_news"));
+        String newsfeed_title    = (dataFromForm.getParameter("newsfeed_title"));
+        String newsfeed_img      = (dataFromForm.getParameter("newsfeed_img"));
+
+        User user = userRepo.getOneUser(principal.getName());
+        Organization org = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss.SSSSSS");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        newsRepo.insertNews(newsfeed_news, newsfeed_title, newsfeed_img, sdf.format(timestamp), org.getOrg_name());
+
+        return "redirect:/newsfeed/" + org.getOrg_name();
+    }
+
+    //    DELETE NEWS =============
+
+    @PostMapping("/delete/newsfeed")
+    public String deleteNews(WebRequest dataFromForm) {
+        String newsfeed_id               = (dataFromForm.getParameter("newsfeed_id"));
+
+        int idParsed = Integer.parseInt(newsfeed_id);
+
+        newsRepo.deleteNews(idParsed);
+
+        System.out.println(idParsed);
+
+        return "redirect:/";
+    }
 
     //  =================================  POST ROUTES For TICKETS =============================
 

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>**DYNAMIC PROJECT NAME **</title>
+    <title th:text="${project.getProject_name()+' - Gantt'}"></title>
 
 
     <link href="/css/profile/gantt.css" type="text/css" rel="stylesheet">
@@ -22,9 +22,9 @@
             <div class="container">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <h2 class="sidenavHeaders">Project Settings</h2>
-                <a href="#">Add Task</a>
-                <a href="#">Add Employee</a>
-                <a href="#">Edit Project</a>
+                <a th:href="@{'/projects/create/task/'+${project.getProject_id()}}">Add Task</a>
+                <a th:href="@{'/profile/organization/'+${project.getFk_orgId()}}">Add Employee</a>
+                <a th:href="@{'/projects/edit/'+${project.getProject_id}}">Edit Project</a>
                 <a href="#">Edit Gantt</a>
 
                 <form class="">

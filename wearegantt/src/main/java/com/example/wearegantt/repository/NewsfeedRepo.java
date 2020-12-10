@@ -13,14 +13,15 @@ public class NewsfeedRepo {
 
     // =================== GET ALL NEWS ==================
 
-    public List<Newsfeed> getAllNews(){
+    public List<Newsfeed> getAllNews(String fk_orgName){
         List<Newsfeed> allNews = new ArrayList<>();
 
         try {
 
             //lavet et statement
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news");
-
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE fk_orgName = ?");
+           // metoden i ps objektet fortæller hvad der skal stå på QUERY plads nummer 1 (?).
+            ps.setString(1, fk_orgName);
             //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
@@ -32,51 +33,117 @@ public class NewsfeedRepo {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(7)
+                        rs.getString(6)
                 );
+
+                System.out.println(tmp);
                 allNews.add(tmp);
             }
 
         } catch (SQLException e) {
             System.out.println(e);
             return null;
+
         }
         return allNews;
     }
 
     // Get ONE NEWS ===========
-//
-//    public Newsfeed getOneNews(int news_id){
-//        Newsfeed NewsfeedToReturn = null;
-//
-//
-//        try {
-//            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE news_id = ?");
-//            ps.setInt(1 , news_id);
-//
-//            ResultSet rs = ps.executeQuery();
-//
-//            while(rs.next()){
-//                NewsfeedToReturn = new Newsfeed(
-//                        rs.getInt(1),
-//                        rs.getString(2),
-//                        rs.getString(3),
-//                        rs.getString(4),
-//                        rs.getString(5), ,
-//                        rs.getInt(7)
-//                );
-//            }
-//
-//
-//        }
-//        catch(SQLException e){
-//            System.out.println(e);
-//            return null;
-//        }
-//
-//        return NewsfeedToReturn;
-//
-//    }
+
+    public Newsfeed getOneNews(int newsfeed_id){
+        Newsfeed NewsfeedToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE newsfeed_id = ?");
+            ps.setInt(1 , newsfeed_id);
+
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                NewsfeedToReturn = new Newsfeed(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return NewsfeedToReturn;
+
+    }
+
+    //    ================== UPDATE NEWS ================
+
+    public void updateNews(int newsfeed_id, String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime, String fk_orgName){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE news SET newsfeed_news = ?, newsfeed_title = ?, newsfeed_img = ?, newsfeed_datetime = ?, fk_orgName = ? WHERE newsfeed_id = ?");
+
+
+            ps.setString(1, newsfeed_news);
+            ps.setString(2, newsfeed_title);
+            ps.setString(3, newsfeed_img);
+            ps.setString(4, newsfeed_datetime);
+            ps.setString(5, fk_orgName);
+            ps.setInt(6,    newsfeed_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Newsfeed update");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
+    //    ================== Delete NEWS ================
+
+    public void deleteNews(int newsfeed_id){
+
+        NewsfeedRepo newsRepo = new NewsfeedRepo();
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE  FROM news WHERE newsfeed_id = ?");
+
+            ps.setInt(1,    newsfeed_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Newsfeed Deleted");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    //    ================== INSERT NEWS ================
+
+    public void insertNews(String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime,String fk_orgName){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO news(newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime, fk_orgName) VALUES (?, ?, ?, ?, ?)");
+            ps.setString(1, newsfeed_news);
+            ps.setString(2, newsfeed_title);
+            ps.setString(3, newsfeed_img);
+            ps.setString(4, newsfeed_datetime);
+            ps.setString(5, fk_orgName);
+
+            int row = ps.executeUpdate();
+            System.out.println("news insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
 
     private Connection establishConnection() throws SQLException {
         //Lav en forbindelse

@@ -29,11 +29,38 @@ public class ProjectController {
 
     JobTitleRepo jobTitleRepo = new JobTitleRepo();
 
-// GANTT =================
+// ================================================== GANTT =====================================
 
     @GetMapping("/gantt/{project_id}")
     private ModelAndView gantt(@PathVariable(name = "project_id") String project_id){
         ModelAndView mav = new ModelAndView("project/gantt");
+
+        int idParsed = Integer.parseInt(project_id);
+
+        Project project = projectRepo.getOneProject(idParsed);
+        Organization org = orgRep.getOneOrgWId(project.getFk_orgId());
+
+        System.out.println(org.getOrg_name());
+
+        mav.addObject("org", org);
+
+        mav.addObject("project",project);
+
+        return mav;
+    }
+
+// TASKS ================
+
+    @GetMapping("/projects/create/task/{project_id}")
+    private ModelAndView tasks(@PathVariable(name = "project_id") String project_id){
+        ModelAndView mav = new ModelAndView("project/createTask");
+
+//        int idParsed = Integer.parseInt(project_id);
+
+//        Project project = projectRepo.getOneProject(idParsed);
+//
+//        List<Project> listProjects = projectRepo.getAllProjects();
+        mav.addObject("project_id", project_id);
 
         return mav;
     }
@@ -109,8 +136,8 @@ public class ProjectController {
 
         int idParsed = Integer.parseInt(project_id);
 
-        User user = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitleCheck = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
+        User user               = userRepo.getOneUser(principal.getName());
+        JobTitle jobTitleCheck  = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
 
         if(jobTitleCheck == null){
             jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());

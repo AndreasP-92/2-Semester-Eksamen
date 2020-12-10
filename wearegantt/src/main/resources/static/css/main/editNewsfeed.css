@@ -22,4 +22,10 @@
 
 .form-button{
     background: #34d4b1;;
+
+}
+
+#delete-submit{
+
+    background-color:red;
 }

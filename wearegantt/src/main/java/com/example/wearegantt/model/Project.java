@@ -1,5 +1,7 @@
 package com.example.wearegantt.model;
 
+import java.util.List;
+
 public class Project {
     private int project_id;
     private String project_name;
@@ -8,6 +10,8 @@ public class Project {
     private String project_start;
     private String project_end;
     private int fk_orgId;
+
+//    lav en liste eller hashset
 
 
     public Project(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId) {
@@ -19,6 +23,11 @@ public class Project {
         this.project_end = project_end;
         this.fk_orgId = fk_orgId;
     }
+
+//    public List<Project> ProjectList(){
+//        List<>
+//    }
+
 
     public int getProject_id() {
         return project_id;
