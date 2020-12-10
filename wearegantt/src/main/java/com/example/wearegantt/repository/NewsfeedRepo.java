@@ -50,13 +50,13 @@ public class NewsfeedRepo {
 
     // Get ONE NEWS ===========
 
-    public Newsfeed getOneNews(int news_id){
+    public Newsfeed getOneNews(int newsfeed_id){
         Newsfeed NewsfeedToReturn = null;
 
 
         try {
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM news WHERE newsfeed_id = ?");
-            ps.setInt(1 , news_id);
+            ps.setInt(1 , newsfeed_id);
 
 
             ResultSet rs = ps.executeQuery();
@@ -106,7 +106,7 @@ public class NewsfeedRepo {
 
     }
 
-    //    ================== Delete Project ================
+    //    ================== Delete NEWS ================
 
     public void deleteNews(int newsfeed_id){
 

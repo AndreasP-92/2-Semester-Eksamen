@@ -21,27 +21,31 @@
         <img th:src="@{/images/logo.png/}" style="">
     </div>
 
-    <form id="contact" action="" method="post" class="w-50">
+    <form id="contact" th:action="@{/update/newsfeed}" th:object="${newsfeed}" class="w-50" method="post">
         <!--=================== Input ============================ -->
         <h3 style="text-align: center">Edit Your News</h3>
         <h4></h4>
+        <input placeholder="Enter Your name" type="text" style="display:none" th:field="*{newsfeed_id}" >
         <div class="form-group ml-5 mr-5">
-            <input placeholder="Enter Your name" type="text" required autofocus class="form-control" >
+            <input placeholder="Enter Your name" type="text" th:field="*{newsfeed_title}" >
         </div>
         <div class="form-group ml-5 mr-5">
-            <input placeholder="Enter Date and Time " type="DateTime" required class="form-control">
+            <input placeholder="Enter Date and Time " type="text" th:field="*{newsfeed_datetime}">
         </div>
         <div class="form-group ml-5 mr-5">
-            <textarea maxlength="50" placeholder="Enter your News" required class="form-control"></textarea>
+            <textarea maxlength="50" placeholder="Enter your News" th:field="*{newsfeed_news}"></textarea>
         </div>
         <!--=================== Submit button ============================ -->
         <div class="btn-group" role="group" aria-label="">
             <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="update-submit" data-submit="...Sending">Update</button>
-            <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="delete-submit" data-submit="...Sending">Delete</button>
-            <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>
         </div>
-
     </form>
+            <form th:action="@{/delete/newsfeed}" method="post" th:object="${newsfeed}">
+            <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{newsfeed_id}">
+            <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="delete-submit" data-submit="...Sending">Delete</button>
+            </form>
+            <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>
+
 
 </main>
 <!--=================== Footer ============================ -->
