@@ -21,45 +21,45 @@
     </div>
     <div class="d-flex justify-content-center form_container">
 
-        <form th:action="@{/admin/edit/profile/{user_mail}}">
+        <form th:action="@{/admin/edit/profile}" method="post">
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="email" placeholder="Email">
+                <input type="text" class="form-control input_pass" th:field="${user.user_mail}">
             </div>
             <div class="input-group mb-2">
-                <input type="password" class="form-control input_pass" name="password" placeholder="Password">
+                <input type="password" class="form-control input_pass" th:field="${user.user_password}">
             </div>
             <div class="input-group mb-2">
-                <input type="password" class="form-control input_pass" name="password" placeholder="Password">
+                <input type="password" class="form-control input_pass" th:field="${user.user_password}">
             </div>
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="firstname" placeholder="FirstName">
-            </div>
-
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="lastname" placeholder="Lastname">
+                <input type="text" class="form-control input_pass" th:field="${profile.profile_firstname}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="phone" placeholder="Phone">
+                <input type="text" class="form-control input_pass" th:field="${profile.profile_lastname}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="country" placeholder="Country">
+                <input type="text" class="form-control input_pass" th:field="${profile.profile_phone}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="address" placeholder="Address">
+                <input type="text" class="form-control input_pass" th:field="${profile.profile_country}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="zipcode" placeholder="Zipcode">
+                <input type="text" class="form-control input_pass" th:field="${profile.profile_address}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" name="jobTitle" placeholder="Jobtitle">
+                <input type="text" class="form-control input_pass" th:field="${profile.profile_zip}">
             </div>
 
-            <select class="input-group mb-2">
+            <div class="input-group mb-2">
+                <input type="text" class="form-control input_pass" th:field="${profile.profile_jobTitle}">
+            </div>
+
+            <select name="role" class="input-group mb-2">
                 <option selected>Open this select menu to choose role</option>
                 <option value="ADMIN_ROLE">Admin</option>
                 <option value="TRIAL_ROLE">Trail</option>

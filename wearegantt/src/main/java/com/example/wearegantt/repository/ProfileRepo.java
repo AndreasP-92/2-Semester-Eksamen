@@ -47,7 +47,42 @@ public class ProfileRepo {
         }
         return allProfiles;
     }
+    // =================== GET ONE PROFILE WITH PROFILE ID  ==================
 
+    public Profile getOneProfileWProfileId(int fk_userId){
+        Profile profileToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profile WHERE fk_userId = ?");
+            ps.setInt(1 , fk_userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                profileToReturn = new Profile(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getInt(9)
+                );
+            }
+
+            System.out.println(profileToReturn);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return profileToReturn;
+
+    }
     // =================== GET ONE PROFILE ==================
 
     public Profile getOneProfile(int fk_userId){
