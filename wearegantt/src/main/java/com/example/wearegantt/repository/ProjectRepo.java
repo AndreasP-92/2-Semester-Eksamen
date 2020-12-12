@@ -78,6 +78,41 @@ public class ProjectRepo {
         return allProjects;
     }
 
+// Get ONE PROJECT WITH PROJECT NAME ===========
+
+    public Project getOneProjectWPName(String project_name){
+        Project ProjectToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE project_name = ?");
+            ps.setString(1 , project_name);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                ProjectToReturn = new Project(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return ProjectToReturn;
+
+    }
+
 // Get ONE PROJECT WHERE PROJECT ID ===========
 
     public Project getOneProject(int project_id){
@@ -282,6 +317,46 @@ public class ProjectRepo {
 
 // ============================================================= TASKS =================================================================
 
+    // Get ONE PROJECT WHERE PROJECT ID ===========
+
+    public Task getAllTasksWId(int task_id){
+        Task taskToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM task WHERE task_id = ?");
+            ps.setInt(1 , task_id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                taskToReturn = new Task(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getTimestamp(5).toLocalDateTime(),
+                        rs.getTimestamp(6).toLocalDateTime(),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return taskToReturn;
+
+    }
+
 // GET ALL PROJECTS + TASKS WITH PROJECT ID ==================
 
     public List<Task> getAllPTasksWProjectId(int fk_projectId){
@@ -300,8 +375,8 @@ public class ProjectRepo {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getTimestamp(5),
-                        rs.getTimestamp(6),
+                        rs.getTimestamp(5).toLocalDateTime(),
+                        rs.getTimestamp(6).toLocalDateTime(),
                         rs.getInt(7),
                         rs.getInt(8),
                         rs.getString(9),
@@ -320,6 +395,8 @@ public class ProjectRepo {
         return allTasks;
     }
 
+//    ================== GET ALL TASKS WITH PROJECT ID ================
+
     public List<Task> getAllTasksWProjectId(String fk_projectName){
         List<Task> allTasks = new ArrayList<>();
 
@@ -336,8 +413,8 @@ public class ProjectRepo {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getTimestamp(5),
-                        rs.getTimestamp(6),
+                        rs.getTimestamp(5).toLocalDateTime(),
+                        rs.getTimestamp(6).toLocalDateTime(),
                         rs.getInt(7),
                         rs.getInt(8),
                         rs.getString(9),
@@ -384,6 +461,37 @@ public class ProjectRepo {
             System.out.println(e);
         }
     }
+
+    //    ================== UPDATE TASK ================
+
+    public void updateTask(int task_id, String task_name, String task_desc, int task_duration, String task_start,String task_end, int task_processEnd, int task_processStart, String fk_projectName, String fk_profileName, String fk_ganttPhaseName, String fk_jobTitleName){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE task SET task_name = ?, task_desc = ?, task_duration = ?, task_start = ?, task_end = ?, task_processEnd = ?, task_processStart = ?, fk_projectName = ?, fk_profileName = ?, fk_ganttPhaseName = ?, fk_jobTitleName = ? WHERE task_id = ?");
+
+
+            ps.setString(1, task_name);
+            ps.setString(2, task_desc);
+            ps.setInt(3, task_duration);
+            ps.setString(4, task_start);
+            ps.setString(5, task_end);
+            ps.setInt(6, task_processEnd);
+            ps.setInt(7, task_processStart);
+            ps.setString(8, fk_projectName);
+            ps.setString(9, fk_profileName);
+            ps.setString(10, fk_ganttPhaseName);
+            ps.setString(11, fk_jobTitleName);
+            ps.setInt(12, task_id);
+
+
+            int row = ps.executeUpdate();
+            System.out.println("Project insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
 
 // ============================================================= GANTT PHASES =================================================================
 

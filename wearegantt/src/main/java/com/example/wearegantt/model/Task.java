@@ -1,14 +1,19 @@
 package com.example.wearegantt.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Task {
     private int task_id;
     private String task_name;
-    private String taskString;
+    private String task_desc;
     private int task_duration;
-    private Timestamp task_start;
-    private Timestamp task_end;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime task_start;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime  task_end;
     private int task_processEnd;
     private int task_processStart;
     private String fk_projectName;
@@ -16,10 +21,10 @@ public class Task {
     private String fk_ganttPhaseName;
     private String fk_jobTitleName;
 
-    public Task(int task_id, String task_name, String taskString, int task_duration, Timestamp task_start, Timestamp task_end, int task_processEnd, int task_processStart, String fk_projectName, String fk_profileName, String fk_ganttPhaseName, String fk_jobTitleName) {
+    public Task(int task_id, String task_name, String task_desc, int task_duration, LocalDateTime task_start, LocalDateTime task_end, int task_processEnd, int task_processStart, String fk_projectName, String fk_profileName, String fk_ganttPhaseName, String fk_jobTitleName) {
         this.task_id = task_id;
         this.task_name = task_name;
-        this.taskString = taskString;
+        this.task_desc = task_desc;
         this.task_duration = task_duration;
         this.task_start = task_start;
         this.task_end = task_end;
@@ -47,12 +52,12 @@ public class Task {
         this.task_name = task_name;
     }
 
-    public String getTaskString() {
-        return taskString;
+    public String getTask_desc() {
+        return task_desc;
     }
 
-    public void setTaskString(String taskString) {
-        this.taskString = taskString;
+    public void setTask_desc(String task_desc) {
+        this.task_desc = task_desc;
     }
 
     public int getTask_duration() {
@@ -63,19 +68,19 @@ public class Task {
         this.task_duration = task_duration;
     }
 
-    public Timestamp getTask_start() {
+    public LocalDateTime getTask_start() {
         return task_start;
     }
 
-    public void setTask_start(Timestamp task_start) {
+    public void setTask_start(LocalDateTime task_start) {
         this.task_start = task_start;
     }
 
-    public Timestamp getTask_end() {
+    public LocalDateTime getTask_end() {
         return task_end;
     }
 
-    public void setTask_end(Timestamp task_end) {
+    public void setTask_end(LocalDateTime task_end) {
         this.task_end = task_end;
     }
 
@@ -132,7 +137,7 @@ public class Task {
         return "Task{" +
                 "task_id=" + task_id +
                 ", task_name='" + task_name + '\'' +
-                ", taskString='" + taskString + '\'' +
+                ", task_desc='" + task_desc + '\'' +
                 ", task_duration=" + task_duration +
                 ", task_start=" + task_start +
                 ", task_end=" + task_end +
