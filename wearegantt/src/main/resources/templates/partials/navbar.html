@@ -10,15 +10,17 @@
     </div>
     <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
         <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link text-truncate text-white" href="/newsfeed">News Feed</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-truncate text-white" href="/projects">Data Model</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-truncate text-white" href="/editprofile">Edit Profile</a>
-            </li>
+            <div th:if="${OneOrg != null && project != null && profile != null}">
+                <li class="nav-item active">
+                    <a class="nav-link text-truncate text-white" th:href="@{'/newsfeed/' + ${OneOrg}}">News Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-truncate text-white" th:href="@{'/projects/' + ${project.getProject_id}}">Data Model</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-truncate text-white" th:href="@{'/editprofile/' + ${profile.getProfile_name}}">Edit Profile</a>
+                </li>
+            </div>
             <li class="nav-item">
                 <a class="nav-link text-truncate text-white" href="/">Login</a>
             </li>

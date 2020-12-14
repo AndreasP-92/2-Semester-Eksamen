@@ -1,18 +1,11 @@
 package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.*;
-import com.example.wearegantt.repository.SupportTicketRepo;
+import com.example.wearegantt.repository.*;
 import com.example.wearegantt.repository.OrganizationRepo;
-import com.example.wearegantt.repository.TicketRepo;
-import com.example.wearegantt.repository.NewsfeedRepo;
-import com.example.wearegantt.repository.OrganizationRepo;
-import com.example.wearegantt.repository.ProfileRepo;
-import com.example.wearegantt.repository.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,6 +26,12 @@ public class MainController {
     TicketRepo ticketRepo = new TicketRepo();
 
     NewsfeedRepo newsRepo = new NewsfeedRepo();
+
+    ProfileRepo profRepo = new ProfileRepo();
+
+    ProjectRepo projRepo = new ProjectRepo();
+
+
 
 //    OrganizationRepo orgRep = new OrganizationRepo();
 
@@ -74,21 +73,33 @@ public class MainController {
 
         List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
 
+        Organization organization = orgRep.getOneOrg(fk_orgName);
+        Project project = projRepo.getOneProjectWOrgId(organization.getOrg_id());
+        User user = userRepo.getOneUserWOrgId(organization.getOrg_id());
+        Profile profile = profRepo.getOneProfile(user.getUser_id());
+
+
         System.out.println(listNewsfeed);
         mav.addObject("listNewsfeed", listNewsfeed);
+        mav.addObject("OneOrg", fk_orgName);
+        mav.addObject("project", project);
+        mav.addObject("profile", profile);
+
+
 
             return mav;
     }
 
     @GetMapping("/create/newsfeed")
-    private String createNewsfeed(){
+    private ModelAndView createnewsfeed(Principal principal) {
+        ModelAndView mav = new ModelAndView("main/createNewsfeed");
 
-        return "main/createnewsfeed";
-        //        private ModelAndView createNewsfeed(Model model){
-//            ModelAndView mav = new ModelAndView("newsfeed/createNewsfeed");
-//
-//            return mav;
+        User user           = userRepo.getOneUser(principal.getName());
+        mav.addObject("user", user);
+
+        return mav;
     }
+
 
     //    UPDATE NEWS ======================
 
@@ -105,15 +116,15 @@ public class MainController {
     }
 
 
-    @GetMapping("/newsfeed/create")
-    private ModelAndView createnewsfeed(Principal principal) {
-        ModelAndView mav = new ModelAndView("main/createNewsfeed");
-//        User user = userRepo.getOneUser(principal.getName());
-//        List<JobTitle> jobTitles = projectRepo.getAllJobTitlesWOrg(user.getFk_orgId());
+//    @GetMapping("/newsfeed/create")
+//    private ModelAndView createnewsfeed(Principal principal) {
+//        ModelAndView mav = new ModelAndView("main/createNewsfeed");
 //
-//        System.out.println(jobTitles);
-        return mav;
-    }
+//        User user           = userRepo.getOneUser(principal.getName());
+//        mav.addObject("user", user);
+//
+//        return mav;
+//    }
 
 //    POST ROUTES NEWS   ==================
 
@@ -121,7 +132,7 @@ public class MainController {
     //    UPDATE NEWS =============
 
     @PostMapping("/update/newsfeed")
-    public String updateNews(WebRequest dataFromForm,  Principal principal) {
+    public String updateNews(WebRequest dataFromForm, Principal principal) {
         String newsfeed_id          = (dataFromForm.getParameter("newsfeed_id"));
         String newsfeed_news        = (dataFromForm.getParameter("newsfeed_news"));
         String newsfeed_title       = (dataFromForm.getParameter("newsfeed_title"));
@@ -146,7 +157,7 @@ public class MainController {
     public String postNews(WebRequest dataFromForm, Principal principal) {
         String newsfeed_news     = (dataFromForm.getParameter("newsfeed_news"));
         String newsfeed_title    = (dataFromForm.getParameter("newsfeed_title"));
-        String newsfeed_img      = (dataFromForm.getParameter("newsfeed_img"));
+        String newsfeed_img    = (dataFromForm.getParameter("newsfeed_img"));
 
         User user = userRepo.getOneUser(principal.getName());
         Organization org = orgRep.getOneOrgWId(user.getFk_orgId());
@@ -158,6 +169,7 @@ public class MainController {
 
         return "redirect:/newsfeed/" + org.getOrg_name();
     }
+
 
     //    DELETE NEWS =============
 

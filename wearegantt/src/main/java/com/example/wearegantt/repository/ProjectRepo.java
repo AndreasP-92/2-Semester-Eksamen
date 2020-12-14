@@ -211,6 +211,42 @@ public class ProjectRepo {
 
 
 
+    // Get ONE PROJECT WITH ORG ID ===========
+
+    public Project getOneProjectWOrgId(int org_id){
+        Project ProjectToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE fk_orgId = ?");
+            ps.setInt(1 , org_id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                ProjectToReturn = new Project(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return ProjectToReturn;
+
+    }
+
+
 //    ================== UPDATE Project ================
 
     public void updateProject(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId){
