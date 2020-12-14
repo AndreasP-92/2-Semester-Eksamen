@@ -55,7 +55,7 @@ public class LoginController {
 //    SAVE USER ==============
 
     @PostMapping("/saveUser")
-    public String postSaveUser(WebRequest dataFromForm) {
+    public String postUser(WebRequest dataFromForm) {
         String firstname = (dataFromForm.getParameter("firstname"));
         String lastname = (dataFromForm.getParameter("lastname"));
         String address = (dataFromForm.getParameter("address"));
