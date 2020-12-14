@@ -28,9 +28,10 @@ public class ProfileController {
 
 //   =========================================== GET ROUTES ===================================
 
+
+
+
 // EDIT PROFILE =================
-
-
     @GetMapping("/editprofile/{user_mail}")
     private ModelAndView profile(@PathVariable(name = "user_mail")String user_mail){
         ModelAndView mav = new ModelAndView("profile/editProfile");

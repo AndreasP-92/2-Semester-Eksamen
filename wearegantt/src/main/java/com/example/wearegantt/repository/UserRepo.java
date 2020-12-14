@@ -140,6 +140,39 @@ public class UserRepo {
 
     }
 
+    // ========= GET ONE USER WITH ID ===========
+
+    public User getOneUserWId(int user_id){
+        User userToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE user_id = ?");
+            ps.setInt(1 , user_id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                userToReturn = new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return userToReturn;
+
+    }
+
 //    ================== INSERT USER ================
 
     public void insertUser(String user_mail, String user_pass, int user_enabled){

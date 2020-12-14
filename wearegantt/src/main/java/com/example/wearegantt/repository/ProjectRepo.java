@@ -211,6 +211,42 @@ public class ProjectRepo {
 
 
 
+    // Get ONE PROJECT WITH ORG ID ===========
+
+    public Project getOneProjectWOrgId(int org_id){
+        Project ProjectToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE fk_orgId = ?");
+            ps.setInt(1 , org_id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                ProjectToReturn = new Project(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return ProjectToReturn;
+
+    }
+
+
 //    ================== UPDATE Project ================
 
     public void updateProject(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId){
@@ -235,9 +271,55 @@ public class ProjectRepo {
 
     }
 
+    //    ================== UPDATE Project ================
+
+    public void updateAdminProject(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE project SET project_name = ?, project_desc = ?, project_duration = ?, project_start = ?, project_end = ?, fk_orgId = ? WHERE project_id = ?");
+
+
+            ps.setString(1, project_name);
+            ps.setString(2, project_desc);
+            ps.setString(3, project_duration);
+            ps.setString(4, project_start);
+            ps.setString(5, project_end);
+            ps.setInt(6,    fk_orgId);
+            ps.setInt(7,    project_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Project insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
 //    ================== Delete Project ================
 
     public void deleteProject(int project_id){
+
+
+        ProjectRepo projectRepo = new ProjectRepo();
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE  FROM project WHERE project_id = ?");
+
+            ps.setInt(1,    project_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Project Deleted");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+
+    }
+
+    //    ================== Admin Delete Project ================
+
+    public void deleteAdminProject(int project_id){
 
 
         ProjectRepo projectRepo = new ProjectRepo();

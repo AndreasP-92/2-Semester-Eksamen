@@ -21,20 +21,17 @@
             <img th:src="@{/images/logo.png/}" style="">
         </div>
 
-        <form id="contact" th:action="@{/insert/news}" th:object="${user}" method="post" class="w-50" enctype="multipart/form-data">
+        <form id="contact" th:action="@{/insert/news}" th:object="${user}" method="post" class="w-50">
             <!--=================== Input ============================ -->
             <h3 style="text-align: center">Create Your News</h3>
             <h4></h4>
+
             <div class="form-group ml-5 mr-5">
                 <input placeholder="Enter Your Title" name="newsfeed_title" type="text" required autofocus class="form-control" >
             </div>
             <div class="form-group ml-5 mr-5">
                 <textarea maxlength="50" placeholder="Enter your News" name="newsfeed_news" required class="form-control"></textarea>
             </div>
-                <div class="form-group ml-5 mr-5">
-                    <label>Photos: </label>
-                    <input type="file" name="image" accept="image/png, image/jpeg" />
-                </div>
 
             <!--=================== Submit button ============================ -->
             <div class="btn-group" role="group" aria-label="">
@@ -42,6 +39,11 @@
                 <a href="/newsfeed" class="btn form-button ml-5 mr-5" type="submit" id="cancel-submit" >Cancel</a>
             </div>
         </form>
+                </div>
+
+            <!--=================== Submit button ============================ -->
+
+
 
     </main>
     <!--=================== Footer ============================ -->

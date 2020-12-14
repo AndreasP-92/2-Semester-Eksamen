@@ -20,25 +20,25 @@
     </div>
     <div class="d-flex justify-content-center form_container">
 
-        <form>
+        <form th:action="@{admin/update/project}" th:object="project" method="post">
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Name">
+                <input type="text" class="form-control input_pass" th:field="*{project_name}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Description">
+                <input type="text" class="form-control input_pass" th:field="*{project_desc}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Duration">
+                <input type="text" class="form-control input_pass" th:field="*{project_duration}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project Start">
+                <input type="text" class="form-control input_pass" th:field="*{project_start}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Project End">
+                <input type="text" class="form-control input_pass" th:field="*{project_end}">
             </div>
 
             <div class="d-flex justify-content-center mt--1 p-2 login_container">

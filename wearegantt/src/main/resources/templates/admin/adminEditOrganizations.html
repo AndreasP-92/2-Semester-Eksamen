@@ -20,17 +20,17 @@
     </div>
     <div class="d-flex justify-content-center form_container">
 
-        <form>
+        <form th:action="@{admin/update/org}" th:object="${org}" method="post">
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Organizations Name">
+                <input type="text" class="form-control input_pass" th:field="*{org_name}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Organizations Address">
+                <input type="text" class="form-control input_pass" th:field="*{org_address}">
             </div>
 
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" placeholder="Organizations CVR">
+                <input type="text" class="form-control input_pass" th:field="*{org_cvr}">
             </div>
 
             <div class="d-flex justify-content-center mt--1 p-2 login_container">
