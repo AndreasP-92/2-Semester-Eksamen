@@ -90,7 +90,7 @@ public class MainController {
     }
 
     @GetMapping("/create/newsfeed")
-    private ModelAndView createnewsfeed(Principal principal) {
+    private ModelAndView createNewsfeed(Principal principal) {
         ModelAndView mav = new ModelAndView("main/createNewsfeed");
 
         User user                   = userRepo.getOneUser(principal.getName());

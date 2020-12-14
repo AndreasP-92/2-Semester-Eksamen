@@ -10,6 +10,7 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +71,9 @@ public class LoginController {
         int zipParsed = Integer.parseInt(zipcode);
         int phoneParsed = Integer.parseInt(phone);
 
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        password = encoder.encode(password);
+
         userRepo.insertUser(email, password, 1);
         User userObj = userRepo.getOneUser(email);
 
@@ -78,6 +82,7 @@ public class LoginController {
         userRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed, jobTitle, userObj.getUser_id());
 
         userRepo.insertAuthUser("ROLE_USER", userObj.getUser_mail());
+
 
 
         return "redirect:/";

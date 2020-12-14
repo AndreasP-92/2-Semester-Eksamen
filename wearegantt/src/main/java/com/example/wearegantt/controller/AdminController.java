@@ -30,6 +30,8 @@ public class AdminController {
 
     UserRepo userRepo = new UserRepo();
 
+    NewsfeedRepo newsRepo = new NewsfeedRepo();
+
 //    GET ROUTES ==================
     // Admin Index
 
@@ -133,11 +135,27 @@ public class AdminController {
         return mav;
     }
 
-    //Admin News
-    @GetMapping("/admin/news")
-    public String adminNews(){
-        return "admin/adminNews";
-    }
+//    //Admin News
+//    @GetMapping("/admin/news/{fk_orgName}")
+//    public ModelAndView adminNews(@PathVariable(name = "fk_orgName") String fk_orgName){
+//        ModelAndView mav = new ModelAndView("admin/newsfeed");
+//
+//        List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
+//
+//        Organization organization = orgRep.getOneOrg(fk_orgName);
+//        Project project = projectRepo.getOneProjectWOrgId(organization.getOrg_id());
+//        User user = userRepo.getOneUserWOrgId(organization.getOrg_id());
+//        Profile profile = profileRepo.getOneProfile(user.getUser_id());
+//
+//
+//        System.out.println(listNewsfeed);
+//        mav.addObject("listNewsfeed", listNewsfeed);
+//        mav.addObject("OneOrg", fk_orgName);
+//        mav.addObject("project", project);
+//        mav.addObject("profile", profile);
+//
+//        return mav;
+//    }
 
 
 //========================================= POST ROUTES =========================================================================

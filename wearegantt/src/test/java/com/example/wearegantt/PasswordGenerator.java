@@ -12,7 +12,6 @@ public class PasswordGenerator {
 
         System.out.println(encodedPassword);
 
-
     }
 
 }

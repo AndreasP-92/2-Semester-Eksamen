@@ -183,9 +183,9 @@ public class ProfileController {
 
         userRepo.disableUser(idParsed);
 
-
         return "redirect:/login?logout";
     }
+
 
     //    UPDATE CREDENTIALS ========
 

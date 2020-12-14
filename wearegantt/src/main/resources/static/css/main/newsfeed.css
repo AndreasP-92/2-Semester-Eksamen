@@ -45,14 +45,29 @@ p {
     /*cursor: pointer;*/
 }
 
-.btn {
-    background: #34d4b1;
-    color:black;
+.projectBox{
+    background-color:grey; height:300px;
+    border-radius: 5%;
+    width:50%;
+    /*cursor: pointer;*/
+}
+p{
+    color:white;
+}
+h4{
+    color:white;
+}
+a{
+    text-decoration: none!important;
 }
 
-.btn-group, .btn-group-vertical {
-    position: absolute;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    vertical-align: middle;
+.buttons {
+    background: #34d4b1;;
+    border-radius: 10px;
+    border: 1px solid black;;
+    height: 33px;
+    color:black;
+    font-weight: bold;
+    display: block;
+    text-align: center;
 }
