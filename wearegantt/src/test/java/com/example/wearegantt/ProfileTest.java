@@ -40,7 +40,7 @@ public class ProfileTest {
     @Test
     public void InsertOneProfile() {
 
-        profileRepo.InsertProfile("name3", "desc3", "valby", 666, "dk", 2500, "stud", 6);
+        profileRepo.insertProfile("name3", "desc3", "valby", 666, "dk", 2500, "stud", 6);
     }
 
     // UPDATE ONE PROJECT

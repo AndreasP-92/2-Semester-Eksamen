@@ -21,7 +21,7 @@
     </div>
     <div class="d-flex justify-content-center form_container">
 
-        <form th:action="@{/admin/edit/profile}" method="post">
+        <form th:action="@{/admin/update/user}" method="post">
             <div class="input-group mb-2">
                 <input type="text" class="form-control input_pass" th:field="${user.user_mail}">
             </div>
@@ -30,6 +30,9 @@
             </div>
             <div class="input-group mb-2">
                 <input type="password" class="form-control input_pass" th:field="${user.user_password}">
+            </div>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control input_pass" readonly th:field="${profile.profile_id}">
             </div>
             <div class="input-group mb-2">
                 <input type="text" class="form-control input_pass" th:field="${profile.profile_firstname}">
@@ -67,13 +70,12 @@
                 <option value="NORMALUSER_ROLE">NormalUser</option>
             </select>
 
-            <div class="d-flex justify-content-center mt--1 p-2 login_container">
-                <button  type="submit" name="button" class="btn login_btn">Save Profile</button>
-            </div>
 
-            <div class="d-flex justify-content-center mt--1 p-2 login_container">
-                <button  type="submit" name="button" class="btn login_btn">Delete Profile</button>
-            </div>
+                <input  type="submit" name="button" class="btn login_btn" value="Save">
+
+                <input  type="submit" name="button" class="btn login_btn" value="Delete">
+
+
         </form>
     </div>
 </div>

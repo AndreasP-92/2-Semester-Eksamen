@@ -120,7 +120,7 @@ public class ProfileRepo {
 
     //    ================== INSERT PROFILE ================
 
-    public void InsertProfile(String profile_firstname, String profile_lastname, String profile_address, int profile_phone, String profile_country, int profile_zip, String profile_jobTitle, int fk_userId){
+    public void insertProfile(String profile_firstname, String profile_lastname, String profile_address, int profile_phone, String profile_country, int profile_zip, String profile_jobTitle, int fk_userId){
         try {
             PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profile(profile_firstname, profile_lastname, profile_address, profile_phone, profile_country, profile_zip, profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, profile_firstname);
@@ -164,11 +164,11 @@ public class ProfileRepo {
         }
     }
 
-    //    ================== ADMIN UPDATE USER ================
+    //    ================== INSERT ADMIN PROFILE ================
 
-    public void updateAdminProfile(int profile_id, String profile_firstname, String profile_lastname, String profile_address, int profile_phone, String profile_country, int profile_zip, String profile_jobTitle, int fk_userId){
+    public void insertAdminProfile(String profile_firstname, String profile_lastname, String profile_address, int profile_phone, String profile_country, int profile_zip, String profile_jobTitle, int fk_userId){
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE profile SET profile_firstname = ?, profile_lastname = ?, profile_address = ?, profile_phone = ?,profile_country = ?,profile_zip = ?, profile_jobTitle = ?, fk_userId = ? WHERE profile_id = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO profile(profile_firstname, profile_lastname, profile_address, profile_phone, profile_country, profile_zip, profile_jobTitle, fk_userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, profile_firstname);
             ps.setString(2, profile_lastname);
             ps.setString(3, profile_address);
@@ -177,7 +177,30 @@ public class ProfileRepo {
             ps.setInt(6, profile_zip);
             ps.setString(7, profile_jobTitle);
             ps.setInt(8, fk_userId);
-            ps.setInt(9,profile_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("User insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
+    //    ================== ADMIN UPDATE USER ================
+
+    public void updateAdminProfile(int profile_id, String profile_firstname, String profile_lastname, String profile_address, int profile_phone, String profile_country, int profile_zip, String profile_jobTitle, int fk_userId){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE profile SET profile_firstname = ?, profile_lastname = ?, profile_address = ?, profile_phone = ?,profile_country = ?,profile_zip = ?, profile_jobTitle = ?, fk_userId = ? WHERE profile_id = ?");
+            ps.setString(1, profile_firstname);
+            ps.setString(2, profile_lastname);
+            ps.setString(3, profile_address);
+            ps.setInt(4,    profile_phone);
+            ps.setString(5, profile_country);
+            ps.setInt(6,    profile_zip);
+            ps.setString(7, profile_jobTitle);
+            ps.setInt(8,    fk_userId);
+            ps.setInt(9,    profile_id);
 
 
             int row = ps.executeUpdate();
@@ -186,6 +209,26 @@ public class ProfileRepo {
         }catch (SQLException e){
             System.out.println(e);
         }
+    }
+
+    //    ================== ADMIN Delete User ================
+
+    public void deleteUser(int user_id){
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE  FROM users WHERE user_id = ?");
+
+            ps.setInt(1,    user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("User Deleted");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+
     }
 
 // ============================================================= ESTABLISH CONNECTION =================================================================

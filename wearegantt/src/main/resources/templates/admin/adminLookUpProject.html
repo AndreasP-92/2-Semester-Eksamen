@@ -47,9 +47,13 @@
                 <div class="d-flex justify-content-center mt--1 p-2 login_container ">
                     <a th:href="@{'/admin/editprofile/' + ${project.getProject_id()}}" class="btn btn-danger">Edit</a>
                 </div>
+
                 <div class="d-flex justify-content-center mt--1 p-2 login_container" >
-                    <a th:href="@{'/admin/delete/' + ${project.getProject_id()}}" class="btn btn-danger">Delete</a>
-                </div>
+                <form th:action="@{/admin/delete/user}" method="post">
+                    <input type="submit" class="btn btn-danger" value="Delete" >
+                    <input type="text" name="user_id" style="display: none;" th:value="${project.getProject_id()}">
+                </form>
+</div>
             </td>
         </tr>
         </tbody>

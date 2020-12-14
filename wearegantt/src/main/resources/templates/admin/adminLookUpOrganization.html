@@ -100,10 +100,10 @@
         </thead>
         <tbody>
         <tr th:each="organization : ${orglist}">
-            <th th:text="${organization.org_id}">ID</th>
-            <td th:text="${organization.org_name}">Name</td>
-            <td th:text="${organization.org_address}">Address</td>
-            <td th:text="${organization.org_cvr}">CVR</td>
+            <th th:text="${organization.org_id}">Organization ID</th>
+            <td th:text="${organization.org_name}">Organization Name</td>
+            <td th:text="${organization.org_address}">Organization Address</td>
+            <td th:text="${organization.org_cvr}">Organization CVR</td>
             <td>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container ">
                     <a th:href="@{'/admin/editorganizations/' + ${organization.getOrg_id()}}" class="btn btn-danger">Edit</a>

@@ -34,14 +34,18 @@
         <tbody>
         <tr th:each="user : ${userlist}">
             <th th:text="${user.user_id}">ID</th>
-            <td th:text="${user.user_mail}">Firstname</td>
-            <td th:text="${user.user_enabled}">Lastname</td>
+            <td th:text="${user.user_mail}">User Mail</td>
+            <td th:text="${user.user_enabled}">Enabled Profile</td>
             <td>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container ">
                     <a th:href="@{'/admin/editprofile/' + ${user.getUser_id()}}" class="btn btn-danger">Edit</a>
                 </div>
+
                 <div class="d-flex justify-content-center mt--1 p-2 login_container" >
-                    <a th:href="@{'/admin/delete/' + ${user.getUser_id()}}" class="btn btn-danger">Delete</a>
+                    <form th:action="@{/admin/delete/user}" method="post">
+                        <input type="submit" class="btn btn-danger" value="Delete" >
+                        <input type="text" name="user_id" style="display: none;" th:value="${user.getUser_id()}">
+                    </form>
                 </div>
             </td>
         </tr>
