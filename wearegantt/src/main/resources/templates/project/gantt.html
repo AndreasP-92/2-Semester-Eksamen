@@ -12,7 +12,9 @@
 <body>
     <header>
         <!--=================== NAVIGATION ============================ -->
-        <div th:replace="partials/navbar :: navigation">
+        <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${org},user=${user}">
+
+
 
         </div>
     </header>
@@ -23,7 +25,7 @@
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <h2 class="sidenavHeaders">Project Settings</h2>
                 <a th:href="@{'/projects/create/task/'+${project.getProject_id()}}">Add Task</a>
-                <a th:href="@{'/profile/organization/'+${project.getFk_orgId()}}">Add Employee</a>
+                <a th:href="@{'/profile/organization/'+${org.getOrg_name()}}">Add Employee</a>
                 <a th:href="@{'/projects/edit/'+${project.getProject_id}}">Edit Project</a>
                 <a href="#">Edit Gantt</a>
 

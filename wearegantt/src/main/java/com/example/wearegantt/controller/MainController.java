@@ -81,20 +81,22 @@ public class MainController {
 
         System.out.println(listNewsfeed);
         mav.addObject("listNewsfeed", listNewsfeed);
-        mav.addObject("OneOrg", fk_orgName);
+        mav.addObject("org", organization);
         mav.addObject("project", project);
         mav.addObject("profile", profile);
+        mav.addObject("user", user);
 
-
-
-            return mav;
+        return mav;
     }
 
     @GetMapping("/create/newsfeed")
     private ModelAndView createnewsfeed(Principal principal) {
         ModelAndView mav = new ModelAndView("main/createNewsfeed");
 
-        User user           = userRepo.getOneUser(principal.getName());
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        mav.addObject("org", organization);
         mav.addObject("user", user);
 
         return mav;

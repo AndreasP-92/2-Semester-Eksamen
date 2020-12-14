@@ -34,20 +34,24 @@ public class ProjectController {
 // ================================================== GANTT =====================================
 
     @GetMapping("/gantt/{project_id}")
-    private ModelAndView gantt(@PathVariable(name = "project_id") String project_id){
+    private ModelAndView gantt(@PathVariable(name = "project_id") String project_id, Principal principal){
         ModelAndView mav = new ModelAndView("project/gantt");
 
         int idParsed    = Integer.parseInt(project_id);
 
-        Project project     = projectRepo.getOneProject(idParsed);
-        Organization org    = orgRep.getOneOrgWId(project.getFk_orgId());
-        List<Task> taskList = projectRepo.getAllTasksWProjectId(project.getProject_name());
+        Project project             = projectRepo.getOneProject(idParsed);
+        Organization org            = orgRep.getOneOrgWId(project.getFk_orgId());
+        List<Task> taskList         = projectRepo.getAllTasksWProjectId(project.getProject_name());
+        User user                   = userRepo.getOneUser(principal.getName());
+
+
 
         System.out.println(project);
 
         System.out.println(taskList);
 
         System.out.println(org.getOrg_name());
+        mav.addObject("user", user);
         mav.addObject("test", "5/13");
         mav.addObject("taskList", taskList);
         mav.addObject("org", org);
@@ -66,6 +70,7 @@ public class ProjectController {
 
         Project project                     = projectRepo.getOneProject(idParsed);
         User user                           = userRepo.getOneUserWOrgId(project.getFk_orgId());
+        Organization organization           = orgRep.getOneOrgWId(project.getFk_orgId());
         Profile profile                     = profileRepo.getOneProfile(user.getUser_id());
         List<GetProjectJobTitles> jobTitles = jobTitleRepo.getOneProjectJobTitle(project.getProject_id());
         List<GanttPhases> phaseList         = projectRepo.getAllGanttPhases();
@@ -78,6 +83,7 @@ public class ProjectController {
         mav.addObject("profile", profile);
         mav.addObject("space", " ");
         mav.addObject("user", user);
+        mav.addObject("org", organization);
         mav.addObject("phaseList", phaseList);
         mav.addObject("jobTitles", jobTitles);
         mav.addObject("project", project);
@@ -104,16 +110,13 @@ public class ProjectController {
         List<GanttPhases> phaseList         = projectRepo.getAllGanttPhases();
         List<GetProjectJobTitles> jobTitles = jobTitleRepo.getOneProjectJobTitle(project.getProject_id());
 
-//        String timeStart = sdf.format(task.getTask_start());
-//
-//        System.out.println(sdf.format(task.getTask_start()));
-
         System.out.println("projects=======" + task);
 
 //        mav.addObject("timeStart", timeStart);
         mav.addObject("profile", profile);
         mav.addObject("space", " ");
         mav.addObject("user", user);
+        mav.addObject("org", organization);
         mav.addObject("phaseList", phaseList);
         mav.addObject("jobTitles", jobTitles);
         mav.addObject("project", project);
@@ -126,23 +129,32 @@ public class ProjectController {
 // PROJECTS ================
 
     @GetMapping("/projects")
-    private String projects(Model model){
+    private String projects(Model model, Principal principal){
 
-        List<Project> listProjects = projectRepo.getAllProjects();
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        List<Project> listProjects  = projectRepo.getAllProjects();
+
         model.addAttribute("listProjects", listProjects);
+        model.addAttribute("org", organization);
+        model.addAttribute("user", user);
 
         return "project/project";
     }
 // JOBTITLE =================
     @GetMapping("/projects/create/newJobtitles/{project_id}")
-    private ModelAndView newjobtitle(@PathVariable(name = "project_id")String project_id ){
+    private ModelAndView newjobtitle(@PathVariable(name = "project_id")String project_id, Principal principal){
         ModelAndView mav = new ModelAndView("project/newJobtitle");
 
         int idParsed = Integer.parseInt(project_id);
 
-        Project project = projectRepo.getOneProject(idParsed);
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        Project project             = projectRepo.getOneProject(idParsed);
 
         mav.addObject("project", project);
+        mav.addObject("user", user);
+        mav.addObject("organization", organization);
 
         return mav;
     }
@@ -150,18 +162,16 @@ public class ProjectController {
 //    CREATE PROJECT =======================
 
     @GetMapping("/projects/create")
-    private ModelAndView createproject(){
+    private ModelAndView createproject(Principal principal){
         ModelAndView mav = new ModelAndView("project/createProject");
-//        User user = userRepo.getOneUser(principal.getName());
-//        List<JobTitle> jobTitles = projectRepo.getAllJobTitlesWOrg(user.getFk_orgId());
-//
-//        System.out.println(jobTitles);
 
 
-//        User user = userRepo.getOneUser(principal.getName());
-//        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
 
-//        mav.addObject("jobTitlesList", jobTitles);
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        mav.addObject("org", organization);
+        mav.addObject("user", user);
 
         return mav;
     }
@@ -171,13 +181,18 @@ public class ProjectController {
 //    UPDATE PROJECT ======================
 
     @GetMapping("/projects/edit/{id}")
-    private ModelAndView project(@PathVariable(name = "id")int id){
+    private ModelAndView project(@PathVariable(name = "id")int id, Principal principal){
         ModelAndView mav    = new ModelAndView("project/editProject");
-        Project project     = projectRepo.getOneProject(id);
+
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        Project project             = projectRepo.getOneProject(id);
         List<GetProjectJobTitles> projectTitlesList = jobTitleRepo.getOneProjectJobTitle(id);
 
         mav.addObject("jobTitlesList", projectTitlesList);
         mav.addObject("project", project);
+        mav.addObject("org", organization);
+        mav.addObject("user", user);
 
         return mav;
     }
