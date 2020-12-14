@@ -135,6 +135,24 @@ public class OrganizationRepo {
         }
     }
 
+    //    ================== ADMIN UPDATE ORGANIZATION ================
+
+    public void updateAdminOrg(int org_id, String org_name, String org_address, int org_cvr){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE org SET org_name = ?, org_address = ?, org_cvr = ? WHERE org_id = ?");
+            ps.setString(1, org_name);
+            ps.setString(2, org_address);
+            ps.setInt(3, org_cvr);
+            ps.setInt(4, org_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("org insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
     //    ================== DELETE ORGANIZATION ================
 
     public void deleteOrg(int org_id){
@@ -144,6 +162,21 @@ public class OrganizationRepo {
 
             int row = ps.executeUpdate();
             System.out.println("Række slettet");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    //    ================== ADMIN DELETE ORGANIZATION ================
+
+    public void deleteAdminOrg(int org_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE FROM org WHERE org_id = ?");
+            ps.setInt(1, org_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Organization Deleted");
 
         }catch (SQLException e){
             System.out.println(e);

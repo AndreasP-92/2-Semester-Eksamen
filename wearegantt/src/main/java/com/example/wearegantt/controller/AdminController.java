@@ -1,13 +1,7 @@
 package com.example.wearegantt.controller;
 
-import com.example.wearegantt.model.Organization;
-import com.example.wearegantt.model.Profile;
-import com.example.wearegantt.model.Project;
-import com.example.wearegantt.model.User;
-import com.example.wearegantt.repository.OrganizationRepo;
-import com.example.wearegantt.repository.ProfileRepo;
-import com.example.wearegantt.repository.ProjectRepo;
-import com.example.wearegantt.repository.UserRepo;
+import com.example.wearegantt.model.*;
+import com.example.wearegantt.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
 
 public class AdminController {
+
+    JobTitleRepo jobTitleRepo = new JobTitleRepo();
 
     OrganizationRepo orgRep = new OrganizationRepo();
 
@@ -126,10 +124,11 @@ public class AdminController {
     @GetMapping("/admin/editprojects/{project_id}")
     public ModelAndView adminEditProject(@PathVariable(name = "project_id") int project_id) {
         ModelAndView mav = new ModelAndView("admin/adminEditProjects");
+        Project project     = projectRepo.getOneProject(project_id);
+        List<GetProjectJobTitles> projectTitlesList = jobTitleRepo.getOneProjectJobTitle(project_id);
 
-        Organization org = orgRep.getOneOrgWId(project_id);
-
-        mav.addObject("org", org);
+        mav.addObject("jobTitlesList", projectTitlesList);
+        mav.addObject("project", project);
 
         return mav;
     }
@@ -141,21 +140,22 @@ public class AdminController {
     }
 
 
-//========================================= POST ROUTES ========================================================
-//    SAVE USER ==============
+//========================================= POST ROUTES =========================================================================
 
+////========================================= Admin INSERT PROFILE =======================================================================
+    //    INSERT ADMIN PROFILE ==============
     @PostMapping("/admin/insert/user")
     public String postUser(WebRequest dataFromForm) {
-        String firstname = (dataFromForm.getParameter("firstname"));
-        String lastname = (dataFromForm.getParameter("lastname"));
-        String address = (dataFromForm.getParameter("address"));
-        String phone = (dataFromForm.getParameter("phone"));
-        String country = (dataFromForm.getParameter("country"));
-        String zipcode = (dataFromForm.getParameter("zipcode"));
-        String jobTitle = (dataFromForm.getParameter("jobTitle"));
-        String password = (dataFromForm.getParameter("password"));
-        String email = (dataFromForm.getParameter("email"));
-        String role = (dataFromForm.getParameter("role"));
+        String firstname    = (dataFromForm.getParameter("firstname"));
+        String lastname     = (dataFromForm.getParameter("lastname"));
+        String address      = (dataFromForm.getParameter("address"));
+        String phone        = (dataFromForm.getParameter("phone"));
+        String country      = (dataFromForm.getParameter("country"));
+        String zipcode      = (dataFromForm.getParameter("zipcode"));
+        String jobTitle     = (dataFromForm.getParameter("jobTitle"));
+        String password     = (dataFromForm.getParameter("password"));
+        String email        = (dataFromForm.getParameter("email"));
+        String role         = (dataFromForm.getParameter("role"));
 
 
         int zipParsed = Integer.parseInt(zipcode);
@@ -174,9 +174,9 @@ public class AdminController {
         return "redirect:/";
     }
 
-    //================ Update User
-    @PostMapping("/admin/update/user")
-    public String updateUser(WebRequest dataFromForm,  Principal principal) {
+    //================ Update ADMIN PROFILE
+    @PostMapping("/admin/update/profile")
+    public String updateAdminProfile(WebRequest dataFromForm,  Principal principal) {
         String profile_id           = (dataFromForm.getParameter("profile_id"));
         String profile_firstname    = (dataFromForm.getParameter("profile_firstname"));
         String profile_lastname     = (dataFromForm.getParameter("profile_lastname"));
@@ -193,15 +193,27 @@ public class AdminController {
 
         User user = userRepo.getOneUser(principal.getName());
 
-        profileRepo.updateProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
+        profileRepo.updateAdminProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
 
 
 
         return "redirect:/";
     }
 
+    @PostMapping("admin/delete/profile")
+    public String deleteAdminProfile(WebRequest dataFromForm) {
+        String user_id      = (dataFromForm.getParameter("user_id"));
+
+        int idParsed = Integer.parseInt(user_id);
+
+        userRepo.disableUser(idParsed);
+
+        return "redirect:/login?logout";
+    }
 
 
+
+//========================================================ADMIN PROJECT===============================================================
 
     @PostMapping("/admin/insert/project")
     public String postAdminProject(WebRequest dataFromForm, Principal principal) {
@@ -220,6 +232,47 @@ public class AdminController {
         return "redirect:/";
     }
 
+    //====================ADMIN UPDATE PROJECT
+    @PostMapping("admin/update/project")
+    public String updateAdminProject(WebRequest dataFromForm,  Principal principal) {
+
+        String project_id         = (dataFromForm.getParameter("project_id"));
+        String project_name       = (dataFromForm.getParameter("project_name"));
+        String project_desc       = (dataFromForm.getParameter("project_desc"));
+        String project_duration   = (dataFromForm.getParameter("project_duration"));
+        String project_start      = (dataFromForm.getParameter("project_start"));
+        String project_end        = (dataFromForm.getParameter("project_end"));
+
+
+        int idParsed = Integer.parseInt(project_id);
+
+
+        User user = userRepo.getOneUser(principal.getName());
+
+        projectRepo.updateAdminProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
+
+
+
+        return "redirect:/";
+    }
+
+    //ADMIN DELETE PROJECT
+
+    @PostMapping("admin/delete/project")
+    public String deleteAdminProject(WebRequest dataFromForm) {
+        String project_id               = (dataFromForm.getParameter("project_id"));
+
+        int idParsed = Integer.parseInt(project_id);
+
+        projectRepo.deleteAdminProject(idParsed);
+
+
+        return "redirect:/";
+    }
+
+//========================================================ADMIN Organisation===============================================================
+
+    //    ================== ADMIN INSERT ORGANIZATION ================
     @PostMapping("/admin/insert/organization")
     public String postAdminOrganization(WebRequest dataFromForm, Principal principal) {
         String org_name         = (dataFromForm.getParameter("org_name"));
@@ -237,4 +290,35 @@ public class AdminController {
 
         return "redirect:/";
     }
+
+    //    ================== ADMIN UPDATE ORGANIZATION ================
+
+    @PostMapping("admin/update/org")
+    public String updateAdminOrg(WebRequest dataFromForm) {
+        String org_id       = (dataFromForm.getParameter("org_id"));
+        String org_address  = (dataFromForm.getParameter("org_address"));
+        String org_name     = (dataFromForm.getParameter("org_name"));
+        String org_cvr      = (dataFromForm.getParameter("org_cvr"));
+
+        int cvrParsed   = Integer.parseInt(org_cvr);
+        int idParsed    = Integer.parseInt(org_id);
+
+        orgRep.updateAdminOrg(idParsed, org_name, org_address, cvrParsed);
+
+
+        return "redirect:/";
+    }
+
+    @PostMapping("admin/delete/org")
+    public String deleteAdminOrg(WebRequest dataFromForm) {
+        String org_id      = (dataFromForm.getParameter("org_id"));
+
+        int idParsed = Integer.parseInt(org_id);
+
+        orgRep.deleteAdminOrg(idParsed);
+
+
+        return "redirect:/";
+    }
+
 }
