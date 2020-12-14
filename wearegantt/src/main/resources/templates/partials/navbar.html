@@ -9,25 +9,25 @@
         </button>
     </div>
     <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
-        <ul class="navbar-nav">
-            <div th:if="${OneOrg != null && project != null && profile != null}">
+        <ul class="navbar-nav" th:if="${org != null && user != null}">
                 <li class="nav-item active">
-                    <a class="nav-link text-truncate text-white" th:href="@{'/newsfeed/' + ${OneOrg}}">News Feed</a>
+                    <a class="nav-link text-truncate text-white" th:href="@{'/newsfeed/' + ${org.getOrg_name}}">News Feed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-truncate text-white" th:href="@{'/projects/' + ${project.getProject_id}}">Data Model</a>
+                    <a class="nav-link text-truncate text-white" href="/projects/">Data Model</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-truncate text-white" th:href="@{'/editprofile/' + ${profile.getProfile_name}}">Edit Profile</a>
+                    <a class="nav-link text-truncate text-white" th:href="@{'/editprofile/' + ${user.getUser_mail}}">Edit Profile</a>
                 </li>
-            </div>
-            <li class="nav-item">
-                <a class="nav-link text-truncate text-white" href="/">Login</a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link text-truncate text-white" href="/login?logout">Logout</a>
             </li>
-
+        </ul>
+        <ul class="navbar-nav" th:if="${org == null && project == null && user == null}">
+            <li class="nav-item">
+                <a class="nav-link text-truncate text-white" href="/login">Login</a>
+            </li>
         </ul>
     </div>
     <span class="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last"></span>

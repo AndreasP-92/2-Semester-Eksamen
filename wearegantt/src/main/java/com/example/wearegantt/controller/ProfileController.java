@@ -3,6 +3,7 @@ package com.example.wearegantt.controller;
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -21,9 +23,6 @@ public class ProfileController {
     UserRepo userRepo       = new UserRepo();
 
     ProfileRepo profileRepo = new ProfileRepo();
-
-
-
 
 
 //   =========================================== GET ROUTES ===================================
@@ -52,7 +51,14 @@ public class ProfileController {
 // NEW ORGANIZATION =================
 
     @GetMapping("/profile/organization")
-    private String newOrganization(){
+    private String newOrganization(Model model, Principal principal){
+
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        model.addAttribute("org", organization);
+        model.addAttribute("user", user);
+
         return "profile/newOrganization";
     }
 
@@ -60,10 +66,13 @@ public class ProfileController {
 
 
     @GetMapping("/profile/organization/{org_name}")
-    public ModelAndView Organization(@PathVariable(name = "org_name")String org_name){
+    public ModelAndView Organization(@PathVariable(name = "org_name")String org_name, Principal principal){
         ModelAndView mav    = new ModelAndView("profile/editOrganization");
-        Organization org    = orgRep.getOneOrg(org_name);
 
+        Organization org    = orgRep.getOneOrg(org_name);
+        User user           = userRepo.getOneUser(principal.getName());
+
+        mav.addObject("user", user);
         mav.addObject("org", org);
 
         return mav;

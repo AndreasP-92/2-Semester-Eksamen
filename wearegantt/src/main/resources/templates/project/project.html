@@ -11,9 +11,7 @@
 <body>
     <header>
         <!--=================== NAVIGATION ============================ -->
-        <div th:replace="partials/navbar :: navigation">
-
-        </div>
+        <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}"></div>
     </header>
     <main class="row">
         <div class="col-sm-2 mt-3" align="center">
