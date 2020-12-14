@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -58,6 +59,8 @@ public class AdminController {
         User user = userRepo.getOneUserWId(user_id);
 
         Profile profile = profileRepo.getOneProfile(user_id);
+
+
 
         mav.addObject("profile", profile);
 

@@ -42,8 +42,39 @@ public class UserRepo {
         return allUsers;
     }
 
+    // =================== GET ALL USERS WITH ORGANIZATION ID ==================
 
-// ========= FIND ONE USER ===========
+    public List<User> getAllUsersWOrgId(int fk_orgId){
+        List<User> allUsers = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE fk_orgId = ?");
+            ps.setInt(1 , fk_orgId);
+
+            ResultSet rs = ps.executeQuery();
+
+            //Bruge resultatet til noget
+            while(rs.next()){
+                User tmp = new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5)
+
+                );
+                allUsers.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+        return allUsers;
+    }
+
+
+// ========= FIND ONE USER WITH USER MAIL===========
 
     public User getOneUser(String user_mail){
         User userToReturn = null;
@@ -52,6 +83,39 @@ public class UserRepo {
         try {
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE user_mail = ?");
             ps.setString(1 , user_mail);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                userToReturn = new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return userToReturn;
+
+    }
+
+    // ========= FIND ONE USER WITH ORGANIZATION ID ===========
+
+    public User getOneUserWOrgId(int fk_orgId){
+        User userToReturn = null;
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE fk_orgId = ?");
+            ps.setInt(1 , fk_orgId);
 
             ResultSet rs = ps.executeQuery();
 
@@ -245,7 +309,7 @@ public class UserRepo {
     public void updateUserOrg(String user_mail, int fk_orgId){
         try {
             if(fk_orgId != 0){
-                PreparedStatement ps = establishConnection().prepareStatement("UPDATE user SET fk_orgId = ? WHERE user_mail = ?");
+                PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET fk_orgId = ? WHERE user_mail = ?");
                 ps.setInt(1, fk_orgId);
                 ps.setString(2, user_mail);
 

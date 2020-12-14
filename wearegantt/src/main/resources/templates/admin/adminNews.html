@@ -2,157 +2,60 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Whats New</title>
+    <title>Edit Newsfeed</title>
 
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link th:href="@{/css/admin/adminNews.css}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="/css/main/newsfeed.css" type="text/css" rel="stylesheet">
+    <link href="/css/admin/adminNews.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<!--&lt;!&ndash;=================== Block 1 ============================ &ndash;&gt;-->
-<main class="container">
-    <a href="/admin" style="color:black;">
-        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
-    </a>
-        <div class="row">
-            <div class="col-sm">
-                <div class="container" align="center">
-                    <div class="col-sm-12" align="center">
-                        <img th:src="@{/images/logo.png/}" style="">
-                    </div>
-                    <form id="news" action="" method="post" class="w-50">
-                        <h3 style="text-align: center">What's New?</h3>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--=================== Block 2 ============================ -->
-        <div class="row">
-            <div class="col-sm">
-                <div th:each="" class="container" align="center">
-                    <form id="user1" action="" method="post" class="w-50">
-                        <div class="brand_logo_container">
-                            <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                        </div>
-                        <h3 style="text-align: center"><small>Project "Wag" is updated</small></h3>
-                        <p class="text-left" style="color:black"> Admin </p>
-                        <p1 class="text-left" style="color:black"> -> 29/11/20 <- </p1>
-<!---->
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--=================== Block 3 ============================ -->
-<!--        <div class="row">-->
-<!--            <div class="col-sm">-->
-<!--                <div class="container" align="center">-->
-<!--                    <form id="admin" action="" method="post" class="w-50">-->
-<!--                        <div class="brand_logo_container">-->
-<!--                            <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
-<!--                        </div>-->
-<!--                        <h3 style="text-align: center"><small>Bug fixed version 2.5</small></h3>-->
-<!--                        <p class="text-left" style="color:#ffffff"> Admin </p>-->
-<!--                        <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-        <!--=================== Block 4 ============================ -->
-<!--        <div class="row">-->
-<!--            <div class="col-sm">-->
-<!--                <div class="container" align="center">-->
-<!--                    <form id="user2" action="" method="post" class="w-50">-->
-<!--                        <div class="brand_logo_container">-->
-<!--                            <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
-<!--                        </div>-->
-<!--                        <h3 style="text-align: center"><small>Update Coming Soon</small></h3>-->
-<!--                        <p class="text-left" style="color:#ffffff"> Admin </p>-->
-<!--                        <div class="col-sm-12" align="center">-->
-<!--                            <img th:src="@{/images/PhunTime.png/}" style="">-->
-<!--                        </div>-->
-<!--                        <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
-<!--&lt;!&ndash;&ndash;&gt;-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-    </main>
+<header>
+    <!--=================== NAVIGATION ============================ -->
+    <div th:replace="partials/navbar :: navigation">
 
     </div>
+</header>
+<main class="container" align="center">
+    <!--=================== logo ============================ -->
+    <div class="col-sm-12" align="center">
+        <img th:src="@{/images/logo.png/}" style="">
+    </div>
+
+    <form id="contact" th:action="@{/update/newsfeed}" th:object="${newsfeed}" class="w-50" method="post">
+        <!--=================== Input ============================ -->
+        <h3 style="text-align: center">Edit Your News</h3>
+        <h4></h4>
+        <input placeholder="Enter Your name" type="text" style="display:none" th:field="*{newsfeed_id}" >
+        <div class="form-group ml-5 mr-5">
+            <input placeholder="Enter Your name" type="text" th:field="*{newsfeed_title}" >
+        </div>
+        <div class="form-group ml-5 mr-5">
+            <input placeholder="Enter Date and Time " type="text" th:field="*{newsfeed_datetime}">
+        </div>
+        <div class="form-group ml-5 mr-5">
+            <textarea maxlength="50" placeholder="Enter your News" th:field="*{newsfeed_news}"></textarea>
+        </div>
+        <!--=================== Submit button ============================ -->
+        <form>
+            <div class="btn-group" role="group" aria-label="">
+                <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="update-submit" data-submit="...Sending">Update</button>
+
+        </form>
+
+        <form th:action="@{/delete/newsfeed}" method="post" th:object="${newsfeed}">
+            <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{newsfeed_id}">
+            <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="delete-submit" data-submit="...Sending">Delete</button>
+        </form>
+
+        <a href="/newsfeed" class="btn form-button ml-5 mr-5" name="submit" type="submit" id="cancel-submit" data-submit="...Sending">Cancel</a>
+
+    </form>
+
+    </div>
+</main>
+<!--=================== Footer ============================ -->
+
+<div th:replace="partials/footer :: footerFragment"></div>
 
 </body>
 </html>
-
-
-
-
-<!--&lt;!&ndash;=================== Block 1 ============================ &ndash;&gt;-->
-<!--<div class="container" align="center">-->
-<!--    <a href="/admin" style="color:black;">-->
-<!--        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>-->
-<!--    </a>-->
-<!--    <div class="row">-->
-<!--        <div class="col-sm">-->
-<!--            <div class="container" align="center">-->
-<!--                <div class="col-sm-12" align="center">-->
-<!--                    <img th:src="@{/images/logo.png/}" style="">-->
-<!--                </div>-->
-<!--                <form id="news" action="" method="post" class="w-50">-->
-<!--                    <h3 style="text-align: center">What's New?</h3>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;=================== Block 2 ============================ &ndash;&gt;-->
-<!--    <div class="row">-->
-<!--        <div class="col-sm">-->
-<!--            <div class="container" align="center">-->
-<!--                <form id="user1" action="" method="post" class="w-50">-->
-<!--                    <div class="brand_logo_container">-->
-<!--                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
-<!--                    </div>-->
-<!--                    <h3 style="text-align: center"><small>Project "Wag" is updated</small></h3>-->
-<!--                    <p class="text-left" style="color:#ffffff"> Admin </p>-->
-<!--                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
-
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;=================== Block 3 ============================ &ndash;&gt;-->
-<!--    <div class="row">-->
-<!--        <div class="col-sm">-->
-<!--            <div class="container" align="center">-->
-<!--                <form id="admin" action="" method="post" class="w-50">-->
-<!--                    <div class="brand_logo_container">-->
-<!--                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
-<!--                    </div>-->
-<!--                    <h3 style="text-align: center"><small>Bug fixed version 2.5</small></h3>-->
-<!--                    <p class="text-left" style="color:#ffffff"> Admin </p>-->
-<!--                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;=================== Block 4 ============================ &ndash;&gt;-->
-<!--    <div class="row">-->
-<!--        <div class="col-sm">-->
-<!--            <div class="container" align="center">-->
-<!--                <form id="user2" action="" method="post" class="w-50">-->
-<!--                    <div class="brand_logo_container">-->
-<!--                        <img  srcset="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_1280.png 1.778x" src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">-->
-<!--                    </div>-->
-<!--                    <h3 style="text-align: center"><small>Update Coming Soon</small></h3>-->
-<!--                    <p class="text-left" style="color:#ffffff"> Admin </p>-->
-<!--                    <div class="col-sm-12" align="center">-->
-<!--                        <img th:src="@{/images/PhunTime.png/}" style="">-->
-<!--                    </div>-->
-<!--                    <p1 class="text-left" style="color:#ffffff"> -> 29/11/20 <- </p1>-->
-
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--</div>-->

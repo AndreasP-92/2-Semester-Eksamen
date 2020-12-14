@@ -47,20 +47,20 @@ public class ProfileRepo {
         }
         return allProfiles;
     }
-    // =================== GET ONE PROFILE WITH PROFILE ID  ==================
 
-    public Profile getOneProfileWProfileId(int fk_userId){
-        Profile profileToReturn = null;
+    // =================== GET ALL PROFILES WITH ORGANIZATION ID ==================
 
+    public List<Profile> getAllProfilesWUserId(int fk_userId){
+        List<Profile> allProfiles = new ArrayList<>();
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profile WHERE fk_userId = ?");
-            ps.setInt(1 , fk_userId);
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profile WHERE fk_userId");
 
             ResultSet rs = ps.executeQuery();
 
+            //Bruge resultatet til noget
             while(rs.next()){
-                profileToReturn = new Profile(
+                Profile tmp = new Profile(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -71,18 +71,16 @@ public class ProfileRepo {
                         rs.getString(8),
                         rs.getInt(9)
                 );
+                allProfiles.add(tmp);
             }
 
-            System.out.println(profileToReturn);
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
             return null;
         }
-
-        return profileToReturn;
-
+        return allProfiles;
     }
+
     // =================== GET ONE PROFILE ==================
 
     public Profile getOneProfile(int fk_userId){

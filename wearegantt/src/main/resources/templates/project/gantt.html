@@ -69,77 +69,24 @@
                                 <th scope="col ">#</th>
                                 <th scope="col ">Task Name</th>
                                 <th scope="col ">Position</th>
+                                <th scope="col ">Task Owner</th>
                                 <th scope="col">Duration</th>
                                 <th scope="col">Start</th>
-                                <th scope="col">Dato</th>
+                                <th scope="col">End</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </a>
                         </thead>
                         <tbody>
-                        <tr class="mt-5" onclick="location.href='/admin/support/chat'">
-                            <td>1</td>
-                            <th scope="row">1. Analysis</th>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>2</td>
-                            <td scope="row">SWOT Analysis</td>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>3</td>
-                            <td scope="row">Risk Management</td>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>4</td>
-                            <td scope="row">Class Diagram</td>
-                            <td>Manager</td>
-                            <td>31 days</td>
-                            <td>11/23/2020</td>
-                            <td>11/23/2020</td>
-                        </tr>
-                        <tr class="mt-5" onclick="location.href='/admin/support/chat'">
-                            <td>5</td>
-                            <th scope="row">2. Design</th>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>6</td>
-
-                            <td scope="row">Design Database</td>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>7</td>
-                            <td scope="row">Spftware Design</td>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
-                        </tr>
-                        <tr class="mt-5 column" onclick="location.href='/admin/support/chat'">
-                            <td>8</td>
-                            <td>Interface Design</td>
-                            <td>Manager</td>
-                            <td>23 Days</td>
-                            <td>11/30/2020</td>
-                            <td>12/07/2020</td>
+                        <tr th:each="task : ${taskList}" class="mt-5">
+                                <td class="number"></td>
+                                <td th:text="${task.task_name}">Task Name</td>
+                                <td th:text="${task.fk_jobTitleName}">Position</td>
+                                <td th:text="${task.fk_profileName}">Task Owner</td>
+                                <td th:text="${task.task_duration}">Duration</td>
+                                <td th:text="${task.task_start}">Start</td>
+                                <td th:text="${task.task_end}">End</td>
+                                <td><a th:href="@{'/gantt/edit/task/'+${task.task_id}}" class="btn btn-warning">Edit Task</a></td></a>-->
                         </tr>
                         </tbody>
                     </table>
@@ -160,72 +107,35 @@
                             <div class="gantt__row gantt__row--lines" data-month="5">
                                 <span></span><span></span><span></span>
                                 <span></span><span></span><span></span>
-                                <span></span><span class="marker"></span><span></span>
+                                <span></span><span></span><span></span>
                                 <span></span><span></span><span></span>
                             </div>
-                            <div class="gantt__row">
-                                <div class="gantt__row-first">
-                                    Andreas Pedersen
+                            <span th:each="taskList : ${taskList}">
+                                <div class="gantt__row">
+                                    <div th:text="${taskList.fk_profileName}" class="gantt__row-first">
+                                        profile Name
+                                    </div>
+<!--                                     th:title="${}"-->
+                                    <ul class="gantt__row-bars" th:switch="${taskList.fk_ganttPhaseName}">
+                                        <li th:case="${'Analysis'}"
+                                            th:title="${taskList.task_desc}"
+                                            th:style="|grid-column: ${taskList.task_processStart}/${taskList.task_processEnd}; background-color: #343a40; cursor: help;|"
+                                            th:text="${taskList.task_name}"></li>
+                                        <li th:case="${'Design'}"
+                                            th:title="${taskList.task_desc}"
+                                            th:style="|grid-column: ${taskList.task_processStart}/${taskList.task_processEnd}; background-color: #33a541; cursor: help;|"
+                                            th:text="${taskList.task_name}"></li>
+                                        <li th:case="${'Development'}"
+                                            th:title="${taskList.task_desc}"
+                                            th:style="|grid-column: ${taskList.task_processStart}/${taskList.task_processEnd}; background-color: #ccb40e; cursor: help;|"
+                                            th:text="${taskList.task_name}"></li>
+                                        <li th:case="${'Testing'}"
+                                            th:title="${taskList.task_desc}"
+                                            th:style="|grid-column: ${taskList.task_processStart}/${taskList.task_processEnd}; background-color: #7d6e02; cursor: help;|"
+                                            th:text="${taskList.task_name}"></li>
+                                    </ul>
                                 </div>
-                                <ul class="gantt__row-bars">
-                                    <li style="grid-column: 4/13; background-color: #2ecaac;">Even longer project</li>
-                                </ul>
-                            </div>
-                            <div class="gantt__row gantt__row--empty">
-                                <div class="gantt__row-first">
-                                    Tobias Cho
-                                </div>
-                                <ul class="gantt__row-bars"></ul>
-                            </div>
-                            <div class="gantt__row">
-                                <div class="gantt__row-first">
-                                    Jeffrey Oechsner
-                                </div>
-                                <ul class="gantt__row-bars">
-                                    <li style="grid-column: 2/5; background-color: #2ecaac;">Start Februar 🙌</li>
-                                    <li style="grid-column: 1/6; background-color: #ff6252;" class="stripes"></li>
-                                    <li style="grid-column: 7/11; background-color: #54c6f9;">Same line</li>
-                                </ul>
-                            </div>
-                            <div class="gantt__row gantt__row--empty">
-                                <div class="gantt__row-first">
-                                    Andreas Pedersen
-                                </div>
-                                <ul class="gantt__row-bars"></ul>
-                            </div>
-                            <div class="gantt__row gantt__row--empty">
-                                <div class="gantt__row-first">
-                                    Tobias Cho
-                                </div>
-                                <ul class="gantt__row-bars">
-                                    <li style="grid-column: 1/13; background-color: #54c6f9;">Your d**k head, work PEON!</li>
-                                </ul>
-                            </div>
-                            <div class="gantt__row">
-                                <div class="gantt__row-first">
-                                    Jeffrey Oechsner
-                                </div>
-                                <ul class="gantt__row-bars">
-                                    <li style="grid-column: 2/5; background-color: #2ecaac;"></li>
-                                </ul>
-                            </div>
-                            <div class="gantt__row">
-                                <div class="gantt__row-first">
-                                    Andreas Pedersen
-                                </div>
-                                <ul class="gantt__row-bars">
-                                    <li style="grid-column: 3/8; background-color: #54c6f9;">Long project</li>
-                                </ul>
-                            </div>
-
-                            <div class="gantt__row">
-                                <div class="gantt__row-first">
-                                    Ketti Waterworth
-                                </div>
-                                <ul class="gantt__row-bars">
-                                    <li style="grid-column: 4/9; background-color: #ff6252;" class="stripes">A title</li>
-                                </ul>
-                            </div>
+                            </span>
                         </div>
                     </div>
                 </div>

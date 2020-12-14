@@ -1,20 +1,39 @@
 package com.example.wearegantt.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Task {
     private int task_id;
     private String task_name;
-    private String task_duration;
-    private String task_start;
-    private String tak_end;
+    private String task_desc;
+    private int task_duration;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime task_start;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime  task_end;
+    private int task_processEnd;
+    private int task_processStart;
+    private String fk_projectName;
+    private String fk_profileName;
+    private String fk_ganttPhaseName;
+    private String fk_jobTitleName;
 
-    public Task(int task_id, String task_name, String task_duration, String task_start, String tak_end) {
+    public Task(int task_id, String task_name, String task_desc, int task_duration, LocalDateTime task_start, LocalDateTime task_end, int task_processEnd, int task_processStart, String fk_projectName, String fk_profileName, String fk_ganttPhaseName, String fk_jobTitleName) {
         this.task_id = task_id;
         this.task_name = task_name;
+        this.task_desc = task_desc;
         this.task_duration = task_duration;
         this.task_start = task_start;
-        this.tak_end = tak_end;
+        this.task_end = task_end;
+        this.task_processEnd = task_processEnd;
+        this.task_processStart = task_processStart;
+        this.fk_projectName = fk_projectName;
+        this.fk_profileName = fk_profileName;
+        this.fk_ganttPhaseName = fk_ganttPhaseName;
+        this.fk_jobTitleName = fk_jobTitleName;
     }
 
     public int getTask_id() {
@@ -33,28 +52,84 @@ public class Task {
         this.task_name = task_name;
     }
 
-    public String getTask_duration() {
+    public String getTask_desc() {
+        return task_desc;
+    }
+
+    public void setTask_desc(String task_desc) {
+        this.task_desc = task_desc;
+    }
+
+    public int getTask_duration() {
         return task_duration;
     }
 
-    public void setTask_duration(String task_duration) {
+    public void setTask_duration(int task_duration) {
         this.task_duration = task_duration;
     }
 
-    public String getTask_start() {
+    public LocalDateTime getTask_start() {
         return task_start;
     }
 
-    public void setTask_start(String task_start) {
+    public void setTask_start(LocalDateTime task_start) {
         this.task_start = task_start;
     }
 
-    public String getTak_end() {
-        return tak_end;
+    public LocalDateTime getTask_end() {
+        return task_end;
     }
 
-    public void setTak_end(String tak_end) {
-        this.tak_end = tak_end;
+    public void setTask_end(LocalDateTime task_end) {
+        this.task_end = task_end;
+    }
+
+    public int getTask_processEnd() {
+        return task_processEnd;
+    }
+
+    public void setTask_processEnd(int task_processEnd) {
+        this.task_processEnd = task_processEnd;
+    }
+
+    public int getTask_processStart() {
+        return task_processStart;
+    }
+
+    public void setTask_processStart(int task_processStart) {
+        this.task_processStart = task_processStart;
+    }
+
+    public String getFk_projectName() {
+        return fk_projectName;
+    }
+
+    public void setFk_projectName(String fk_projectName) {
+        this.fk_projectName = fk_projectName;
+    }
+
+    public String getFk_profileName() {
+        return fk_profileName;
+    }
+
+    public void setFk_profileName(String fk_profileName) {
+        this.fk_profileName = fk_profileName;
+    }
+
+    public String getFk_ganttPhaseName() {
+        return fk_ganttPhaseName;
+    }
+
+    public void setFk_ganttPhaseName(String fk_ganttPhaseName) {
+        this.fk_ganttPhaseName = fk_ganttPhaseName;
+    }
+
+    public String getFk_jobTitleName() {
+        return fk_jobTitleName;
+    }
+
+    public void setFk_jobTitleName(String fk_jobTitleName) {
+        this.fk_jobTitleName = fk_jobTitleName;
     }
 
     @Override
@@ -62,9 +137,16 @@ public class Task {
         return "Task{" +
                 "task_id=" + task_id +
                 ", task_name='" + task_name + '\'' +
-                ", task_duration='" + task_duration + '\'' +
-                ", task_start='" + task_start + '\'' +
-                ", tak_end='" + tak_end + '\'' +
+                ", task_desc='" + task_desc + '\'' +
+                ", task_duration=" + task_duration +
+                ", task_start=" + task_start +
+                ", task_end=" + task_end +
+                ", task_processEnd=" + task_processEnd +
+                ", task_processStart=" + task_processStart +
+                ", fk_projectName='" + fk_projectName + '\'' +
+                ", fk_profileName='" + fk_profileName + '\'' +
+                ", fk_ganttPhaseName='" + fk_ganttPhaseName + '\'' +
+                ", fk_jobTitleName='" + fk_jobTitleName + '\'' +
                 '}';
     }
 }
