@@ -3,22 +3,23 @@
 }
 
 #news {
-    background: #707070;
-    margin-top:1%;
-    padding:30px;
+    background-color:#707070; height:150px;
+    border-radius: 5%;
+    width:50%;
+    margin-top:20px;
+    color:white;
 }
 
-#news h3 {
-    color: #ffffff;
-    display: block;
-    font-size: 30px;
-    font-weight: 400;
-}
+/*#news h3 {*/
+/*    color: #ffffff;*/
+/*    display: block;*/
+/*    font-size: 30px;*/
+/*    font-weight: 400;*/
+/*}*/
 
-p {
-    margin-top: 0;
-    margin-bottom: 8rem;
-}
+/*p {*/
+/*    margin-top: 0;*/
+/*}*/
 
 .brand_logo_container {
     position: absolute;
@@ -42,16 +43,17 @@ p {
 
 }
 
-.newsBox{
-    background-color:grey; height:300px;
-    border-radius: 5%;
-    /*cursor: pointer;*/
-}
+/*.newsBox{*/
+/*    background-color:#707070; height:300px;*/
+/*    border-radius: 5%;*/
+/*    !*cursor: pointer;*!*/
+/*}*/
 
 .projectBox{
-    background-color:grey; height:300px;
+    background-color:#707070; height:300px;
     border-radius: 5%;
     width:50%;
+    margin-top:20px;
     /*cursor: pointer;*/
 }
 p{

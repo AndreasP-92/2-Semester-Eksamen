@@ -26,12 +26,13 @@
                     <img  th:src="@{/images/smallLogo.png/}"  class ="brand_logo" alt="logo">
                 </div>
             </div>
-            <form th:action="@{/saveUser}" method="post" class="pt-5">
+            <form th:action="@{/saveUser}" method="post" class="pt-5" id="registerForm">
                 <input class="text-center p-3 mb-1" type="text"  name="email" placeholder="Email">
 
-                <input class="text-center p-3 mb-1" type="password"  name="password" placeholder="Password">
+                <input class="text-center p-3 mb-1" type="password" id="password" name="password" placeholder="Password">
+                <div id="passwordValid" class="valid"></div>
 
-                <input class="text-center p-3 mb-1" type="password"  name="password" placeholder="Password">
+                <input class="text-center p-3 mb-1" type="password" id="confirm_password" name="pass" placeholder="Password">
 
                 <input class="text-center p-3 mb-1" type="text" name="firstname" placeholder="Firstname">
 
@@ -50,7 +51,7 @@
                 <div id="paypal-button01"></div>
 
                 <div class="d-flex justify-content-center mt--3 p-3 login_container">
-                     <button  type="submit" name="button" class="btn login_btn">Create Account</button>
+                     <button onclick="validate()" type="submit" id="submitButton" name="button" class="btn login_btn">Create Account</button>
                 </div>
 
 
@@ -70,5 +71,5 @@
 </body>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script src="/js/register/paypal.js"></script>
-
+<script src="/js/register/register.js"></script>
 </html>
