@@ -85,6 +85,8 @@ public class MainController {
         mav.addObject("project", project);
         mav.addObject("profile", profile);
         mav.addObject("user", user);
+        mav.addObject("activePage", "newsfeed");
+
 
         return mav;
     }

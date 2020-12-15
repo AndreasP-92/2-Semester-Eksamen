@@ -1,3 +1,6 @@
+.nav-active{
+    border-bottom: 2px solid white;
+}
 
 #news {
     background: #707070;

@@ -1,3 +1,7 @@
+.nav-active{
+    border-bottom: 2px solid white;
+}
+
 .projectBox{
     background-color:grey; height:300px;
     border-radius: 5%;

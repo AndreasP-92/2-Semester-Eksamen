@@ -42,6 +42,8 @@ public class ProfileController {
         mav.addObject("profile", profile);
         mav.addObject("org", org);
         mav.addObject("user", user);
+        mav.addObject("activePage", "profile");
+
 
         System.out.println(user);
 

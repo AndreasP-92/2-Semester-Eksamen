@@ -136,6 +136,7 @@ public class ProjectController {
         List<Project> listProjects  = projectRepo.getAllProjects();
 
         model.addAttribute("listProjects", listProjects);
+        model.addAttribute("activePage", "projects");
         model.addAttribute("org", organization);
         model.addAttribute("user", user);
 
@@ -156,6 +157,7 @@ public class ProjectController {
         mav.addObject("user", user);
         mav.addObject("organization", organization);
 
+
         return mav;
     }
 
@@ -172,6 +174,7 @@ public class ProjectController {
 
         mav.addObject("org", organization);
         mav.addObject("user", user);
+
 
         return mav;
     }

@@ -483,7 +483,7 @@ public class ProjectRepo {
         List<Task> allTasks = new ArrayList<>();
 
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM task WHERE fk_profileName = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM task WHERE fk_projectName = ?");
             ps.setString(1, fk_projectName);
 
             ResultSet rs = ps.executeQuery();
