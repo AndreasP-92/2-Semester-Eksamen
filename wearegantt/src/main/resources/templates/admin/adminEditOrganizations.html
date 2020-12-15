@@ -20,9 +20,13 @@
     </div>
     <div class="d-flex justify-content-center form_container">
 
-        <form th:action="@{/admin/edit/organization}" method="post">
+        <form th:action="@{/admin/update/org}" th:object="${org}" method="post">
             <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="*{organization.org_name}">
+                <input type="text" class="form-control input_pass" readonly th:field="*{org_id}">
+            </div>
+
+            <div class="input-group mb-2">
+                <input type="text" class="form-control input_pass" th:field="*{org_name}">
             </div>
 
             <div class="input-group mb-2">

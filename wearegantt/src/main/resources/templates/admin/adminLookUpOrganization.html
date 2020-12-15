@@ -109,7 +109,13 @@
                     <a th:href="@{'/admin/editorganizations/' + ${organization.getOrg_id()}}" class="btn btn-danger">Edit</a>
                 </div>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container" >
-                    <a th:href="@{'/admin/delete/' + ${organization.getOrg_id()}}" class="btn btn-danger">Delete</a>
+                    <form th:action="@{/admin/delete/org}" method="post">
+                        <input type="submit" class="btn btn-danger" value="Delete" >
+                        <input type="text" name="org_id" style="display: none;" th:value="${organization.getOrg_id()}">
+                    </form>
+                </div>
+                <div class="d-flex justify-content-center mt--1 p-2 login_container ">
+                    <a th:href="@{'/admin/editnews/' + ${organization.getOrg_name()}}" class="btn btn-danger">Edit</a>
                 </div>
             </td>
         </tr>

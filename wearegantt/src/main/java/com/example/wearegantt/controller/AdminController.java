@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -130,7 +129,7 @@ public class AdminController {
     @GetMapping("/admin/editprojects/{project_id}")
     public ModelAndView adminEditProject(@PathVariable(name = "project_id") int project_id) {
         ModelAndView mav = new ModelAndView("admin/adminEditProjects");
-        Project project     = projectRepo.getAllProjects().get(project_id);
+        Project project     = projectRepo.getOneProject(project_id);
         List<GetProjectJobTitles> projectTitlesList = jobTitleRepo.getOneProjectJobTitle(project_id);
 
         mav.addObject("jobTitlesList", projectTitlesList);
@@ -149,27 +148,29 @@ public class AdminController {
 //        return "admin/adminLookUpNews";
 //    }
 
-//    //Admin News
-//    @GetMapping("/admin/news/{fk_orgName}")
-//    public ModelAndView adminNews(@PathVariable(name = "fk_orgName") String fk_orgName){
-//        ModelAndView mav = new ModelAndView("admin/newsfeed");
-//
-//        List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
-//
-//        Organization organization = orgRep.getOneOrg(fk_orgName);
-//        Project project = projectRepo.getOneProjectWOrgId(organization.getOrg_id());
-//        User user = userRepo.getOneUserWOrgId(organization.getOrg_id());
-//        Profile profile = profileRepo.getOneProfile(user.getUser_id());
-//
-//
-//        System.out.println(listNewsfeed);
-//        mav.addObject("listNewsfeed", listNewsfeed);
-//        mav.addObject("OneOrg", fk_orgName);
-//        mav.addObject("project", project);
-//        mav.addObject("profile", profile);
-//
-//        return mav;
-//    }
+    //Admin News
+    @GetMapping("/admin/editnews/{fk_orgName}")
+    public ModelAndView adminNews(@PathVariable(name = "fk_orgName") String fk_orgName){
+        ModelAndView mav = new ModelAndView("admin/adminLookUpNews");
+
+        List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
+
+        Organization organization = orgRep.getOneOrg(fk_orgName);
+        Project project = projectRepo.getOneProjectWOrgId(organization.getOrg_id());
+        User user = userRepo.getOneUserWOrgId(organization.getOrg_id());
+        Profile profile = profileRepo.getOneProfile(user.getUser_id());
+
+        System.out.println(organization);
+        System.out.println(project);
+
+        System.out.println(listNewsfeed);
+        mav.addObject("listNewsfeed", listNewsfeed);
+        mav.addObject("OneOrg", fk_orgName);
+        mav.addObject("project", project);
+        mav.addObject("profile", profile);
+
+        return mav;
+    }
 
 
 //========================================= POST ROUTES =========================================================================
@@ -275,29 +276,6 @@ public class AdminController {
         return "redirect:/";
     }
 
-//    //====================ADMIN UPDATE PROJECT
-//    @PostMapping("admin/update/project")
-//    public String updateAdminProject(WebRequest dataFromForm,  Principal principal) {
-//
-//        String project_id         = (dataFromForm.getParameter("project_id"));
-//        String project_name       = (dataFromForm.getParameter("project_name"));
-//        String project_desc       = (dataFromForm.getParameter("project_desc"));
-//        String project_duration   = (dataFromForm.getParameter("project_duration"));
-//        String project_start      = (dataFromForm.getParameter("project_start"));
-//        String project_end        = (dataFromForm.getParameter("project_end"));
-//
-//
-//        int idParsed = Integer.parseInt(project_id);
-//
-//
-//        User user = userRepo.getOneUser(principal.getName());
-//
-//        projectRepo.updateAdminProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
-//
-//
-//
-//        return "redirect:/";
-//    }
 
     //ADMIN DELETE PROJECT
 
@@ -310,47 +288,47 @@ public class AdminController {
         projectRepo.deleteAdminProject(idParsed);
 
 
-        return "redirect:/";
+        return "redirect:/admin/lookupproject";
     }
 
 //========================================================ADMIN Organisation===============================================================
 
     //    ================== ADMIN INSERT ORGANIZATION ================
-    @PostMapping("/admin/edit/organization")
-    public String postAdminOrganization(WebRequest dataFromForm, Principal principal) {
-        String org_name         = (dataFromForm.getParameter("org_name"));
-        String org_address      = (dataFromForm.getParameter("org_address"));
-        String org_cvr          = (dataFromForm.getParameter("org_cvr"));
-
-        int cvrParsed = Integer.parseInt(org_cvr);
-
-        orgRep.insertOrg(org_name, org_address, cvrParsed);
-
-        User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-
-        orgRep.insertOrg(org_name, org_address, cvrParsed);
-
-        return "redirect:/";
-    }
-
-//    //================== ADMIN UPDATE ORGANIZATION ================
+//    @PostMapping("/admin/edit/organization")
+//    public String postAdminOrganization(WebRequest dataFromForm, Principal principal) {
+//        String org_name         = (dataFromForm.getParameter("org_name"));
+//        String org_address      = (dataFromForm.getParameter("org_address"));
+//        String org_cvr          = (dataFromForm.getParameter("org_cvr"));
 //
-//    @PostMapping("admin/update/org")
-//    public String updateAdminOrg(WebRequest dataFromForm) {
-//        String org_id       = (dataFromForm.getParameter("org_id"));
-//        String org_address  = (dataFromForm.getParameter("org_address"));
-//        String org_name     = (dataFromForm.getParameter("org_name"));
-//        String org_cvr      = (dataFromForm.getParameter("org_cvr"));
+//        int cvrParsed = Integer.parseInt(org_cvr);
 //
-//        int cvrParsed   = Integer.parseInt(org_cvr);
-//        int idParsed    = Integer.parseInt(org_id);
+//        orgRep.insertOrg(org_name, org_address, cvrParsed);
 //
-//        orgRep.updateAdminOrg(idParsed, org_name, org_address, cvrParsed);
+//        User user           = userRepo.getOneUser(principal.getName());
+//        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
 //
+//        orgRep.insertOrg(org_name, org_address, cvrParsed);
 //
 //        return "redirect:/";
 //    }
+
+    //================== ADMIN UPDATE ORGANIZATION ================
+
+    @PostMapping("/admin/update/org")
+    public String updateAdminOrg(WebRequest dataFromForm) {
+        String org_id       = (dataFromForm.getParameter("org_id"));
+        String org_address  = (dataFromForm.getParameter("org_address"));
+        String org_name     = (dataFromForm.getParameter("org_name"));
+        String org_cvr      = (dataFromForm.getParameter("org_cvr"));
+
+        int cvrParsed   = Integer.parseInt(org_cvr);
+        int idParsed    = Integer.parseInt(org_id);
+
+        orgRep.updateAdminOrg(idParsed, org_name, org_address, cvrParsed);
+
+
+        return "redirect:/";
+    }
 
     @PostMapping("/admin/delete/org")
     public String deleteAdminOrg(WebRequest dataFromForm) {
@@ -361,7 +339,41 @@ public class AdminController {
         orgRep.deleteAdminOrg(idParsed);
 
 
-        return "redirect:/";
+        return "redirect:/admin/lookuporganization";
+    }
+
+//========================================================ADMIN NEWS===============================================================
+
+    //    UPDATE NEWS =============
+
+    @PostMapping("/admin/update/news")
+    public String updateAdminNews(WebRequest dataFromForm, Principal principal) {
+        String newsfeed_id          = (dataFromForm.getParameter("newsfeed_id"));
+        String newsfeed_news        = (dataFromForm.getParameter("newsfeed_news"));
+        String newsfeed_title       = (dataFromForm.getParameter("newsfeed_title"));
+        String newsfeed_img         = (dataFromForm.getParameter("newsfeed_img"));
+        String newsfeed_datetime    = (dataFromForm.getParameter("newsfeed_datetime"));
+
+        int idParse         = Integer.parseInt(newsfeed_id);
+
+        User user           = userRepo.getOneUser(principal.getName());
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        newsRepo.updateAdminNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime, org.getOrg_name());
+
+        return "redirect:/" + org.getOrg_name();
+    }
+
+    @PostMapping("/admin/delete/news")
+    public String deleteAdminNews(WebRequest dataFromForm) {
+        String newsfeed_id      = (dataFromForm.getParameter("newsfeed_id"));
+
+        int idParsed = Integer.parseInt(newsfeed_id);
+
+        orgRep.deleteAdminOrg(idParsed);
+
+
+        return "redirect:/admin/lookuporganization";
     }
 
 }

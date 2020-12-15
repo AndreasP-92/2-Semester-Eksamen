@@ -146,7 +146,7 @@ public class OrganizationRepo {
             ps.setInt(4, org_id);
 
             int row = ps.executeUpdate();
-            System.out.println("org insert");
+            System.out.println("org Updated");
 
         }catch (SQLException e){
             System.out.println(e);
