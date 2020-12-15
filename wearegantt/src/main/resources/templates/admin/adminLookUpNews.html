@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link th:href="@{/css/admin/adminLookUpUser.css}" type="text/css" rel="stylesheet">
+
+    <title>Admin Page</title>
+</head>
+<body>
+<div class="container">
+    <a href="/admin" style="color:black;">
+        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+    </a>
+    <div class="row">
+        <div class="col-sm mt-5">
+            <h1 class="text-center">Projects</h1>
+        </div>
+    </div>
+
+    <table class="table mt-5 table-striped table-bordered table-dark table-hover">
+        <thead class="thead-dark">
+        <a href="#">
+            <tr>
+                <th scope="col ">Project ID</th>
+                <th scope="col">Project Name</th>
+                <th scope="col">Project Desc</th>
+                <th scope="col">Project Duration</th>
+                <th scope="col">Project Start</th>
+                <th scope="col">Project End</th>
+                <th scope="col">Action</th>
+            </tr>
+        </a>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projectList}">
+            <th th:text="${project.project_id}">ID</th>
+            <td th:text="${project.project_name}">Project Name</td>
+            <td th:text="${project.project_desc}">Project Describtion</td>
+            <td th:text="${project.project_duration}">Project Duration</td>
+            <td th:text="${project.project_start}">Project Start</td>
+            <td th:text="${project.project_end}">Project End</td>
+
+            <td>
+                <div class="d-flex justify-content-center mt--1 p-2 login_container ">
+                    <a th:href="@{'/admin/editprofile/' + ${project.getProject_id()}}" class="btn btn-danger">Edit</a>
+                </div>
+
+                <div class="d-flex justify-content-center mt--1 p-2 login_container" >
+                    <form th:action="@{/admin/delete/user}" method="post">
+                        <input type="submit" class="btn btn-danger" value="Delete" >
+                        <input type="text" name="user_id" style="display: none;" th:value="${project.getProject_id()}">
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

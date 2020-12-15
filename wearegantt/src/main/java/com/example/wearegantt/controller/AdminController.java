@@ -140,6 +140,16 @@ public class AdminController {
     }
 
 //    //Admin News
+//    @GetMapping("/admin/lookupnews")
+//    public String adminLookUpNews(Model model){
+//
+//        List<Newsfeed> newsfeedList = newsRepo.getAllNews();
+//        model.addAttribute("newsfeedList", newsfeedList);
+//
+//        return "admin/adminLookUpNews";
+//    }
+
+//    //Admin News
 //    @GetMapping("/admin/news/{fk_orgName}")
 //    public ModelAndView adminNews(@PathVariable(name = "fk_orgName") String fk_orgName){
 //        ModelAndView mav = new ModelAndView("admin/newsfeed");

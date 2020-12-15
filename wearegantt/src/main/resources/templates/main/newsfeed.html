@@ -17,11 +17,6 @@
     </div>
 </header>
 <main>
-<!--    <div class="btn-group sm-2 mt-3 w-25" align="center" role="group" aria-label="" >-->
-<!--        <a th:href="@{'/create/newsfeed/' + ${news.newsfeed_id}}" type="button" class="btn btn-secondary">Create Newsfeed</a>-->
-<!--        <a href="/edit/newsfeed" type="button" class="btn btn-secondary">Edit Newsfeed</a>-->
-<!--    </div>-->
-
     <!--=================== Block 1 ============================ -->
     <div class="container" align="center">
         <div class="row">
@@ -32,6 +27,7 @@
                     </div>
                     <form id="news" method="post" class="w-50">
                         <h3 style="text-align: center">What's New?</h3>
+                        <a href="/create/newsfeed" class="buttons w-25">Create Newsfeed</a>
                     </form>
                 </div>
             </div>
@@ -42,9 +38,8 @@
                 <div class="projectBox m3" align="center">
                     <h4 th:text="${news.newsfeed_news}" class="pt-2" align="center"></h4>
                     <p th:text="${news.newsfeed_title}" class="p-3"></p>
-                    <a th:href="@{'/edit/newsfeed/' + ${news.newsfeed_id}}" class="buttons w-75 mt-1">Edit Newsfeed</a>
                     <p th:text="${news.newsfeed_datetime}" class="p-3"></p>
-                    <a href="/create/newsfeed" class="btn w-75">Create Newsfeed</a>
+                    <a th:href="@{'/edit/newsfeed/' + ${news.newsfeed_id}}" class="buttons w-25 mt-1">Edit Newsfeed</a>
                 </div>
             </div>
         </div>

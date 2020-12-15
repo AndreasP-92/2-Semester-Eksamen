@@ -71,9 +71,9 @@ public class LoginController {
         int phoneParsed = Integer.parseInt(phone);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        password = encoder.encode(password);
+        String password1 = encoder.encode(password);
 
-        userRepo.insertUser(email, password, 1);
+        userRepo.insertUser(email, password1, 1);
         User userObj = userRepo.getOneUser(email);
 
         System.out.println(userObj);
