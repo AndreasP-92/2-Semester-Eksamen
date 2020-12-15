@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
+
     <meta charset="UTF-8">
     <title>Edit Your Profile</title>
 
     <link th:href="@{/css/main/editprofile.css}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
 </head>
 <body>
 <header>
@@ -59,10 +61,9 @@
                         <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
                         </form>
 
-                        <form th:object="${user}">
                     <h4>Edit Your Email & Password</h4>
 
-                    <form id="registerForm" th:object="${user}" th:action="@{/update/credentials}" method="post">
+                    <form th:object="${user}" th:action="@{/update/credentials}" method="post"  id="registerForm">
 
                         <input class="text-center p-3 mb-1" style="display:none" type="text" th:field="*{user_id}">
 
@@ -76,7 +77,7 @@
                         <label for="confirm_password">Confirm Your Password</label>
                         <input type="password" id="confirm_password" name="pass" required th:field="*{user_password}"/>
 
-                        <button onclick="validate()" id="submitButton" type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
+                        <button id="submitButton" type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
                     </form>
 
 <!-- === DELETE PROFILE === -->

@@ -2,6 +2,7 @@ package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -197,11 +198,14 @@ public class ProfileController {
         String user_mail        = (dataFromForm.getParameter("user_mail"));
         String user_password    = (dataFromForm.getParameter("user_password"));
 
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password1 = encoder.encode(user_password);
+
         int idParsed = Integer.parseInt(user_id);
         if(user_password==""){
             userRepo.updateEmail(idParsed,user_mail);
         }else {
-            userRepo.updateCredentials(idParsed,user_mail,user_password);
+            userRepo.updateCredentials(idParsed,user_mail,password1);
         }
 
         return "redirect:/login?logout";
