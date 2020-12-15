@@ -59,37 +59,36 @@
         <!-- Use any element to open the sidenav -->
         <span id="sideNavBurger" onclick="openNav()"><i class="fas fa-bars" style="font-size: 35px; padding-top: 40px; padding-left: 40px; width: 40px;"></i></span>
 
-        <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 <!-- END -->
         <div class="row">
             <div class="col-sm-6">
                 <div class="ml-3">
                     <table class="table mt-5 table-striped table-bordered table-hover">
                         <thead class="thead-dark">
-                        <a href="#">
                             <tr>
                                 <th scope="col ">#</th>
                                 <th scope="col ">Task Name</th>
                                 <th scope="col ">Position</th>
                                 <th scope="col ">Task Owner</th>
+                                <th scope="col ">Phase</th>
                                 <th scope="col">Duration</th>
                                 <th scope="col">Start</th>
                                 <th scope="col">End</th>
                                 <th scope="col">Action</th>
                             </tr>
-                        </a>
                         </thead>
                         <tbody>
-                        <tr th:each="task : ${taskList}" class="mt-5">
+                            <tr th:each="task : ${taskList}" class="mt-5">
                                 <td class="number"></td>
                                 <td th:text="${task.task_name}">Task Name</td>
                                 <td th:text="${task.fk_jobTitleName}">Position</td>
                                 <td th:text="${task.fk_profileName}">Task Owner</td>
-                                <td th:text="${task.task_duration}">Duration</td>
+                                <td th:text="${task.fk_ganttPhaseName}">Phase</td>
+                                <td th:text="${task.task_duration} + ' Days'">Duration</td>
                                 <td th:text="${task.task_start}">Start</td>
                                 <td th:text="${task.task_end}">End</td>
-                                <td><a th:href="@{'/gantt/edit/task/'+${task.task_id}}" class="btn btn-warning">Edit Task</a></td></a>-->
-                        </tr>
+                                <td><a th:href="@{'/gantt/edit/task/'+${task.task_id}}" class="btn btn-warning">Edit Task</a></td></a>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -117,7 +116,6 @@
                                     <div th:text="${taskList.fk_profileName}" class="gantt__row-first">
                                         profile Name
                                     </div>
-<!--                                     th:title="${}"-->
                                     <ul class="gantt__row-bars" th:switch="${taskList.fk_ganttPhaseName}">
                                         <li th:case="${'Analysis'}"
                                             th:title="${taskList.task_desc}"
@@ -141,6 +139,47 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div align="left" class="col-sm-6">
+<!--                <div class="row" align="right">-->
+                    <div class="col-sm-5 row">
+                        <div class="col-sm-4">
+                            <p>Analysis :</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="gatt_color_meaning" style="background-color: #343a40;"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 row">
+                        <div class="col-sm-4">
+                            <p>Design :</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="gatt_color_meaning" style="background-color: #33a541;"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 row">
+                        <div class="col-sm-4">
+                            <p>Development :</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="gatt_color_meaning" style="background-color: #ccb40e;"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 row">
+                        <div class="col-sm-4">
+                            <p>Testing :</p>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="gatt_color_meaning" style="background-color: #7d6e02;"></span>
+                        </div>
+
+                    </div>
+
+<!--                </div>-->
             </div>
         </div>
     </main>

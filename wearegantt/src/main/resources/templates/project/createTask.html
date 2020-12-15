@@ -30,42 +30,33 @@
         <div class="loginbox col-sm-4">
 
 
-                <!-- == INSERT JOBTITLE FORM == -->
+                <!-- == INSERT NEW TASK == -->
                 <form th:action="@{/insert/newTask}" method="post">
 
                     <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_name" th:value="${project.project_name}">
 
-<!--                    <div class="row">-->
-<!--                        <div class="col-sm-6">-->
-                            <h3>Edit your Organization</h3>
+                            <h3>Add Task</h3>
                             <div align="left" class="form-group">
                                 <label for="taskName">Task Name</label>
-                                <input class="text-center p-3 mb-1" id="taskName" type="text"  name="task_name" placeholder="Task Name">
+                                <input class="text-center p-3 mb-1" id="taskName" type="text"  required name="task_name" placeholder="Task Name">
                             </div>
                             <div align="left" class="form-group">
                                 <label for="task_Description">Task Description</label><br>
-                                <textarea class="text-center form-control p-3 mb-1" id="task_description" rows="3" name="task_description" placeholder="Task Description"></textarea>
+                                <textarea class="text-center form-control p-3 mb-1" id="task_description" required  rows="3" name="task_description" placeholder="Task Description"></textarea>
                             </div>
-                            <div align="left" class="form-group">
-                                <label for="taskDuration">Task Duration</label>
-                                <input class="text-center p-3 mb-1" id="taskDuration" type="number" name="task_duration" placeholder="Task Duration">
-                            </div>
-
                             <div align="left" class="form-group">
                                 <label for="taskStart">Task Start</label>
-                                <input class="text-center p-3 mb-1" id="taskStart" type="datetime-local" name="task_start" placeholder="Task Start">
+                                <input class="text-center p-3 mb-1" id="taskStart" type="date" required  name="task_start" placeholder="Task Start">
                             </div>
 
                             <div align="left" class="form-group">
                                 <label for="taskEnd">Task End</label>
-                                <input class="form-control" id="taskEnd" type="datetime-local" name="task_end" placeholder="taskEnd">
+                                <input class="form-control" id="taskEnd" type="date" required  name="task_end" placeholder="taskEnd">
                             </div>
-<!--                        </div>-->
-
                             <div class="form-group">
-                                <label for="sel1">Select Employee</label>
+                                <label required for="sel1">Select Employee</label>
                                 <select class="form-control" id="sel1" name="profile_name">
-                                    <option class="font-weight-bold"> Select One </option>
+                                    <option class="font-weight-bold" disabled> Select One </option>
                                     <div th:each="profile : ${profile}">
                                         <option th:value="${profile.profile_firstname}" th:text="${profile.profile_firstname + space + profile.profile_lastname}"></option>
                                     </div>
@@ -75,6 +66,7 @@
                             <div class="form-group">
                                 <label for="sel2">Select Gantt Title</label>
                                 <select class="form-control" id="sel2" name="ganttPhase_name">
+                                    <option class="font-weight-bold" disabled> Select One </option>
                                     <div th:each="phaseList : ${phaseList}">
                                     <option th:value="${phaseList.ganttPhase_name}" th:text="${phaseList.ganttPhase_name}"></option>
                                     </div>
@@ -84,7 +76,7 @@
                             <div class="form-group">
                                 <label for="sel1">Select a Profession</label>
                                 <select class="form-control" id="sel3" name="jobTitle_name">
-                                    <option class="font-weight-bold"> Select One </option>
+                                    <option class="font-weight-bold" disabled> Select One </option>
                                     <div th:each="jobTitles : ${jobTitles}">
                                         <option th:value="${jobTitles.jobTitle_name}" th:text="${jobTitles.jobTitle_name}"></option>
                                     </div>

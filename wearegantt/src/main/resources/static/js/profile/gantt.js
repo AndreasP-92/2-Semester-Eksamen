@@ -14,6 +14,6 @@ function taskNumber(){
     const number = document.getElementsByClassName("number").length;
 
     for(i = 0; i < number; i++){
-        document.getElementsByClassName("number")[i].innerHTML = i;
+        document.getElementsByClassName("number")[i].innerHTML = i+1;
     }
 }

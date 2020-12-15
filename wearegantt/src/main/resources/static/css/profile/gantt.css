@@ -30,6 +30,12 @@ body, html {
 }
 
 /* ====================================== GANTT VISUAL ========================================== */
+.gatt_color_meaning{
+    display:block;
+    width:20px;
+    height:20px;
+    border-radius: 50%;
+}
 .gantt {
     display: grid;
     border: 0;

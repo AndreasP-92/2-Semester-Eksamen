@@ -2,6 +2,7 @@ package com.example.wearegantt.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -10,10 +11,10 @@ public class Task {
     private String task_name;
     private String task_desc;
     private int task_duration;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime task_start;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime  task_end;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date task_start;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date  task_end;
     private int task_processEnd;
     private int task_processStart;
     private String fk_projectName;
@@ -21,7 +22,7 @@ public class Task {
     private String fk_ganttPhaseName;
     private String fk_jobTitleName;
 
-    public Task(int task_id, String task_name, String task_desc, int task_duration, LocalDateTime task_start, LocalDateTime task_end, int task_processEnd, int task_processStart, String fk_projectName, String fk_profileName, String fk_ganttPhaseName, String fk_jobTitleName) {
+    public Task(int task_id, String task_name, String task_desc, int task_duration, Date task_start, Date task_end, int task_processEnd, int task_processStart, String fk_projectName, String fk_profileName, String fk_ganttPhaseName, String fk_jobTitleName) {
         this.task_id = task_id;
         this.task_name = task_name;
         this.task_desc = task_desc;
@@ -68,19 +69,19 @@ public class Task {
         this.task_duration = task_duration;
     }
 
-    public LocalDateTime getTask_start() {
+    public Date getTask_start() {
         return task_start;
     }
 
-    public void setTask_start(LocalDateTime task_start) {
+    public void setTask_start(Date task_start) {
         this.task_start = task_start;
     }
 
-    public LocalDateTime getTask_end() {
+    public Date getTask_end() {
         return task_end;
     }
 
-    public void setTask_end(LocalDateTime task_end) {
+    public void Date(Date task_end) {
         this.task_end = task_end;
     }
 

@@ -6,7 +6,7 @@ public class Project {
     private int project_id;
     private String project_name;
     private String project_desc;
-    private String project_duration;
+    private int project_duration;
     private String project_start;
     private String project_end;
     private int fk_orgId;
@@ -14,7 +14,7 @@ public class Project {
 //    lav en liste eller hashset
 
 
-    public Project(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId) {
+    public Project(int project_id, String project_name, String project_desc, int project_duration, String project_start, String project_end, int fk_orgId) {
         this.project_id = project_id;
         this.project_name = project_name;
         this.project_desc = project_desc;
@@ -23,11 +23,6 @@ public class Project {
         this.project_end = project_end;
         this.fk_orgId = fk_orgId;
     }
-
-//    public List<Project> ProjectList(){
-//        List<>
-//    }
-
 
     public int getProject_id() {
         return project_id;
@@ -53,11 +48,11 @@ public class Project {
         this.project_desc = project_desc;
     }
 
-    public String getProject_duration() {
+    public int getProject_duration() {
         return project_duration;
     }
 
-    public void setProject_duration(String project_duration) {
+    public void setProject_duration(int project_duration) {
         this.project_duration = project_duration;
     }
 
@@ -91,7 +86,7 @@ public class Project {
                 "project_id=" + project_id +
                 ", project_name='" + project_name + '\'' +
                 ", project_desc='" + project_desc + '\'' +
-                ", project_duration='" + project_duration + '\'' +
+                ", project_duration=" + project_duration +
                 ", project_start='" + project_start + '\'' +
                 ", project_end='" + project_end + '\'' +
                 ", fk_orgId=" + fk_orgId +

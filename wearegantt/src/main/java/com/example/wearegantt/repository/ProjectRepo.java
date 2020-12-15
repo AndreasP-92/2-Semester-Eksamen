@@ -1,5 +1,7 @@
 package com.example.wearegantt.repository;
 
+//rs.getTimestamp(5).toLocalDateTime(),
+
 import com.example.wearegantt.model.*;
 
 import java.sql.*;
@@ -29,7 +31,7 @@ public class ProjectRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7)
@@ -63,7 +65,7 @@ public class ProjectRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7)
@@ -95,7 +97,7 @@ public class ProjectRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7)
@@ -130,7 +132,7 @@ public class ProjectRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7)
@@ -165,7 +167,7 @@ public class ProjectRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7)
@@ -186,7 +188,7 @@ public class ProjectRepo {
 //    ================== INSERT Project ================
 
 
-    public void InsertProject(String project_name, String project_desc, String project_duration, String project_start,String project_end, int project_fk_orgId){
+    public void InsertProject(String project_name, String project_desc, int project_duration, String project_start,String project_end, int project_fk_orgId){
 //    OPRET TASK FØRST OG HENT DYNAMISK TASK ID
 //    OPRET ORGANAZIATION FØRST OG HENT DYNAMISK ORG ID
 //    OPRET JOBTITLE FØRST OG HENT DYNAMISK JOB ID
@@ -196,7 +198,7 @@ public class ProjectRepo {
             PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name, project_desc, project_duration, project_start, project_end, fk_orgId) VALUES (?, ?, ?, ?, ?, ?)");
             ps.setString(1, project_name);
             ps.setString(2, project_desc);
-            ps.setString(3, project_duration);
+            ps.setInt(3, project_duration);
             ps.setString(4, project_start);
             ps.setString(5, project_end);
             ps.setInt(6, project_fk_orgId);
@@ -228,7 +230,7 @@ public class ProjectRepo {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7)
@@ -249,14 +251,14 @@ public class ProjectRepo {
 
 //    ================== UPDATE Project ================
 
-    public void updateProject(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId){
+    public void updateProject(int project_id, String project_name, String project_desc, int project_duration, String project_start, String project_end, int fk_orgId){
         try {
             PreparedStatement ps = establishConnection().prepareStatement("UPDATE project SET project_name = ?, project_desc = ?, project_duration = ?, project_start = ?, project_end = ?, fk_orgId = ? WHERE project_id = ?");
 
 
             ps.setString(1, project_name);
             ps.setString(2, project_desc);
-            ps.setString(3, project_duration);
+            ps.setInt(3, project_duration);
             ps.setString(4, project_start);
             ps.setString(5, project_end);
             ps.setInt(6,    fk_orgId);
@@ -417,8 +419,8 @@ public class ProjectRepo {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getTimestamp(5).toLocalDateTime(),
-                        rs.getTimestamp(6).toLocalDateTime(),
+                        rs.getDate(5),
+                        rs.getDate(6),
                         rs.getInt(7),
                         rs.getInt(8),
                         rs.getString(9),
@@ -457,8 +459,8 @@ public class ProjectRepo {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getTimestamp(5).toLocalDateTime(),
-                        rs.getTimestamp(6).toLocalDateTime(),
+                        rs.getDate(5),
+                        rs.getDate(6),
                         rs.getInt(7),
                         rs.getInt(8),
                         rs.getString(9),
@@ -495,8 +497,8 @@ public class ProjectRepo {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getTimestamp(5).toLocalDateTime(),
-                        rs.getTimestamp(6).toLocalDateTime(),
+                        rs.getDate(5),
+                        rs.getDate(6),
                         rs.getInt(7),
                         rs.getInt(8),
                         rs.getString(9),
@@ -572,6 +574,19 @@ public class ProjectRepo {
             System.out.println(e);
         }
 
+    }
+
+    public void deleteTask(int task_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE FROM task WHERE task_id = ?");
+            ps.setInt(1, task_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("Række slettet");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
 

@@ -2,6 +2,7 @@ package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
+import com.example.wearegantt.services.ProjectServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -30,6 +34,8 @@ public class ProjectController {
     JobTitleRepo jobTitleRepo = new JobTitleRepo();
 
     ProfileRepo profileRepo = new ProfileRepo();
+
+    ProjectServices ps = new ProjectServices();
 
 // ================================================== GANTT =====================================
 
@@ -51,6 +57,7 @@ public class ProjectController {
         System.out.println(taskList);
 
         System.out.println(org.getOrg_name());
+        mav.addObject("days", " days");
         mav.addObject("user", user);
         mav.addObject("test", "5/13");
         mav.addObject("taskList", taskList);
@@ -192,6 +199,8 @@ public class ProjectController {
         Project project             = projectRepo.getOneProject(id);
         List<GetProjectJobTitles> projectTitlesList = jobTitleRepo.getOneProjectJobTitle(id);
 
+        System.out.println(project);
+
         mav.addObject("jobTitlesList", projectTitlesList);
         mav.addObject("project", project);
         mav.addObject("org", organization);
@@ -249,41 +258,48 @@ public class ProjectController {
 // INSERT PROJECT =======================
 
     @PostMapping("/insert/project")
-    public String postProject(WebRequest dataFromForm, Principal principal) {
+    public String postProject(WebRequest dataFromForm, Principal principal) throws ParseException {
         String project_name     = (dataFromForm.getParameter("project_name"));
         String project_desc     = (dataFromForm.getParameter("project_desc"));
-        String project_duration = (dataFromForm.getParameter("project_duration"));
         String project_start    = (dataFromForm.getParameter("project_start"));
         String project_end      = (dataFromForm.getParameter("project_end"));
+
+        int totalDays = ps.calcTotalDays2(project_start, project_end);
+
+        System.out.println(totalDays);
 
         User user           = userRepo.getOneUser(principal.getName());
         Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
 
-        projectRepo.InsertProject(project_name, project_desc, project_duration, project_start, project_end, org.getOrg_id());
+        projectRepo.InsertProject(project_name, project_desc, totalDays, project_start, project_end, org.getOrg_id());
 
-        return "redirect:/";
+        return "redirect:/projects/";
     }
 
 // UPDATE PROJECT =======================
 
     @PostMapping("/update/project") //URL'en
-    public String updateProject(WebRequest dataFromForm,  Principal principal) {
+    public String updateProject(WebRequest dataFromForm,  Principal principal) throws ParseException {
         // DataFromData objektet(WebRequest) gør man kan hente data fra en form(HTML).
         String project_id         = (dataFromForm.getParameter("project_id"));
         String project_name       = (dataFromForm.getParameter("project_name"));
         String project_desc       = (dataFromForm.getParameter("project_desc"));
-        String project_duration   = (dataFromForm.getParameter("project_duration"));
         String project_start      = (dataFromForm.getParameter("project_start"));
         String project_end        = (dataFromForm.getParameter("project_end"));
+
+        int totalDays = ps.calcTotalDays2(project_start, project_end);
+
+        System.out.println(totalDays);
 
         // grunden til jeg converter, fordi URL er ALTID er en String.
         int idParsed = Integer.parseInt(project_id);
 
         User user = userRepo.getOneUser(principal.getName());
 //        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
-        projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
+        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
+        projectRepo.updateProject(idParsed, project_name, project_desc, totalDays, project_start, project_end, user.getFk_orgId());
 
-        return "redirect:/";
+        return "redirect:/projects/";
     }
 
 //    DELETE PROJECT JOB TITLE =============
@@ -316,11 +332,11 @@ public class ProjectController {
     // INSERT TASK =======================
 
     @PostMapping("/insert/newTask")
-    public String postTask(WebRequest dataFromForm, Principal principal) {
+    public String postTask(WebRequest dataFromForm) throws ParseException {
         String project_name            = (dataFromForm.getParameter("project_name"));
         String task_name            = (dataFromForm.getParameter("task_name"));
         String task_description     = (dataFromForm.getParameter("task_description"));
-        String task_duration        = (dataFromForm.getParameter("task_duration"));
+//        String task_duration        = (dataFromForm.getParameter("task_duration"));
         String task_start           = (dataFromForm.getParameter("task_start"));
         String task_end             = (dataFromForm.getParameter("task_end"));
         String profile_name           = (dataFromForm.getParameter("profile_name"));
@@ -328,25 +344,19 @@ public class ProjectController {
         String jobTitle_name          = (dataFromForm.getParameter("jobTitle_name"));
 
 
+        int totalDays = ps.calcTotalDays2(task_start, task_end);
+
+        System.out.println(totalDays);
+
 
         String processStart     = task_start.substring(5,7);
         String processEnd       = task_end.substring(5,7);
         int processStartParsed  = Integer.parseInt(processStart);
         int processEndParsed    = Integer.parseInt(processEnd);
-        int task_durationParsed = Integer.parseInt(task_duration);
-//        int gantt_phaseParsed   = Integer.parseInt(gantt_phase);
-//        int project_idParsed    = Integer.parseInt(project_id);
-//        int jobTitle_idParsed    = Integer.parseInt(jobTitle_id);
-//        int profile_idParsed    = Integer.parseInt(profile_id);
+//        int task_durationParsed = Integer.parseInt(task_duration);
         Project project = projectRepo.getOneProjectWName(project_name);
 
-//        System.out.println("job title========"+jobTitle_idParsed);
-
-
-//        User user = userRepo.getOneUser(dataFromForm.getRemoteUser());
-//        Profile profile = profileRepo.getOneProfile(user.getUser_id());
-
-        projectRepo.insertTask(task_name, task_description, task_durationParsed, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
+        projectRepo.insertTask(task_name, task_description, totalDays, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
 
         return "redirect:/gantt/"+project.getProject_id();
     }
@@ -354,7 +364,7 @@ public class ProjectController {
 // UPDATE TASK =======================
 
     @PostMapping("/update/newTask")
-    public String updateTask(WebRequest dataFromForm, Principal principal) {
+    public String updateTask(WebRequest dataFromForm) throws ParseException {
         String task_id                  = (dataFromForm.getParameter("task_id"));
         String project_name             = (dataFromForm.getParameter("project_name"));
         String task_name                = (dataFromForm.getParameter("task_name"));
@@ -368,28 +378,34 @@ public class ProjectController {
 
         System.out.println("PROFILE NAME ========================"+profile_name);
 
+        int totalDays = ps.calcTotalDays2(task_start, task_end);
+
 
         String processStart     = task_start.substring(5,7);
         String processEnd       = task_end.substring(5,7);
         int taskIdParsed        = Integer.parseInt(task_id);
         int processStartParsed  = Integer.parseInt(processStart);
         int processEndParsed    = Integer.parseInt(processEnd);
-        int task_durationParsed = Integer.parseInt(task_duration);
-//        int gantt_phaseParsed   = Integer.parseInt(gantt_phase);
-//        int project_idParsed    = Integer.parseInt(project_id);
-//        int jobTitle_idParsed    = Integer.parseInt(jobTitle_id);
-//        int profile_idParsed    = Integer.parseInt(profile_id);
         Project project = projectRepo.getOneProjectWName(project_name);
 
-//        System.out.println("job title========"+jobTitle_idParsed);
 
-
-//        User user = userRepo.getOneUser(dataFromForm.getRemoteUser());
-//        Profile profile = profileRepo.getOneProfile(user.getUser_id());
-
-        projectRepo.updateTask(taskIdParsed, task_name, task_description, task_durationParsed, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
+        projectRepo.updateTask(taskIdParsed, task_name, task_description, totalDays, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
 
         return "redirect:/gantt/"+project.getProject_id();
+    }
+
+//    DELETE TASK =============
+
+    @PostMapping("/delete/task")
+    public String deletetask(WebRequest dataFromForm) {
+        String task_id       = (dataFromForm.getParameter("task_id"));
+        String project_id    = (dataFromForm.getParameter("project_id"));
+
+        int idParsed = Integer.parseInt(task_id);
+
+        projectRepo.deleteTask(idParsed);
+
+        return "redirect:/gantt/"+project_id;
     }
 
 }

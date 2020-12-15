@@ -2,6 +2,7 @@ package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
+import com.example.wearegantt.services.ProjectServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -31,6 +33,8 @@ public class AdminController {
     UserRepo userRepo = new UserRepo();
 
     NewsfeedRepo newsRepo = new NewsfeedRepo();
+
+    ProjectServices ps = new ProjectServices();
 
 //    GET ROUTES ==================
     // Admin Index
@@ -244,20 +248,19 @@ public class AdminController {
 //========================================================ADMIN PROJECT===============================================================
 
     @PostMapping("/admin/update/project")
-    public String updateAdminProject(WebRequest dataFromForm,  Principal principal) {
+    public String updateAdminProject(WebRequest dataFromForm,  Principal principal) throws ParseException {
         String project_id         = (dataFromForm.getParameter("project_id"));
         String project_name       = (dataFromForm.getParameter("project_name"));
         String project_desc       = (dataFromForm.getParameter("project_desc"));
-        String project_duration   = (dataFromForm.getParameter("project_duration"));
         String project_start      = (dataFromForm.getParameter("project_start"));
         String project_end        = (dataFromForm.getParameter("project_end"));
 
-
-        int idParsed = Integer.parseInt(project_id);
+        int totalDays   = ps.calcTotalDays2(project_start, project_end);
+        int idParsed    = Integer.parseInt(project_id);
 
         User user = userRepo.getOneUser(principal.getName());
-//
-        projectRepo.updateProject(idParsed, project_name, project_desc, project_duration, project_start, project_end, user.getFk_orgId());
+
+        projectRepo.updateProject(idParsed, project_name, project_desc, totalDays, project_start, project_end, user.getFk_orgId());
 
         return "redirect:/";
     }

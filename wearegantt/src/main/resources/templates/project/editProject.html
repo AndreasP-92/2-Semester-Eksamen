@@ -47,14 +47,14 @@
                                     <label>Project Description</label>
                                     <input class="form-control cInpu" type="text"  th:field="*{project_desc}">
 
-                                    <label>Project Duration</label>
-                                    <input class="form-control cInpu" type="date"  th:field="*{project_duration}">
-
                                     <label>Project Start</label>
                                         <input class="form-control cInpu" type="date"  th:field="*{project_start}">
 
                                     <label>Project End</label>
                                     <input class="form-control" type="date"  th:field="*{project_end}">
+
+                                    <label>Project Duration </label>
+                                    <input class="form-control cInpu" type="text" disabled  th:value="${project.getProject_duration()} + ' Days'">
 
                                     <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-100">Save Project</button>
                             </form>

@@ -1,4 +1,4 @@
-package com.example.wearegantt.service;
+package com.example.wearegantt.services;
 
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
