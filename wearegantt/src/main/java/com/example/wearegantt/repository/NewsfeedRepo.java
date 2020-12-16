@@ -108,17 +108,16 @@ public class NewsfeedRepo {
 
     //    ================== UPDATE ADMIN NEWS ================
 
-    public void updateAdminNews(int newsfeed_id, String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime, String fk_orgName){
+    public void updateAdminNews(int newsfeed_id, String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime){
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE news SET newsfeed_news = ?, newsfeed_title = ?, newsfeed_img = ?, newsfeed_datetime = ?, fk_orgName = ? WHERE newsfeed_id = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE news SET newsfeed_news = ?, newsfeed_title = ?, newsfeed_img = ?, newsfeed_datetime = ? WHERE newsfeed_id = ?");
 
 
             ps.setString(1, newsfeed_news);
             ps.setString(2, newsfeed_title);
             ps.setString(3, newsfeed_img);
             ps.setString(4, newsfeed_datetime);
-            ps.setString(5, fk_orgName);
-            ps.setInt(6,    newsfeed_id);
+            ps.setInt(   5,    newsfeed_id);
 
             int row = ps.executeUpdate();
             System.out.println("Newsfeed update");

@@ -39,7 +39,13 @@ public class AdminController {
     // Admin Index
 
     @GetMapping("/admin")
-    public String admin() {
+    public String admin(Model model, Principal principal) {
+
+        User user = userRepo.getOneUser(principal.getName());
+        Profile profile = profileRepo.getOneProfile(user.getUser_id());
+
+        model.addAttribute("profile", profile);
+
         return "admin/adminIndex";
     }
 
@@ -149,7 +155,7 @@ public class AdminController {
 //    }
 
     //Admin News
-    @GetMapping("/admin/editnews/{fk_orgName}")
+    @GetMapping("/admin/news/{fk_orgName}")
     public ModelAndView adminNews(@PathVariable(name = "fk_orgName") String fk_orgName){
         ModelAndView mav = new ModelAndView("admin/adminLookUpNews");
 
@@ -168,6 +174,18 @@ public class AdminController {
         mav.addObject("OneOrg", fk_orgName);
         mav.addObject("project", project);
         mav.addObject("profile", profile);
+
+        return mav;
+    }
+
+    @GetMapping("/admin/news/edit/{newsfeed_id}")
+    private ModelAndView updateNews(@PathVariable(name = "newsfeed_id") int newsfeed_id){
+        ModelAndView mav = new ModelAndView("admin/adminEditNews");
+
+        Newsfeed newsfeed = newsRepo.getOneNews(newsfeed_id);
+        mav.addObject("newsfeed", newsfeed);
+
+        System.out.println(newsfeed.getNewsfeed_datetime());
 
         return mav;
     }
@@ -265,11 +283,12 @@ public class AdminController {
         String project_desc       = (dataFromForm.getParameter("project_desc"));
         String project_start      = (dataFromForm.getParameter("project_start"));
         String project_end        = (dataFromForm.getParameter("project_end"));
+        String user_mail          = (dataFromForm.getParameter("user_mail"));
 
         int totalDays   = ps.calcTotalDays2(project_start, project_end);
         int idParsed    = Integer.parseInt(project_id);
 
-        User user = userRepo.getOneUser(principal.getName());
+        User user = userRepo.getOneUser(user_mail);
 
         projectRepo.updateProject(idParsed, project_name, project_desc, totalDays, project_start, project_end, user.getFk_orgId());
 
@@ -347,7 +366,7 @@ public class AdminController {
     //    UPDATE NEWS =============
 
     @PostMapping("/admin/update/news")
-    public String updateAdminNews(WebRequest dataFromForm, Principal principal) {
+    public String updateAdminNews(WebRequest dataFromForm) {
         String newsfeed_id          = (dataFromForm.getParameter("newsfeed_id"));
         String newsfeed_news        = (dataFromForm.getParameter("newsfeed_news"));
         String newsfeed_title       = (dataFromForm.getParameter("newsfeed_title"));
@@ -356,12 +375,9 @@ public class AdminController {
 
         int idParse         = Integer.parseInt(newsfeed_id);
 
-        User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+        newsRepo.updateAdminNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime);
 
-        newsRepo.updateAdminNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime, org.getOrg_name());
-
-        return "redirect:/" + org.getOrg_name();
+        return "redirect:/admin/lookuporganization";
     }
 
     @PostMapping("/admin/delete/news")
@@ -370,7 +386,7 @@ public class AdminController {
 
         int idParsed = Integer.parseInt(newsfeed_id);
 
-        orgRep.deleteAdminOrg(idParsed);
+        newsRepo.deleteAdminNews(idParsed);
 
 
         return "redirect:/admin/lookuporganization";

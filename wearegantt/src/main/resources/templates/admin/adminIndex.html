@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th ="http://www.thymeleaf.org"></html>
+<html xmlns:th ="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
@@ -16,21 +16,21 @@
     </a>
     <div class="row mt-5" >
         <div class="col-sm">
-            <h1 class="text-center">Velkommen tilbage Andreas</h1>
+            <h1 th:text="${'Welcome Back ' + profile.profile_firstname} " class="text-center"></h1>
         </div>
     </div>
     <div class="row mt-5">
-        <div class="col-sm" align="center"><a href="/admin/createuser"><button type="button" class="btn btn-danger w-75 p-3">Create Profile</button></a> </div>
-        <div class="col-sm" align="center"><a href="/admin/support"><button type="button" class="btn btn-danger w-75 p-3">Support</button></a> </div>
+        <div class="col-sm-6" align="center"><a href="/admin/createuser"><button type="button" class="btn btn-danger w-75 p-3">Create Profile</button></a> </div>
+        <div class="col-sm-6" align="center"><a href="/admin/support"><button type="button" class="btn btn-danger w-75 p-3">Support</button></a> </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-sm" align="center"><a href="/admin/lookupuser"><button type="button" class="btn btn-danger w-75 p-3">Look Up Users</button></a> </div>
-        <div class="col-sm" align="center"><a href="/admin/news"><button type="button" class="btn btn-danger w-75 p-3">News</button></a></div>
+    <div class="row mt-5">
+        <div class="col-sm-6" align="center"><a href="/admin/lookupuser"><button type="button" class="btn btn-danger w-75 p-3">Look Up Users</button></a> </div>
+        <div class="col-sm-6" align="center"><a href="/admin/lookuporganization"><button type="button" class="btn btn-danger w-75 p-3">Look Up Organizations</button></a> </div>
     </div>
 
     <div class="row mt-5">
-            <div class="col-sm" align="center"><a href="/admin/lookupproject"><button type="button" class="btn btn-danger w-75 p-3">Look Up Projects</button></a> </div>
-            <div class="col-sm" align="center"><a href="/admin/lookuporganization"><button type="button" class="btn btn-danger w-75 p-3">Look Up Organizations</button></a> </div>
+            <div class="col-sm-6" align="center"><a href="/admin/lookupproject"><button type="button" class="btn btn-danger w-75 p-3">Look Up Projects</button></a> </div>
+
         </div>
     </div>
 </div>

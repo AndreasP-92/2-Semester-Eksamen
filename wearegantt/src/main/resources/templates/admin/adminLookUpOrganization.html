@@ -106,7 +106,7 @@
             <td th:text="${organization.org_cvr}">Organization CVR</td>
             <td>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/editorganizations/' + ${organization.getOrg_id()}}" class="btn btn-danger">Edit</a>
+                    <a th:href="@{'/admin/editorganizations/' + ${organization.getOrg_id()}}" class="btn btn-danger">Edit Organization</a>
                 </div>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container" >
                     <form th:action="@{/admin/delete/org}" method="post">
@@ -115,7 +115,7 @@
                     </form>
                 </div>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/editnews/' + ${organization.getOrg_name()}}" class="btn btn-danger">Edit</a>
+                    <a th:href="@{'/admin/news/' + ${organization.getOrg_name()}}" class="btn btn-danger">Edit News</a>
                 </div>
             </td>
         </tr>

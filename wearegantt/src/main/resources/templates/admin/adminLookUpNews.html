@@ -41,40 +41,13 @@
 
             <td>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/editnews/' + ${news.getNewsfeed_id()}}" class="btn btn-danger">Edit</a>
+                    <a th:href="@{'/admin/news/edit/' + ${news.getNewsfeed_id()}}" class="btn btn-danger">Edit</a>
                 </div>
 
                 <div class="d-flex justify-content-center mt--1 p-2 login_container" >
                     <form th:action="@{/admin/delete/news}" method="post">
                         <input type="submit" class="btn btn-danger" value="Delete" >
-                        <input type="text" name="user_id" style="display: none;" th:value="${project.getProject_id()}">
-                    </form>
-                </div>
-            </td>
-
-
-            <!--=================== Block 2 ============================ -->
-<!--            <div class="row">-->
-<!--                <div class="col-sm-12" th:each = "news : ${listNewsfeed}">-->
-<!--                    <div class="mt-3" style="">-->
-<!--                        <div class="newsBox m3 w-50" align="center">-->
-<!--                            <h4 th:text="${news.newsfeed_news}" class="pt-2" align="center"></h4>-->
-<!--                            <p th:text="${news.newsfeed_title}" class="p-3"></p>-->
-<!--                            <p th:text="${news.newsfeed_datetime}" class="p-3"></p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <td>
-                <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/editprofile/' + ${project.getProject_id()}}" class="btn btn-danger">Edit</a>
-                </div>
-
-                <div class="d-flex justify-content-center mt--1 p-2 login_container" >
-                    <form th:action="@{/admin/delete/user}" method="post">
-                        <input type="submit" class="btn btn-danger" value="Delete" >
-                        <input type="text" name="user_id" style="display: none;" th:value="${project.getProject_id()}">
+                        <input type="text" name="newsfeed_id" style="display: none;" th:value="${news.getNewsfeed_id()}">
                     </form>
                 </div>
             </td>
@@ -84,3 +57,7 @@
 </div>
 </body>
 </html>
+
+
+
+
