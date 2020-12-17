@@ -33,7 +33,7 @@
                 <div class="loginbox">
                     <h4>Edit Your Profile</h4>
 
-<!-- ==== UPDATE PROFILE === -->
+                    <!-- ==== UPDATE PROFILE === -->
                     <form th:action="@{/update/profile}" th:object="${profile}" method="post">
                         <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{profile_id}">
 
@@ -59,9 +59,9 @@
                         <input class="text-center p-3 mb-1" id="jobtitleinput" type="text" th:field="*{profile_jobTitle}">
 
                         <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
-                        </form>
+                    </form>
 
-<!--                        <form th:object="${user}">-->
+                    <!--                        <form th:object="${user}">-->
                     <h4>Edit Your Email & Password</h4>
 
                     <form th:object="${user}" th:action="@{/update/credentials}" method="post"  id="registerForm">
@@ -81,32 +81,42 @@
                         <button id="submitButton" type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
                     </form>
 
-<!-- === DELETE PROFILE === -->
-                        <form th:action="@{/delete/profile}" th:object="${user}" method="post">
+                    <!-- === DELETE PROFILE === -->
+                    <form th:action="@{/delete/profile}" th:object="${user}" method="post">
 
-                            <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
-                            <button type="submit" name="button" class="btn login_btn1 mt-3 mb-3" >Delete</button>
+                        <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
+                        <button type="submit" name="button" class="btn login_btn1 mt-3 mb-3" >Delete</button>
 
-                        </form>
+                    </form>
+                    <!--=== CHANGE SUBSCRIPTION === -->
+                    <form action="" method="post">
+                        <select>
+                            <option value="0">Select new Subscriptoin</option>
+                            <option value="NORMAL_USER">Select Normal User</option>
+                            <option value="SUPER_USER">Select new Subscriptoin</option>
+                        </select>
 
-                        <a      class="btn login_btn mt-3 mb-3"
-                                th:href="@{'/login/userType/'}">Change Subscription</a>
+                        <input class="btn login_btn mt-3 mb-3" type="submit" value="Change Subscription">
+                    </form>
 
-                        <a href="/login/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
+                    <!--=== CREATE SUPPORT TICKET === -->
+                    <a th:href="@{'/profile/support'}" class="btn login_btn mt-3 mb-3">Support</a>
 
-<!-- === EDIT / NEW ORGANIZATION === -->
-                        <div th:if="${user.fk_orgId == 0}">
-                            <li class="nav-item">
-                                <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
-                                   th:href="@{'/profile/organization/' + ${org.org_id}}">New Organization</a>
-                            </li>
-                        </div>
-                        <div th:if="${user.fk_orgId > 0}">
-                            <li class="nav-item">
-                                <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
-                                   th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
-                            </li>
-                        </div>
+                    <!--                    <a th:href="@{'/profile/ticket/' + ${profile.getProfile_id()}}" class="btn login_btn mt-3 mb-3">Create Support Ticket</a>-->
+
+                    <!-- === EDIT / NEW ORGANIZATION === -->
+                    <div th:if="${user.fk_orgId == 0}">
+                        <li class="nav-item">
+                            <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
+                               th:href="@{'/profile/organization/' + ${org.org_id}}">New Organization</a>
+                        </li>
+                    </div>
+                    <div th:if="${user.fk_orgId > 0}">
+                        <li class="nav-item">
+                            <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
+                               th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
+                        </li>
+                    </div>
 
                 </div>
             </div>

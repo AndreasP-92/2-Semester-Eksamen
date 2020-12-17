@@ -3,6 +3,7 @@ package com.example.wearegantt.controller;
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
 import com.example.wearegantt.repository.OrganizationRepo;
+import com.example.wearegantt.services.ObjectManager;
 import com.example.wearegantt.services.ProjectServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import java.util.List;
 @org.springframework.stereotype.Controller
 public class MainController {
 
-    SupportTicketRepo supportTicketRepo = new SupportTicketRepo();
+//    SupportTicketRepo supportTicketRepo = new SupportTicketRepo();
 
     OrganizationRepo orgRep = new OrganizationRepo();
 
@@ -35,6 +36,10 @@ public class MainController {
     ProfileRepo profRepo = new ProfileRepo();
 
     ProjectRepo projRepo = new ProjectRepo();
+
+    ProjectServices ps = new ProjectServices();
+
+    ObjectManager objectManager = new ObjectManager();
 
 
 
@@ -137,7 +142,37 @@ public class MainController {
 
 //    POST ROUTES NEWS   ==================
 
+    // INSERT CONTACT TICKET =======================
 
+    @PostMapping("/insert/ticket")
+    public String postTicket(WebRequest dataFromForm, Principal principal) {
+        String ticket_title         = (dataFromForm.getParameter("ticket_title"));
+        String ticket_ownerName     = (dataFromForm.getParameter("ticket_ownerName"));
+        String ticket_ownerMail     = (dataFromForm.getParameter("ticket_ownerMail"));
+        String ticket_context       = (dataFromForm.getParameter("ticket_context"));
+        String user                 = dataFromForm.getRemoteUser();
+        int ticket_active           = 1;
+        int ticket_taken            = 0;
+        int admin_replied           = 0;
+        int user_replied            = 1;
+
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+
+        System.out.println("MAIL============="+ticket_ownerName);
+        System.out.println("USER============="+user);
+
+        objectManager.ticketRepo.insertSupportTicket(ticket_title, ticket_context, timestamp, ticket_ownerMail, ticket_ownerName, ticket_active, ticket_taken, admin_replied, user_replied);
+        if(user == null){
+            return "redirect:/";
+        } else{
+
+            return "redirect:/editprofile/"+principal.getName();
+        }
+
+
+    }
     //    UPDATE NEWS =============
 
     @PostMapping("/update/newsfeed")
@@ -191,32 +226,6 @@ public class MainController {
         newsRepo.deleteNews(idParsed);
 
         System.out.println(idParsed);
-
-        return "redirect:/";
-    }
-
-    //  =================================  POST ROUTES For TICKETS =============================
-
-    //    INSERT TICKET =============
-
-    @PostMapping("/insert/ticket")
-    public String postTicket(WebRequest dataFromForm) {
-        String ticket_title       = (dataFromForm.getParameter("ticket_title"));
-        String ticket_context     = (dataFromForm.getParameter("ticket_context"));
-        String ticket_ownerMail   = (dataFromForm.getParameter("ticket_ownerMail"));
-        String ticket_ownerName   = (dataFromForm.getParameter("ticket_ownerName"));
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss.SSSSSS");
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        supportTicketRepo.InsertTicket(ticket_title, ticket_context, sdf.format(timestamp), ticket_ownerMail, ticket_ownerName);
-
-//        User user           = userRepo.getOneUser(principal.getName());
-//
-//        SupportTicket supportTicket = supportTicketRepo.getOneTicket(ticket_ownerMail);
-//
-//        ticketRepo.InsertTicketUser(supportTicket.getTicket_id(), user.getUser_id());
-//        //indsæt ticketUser med tidligere ticket_id + user_id
 
         return "redirect:/";
     }
