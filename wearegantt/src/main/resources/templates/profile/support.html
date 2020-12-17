@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="/css/main/contact.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <!--=================== NAVIGATION ============================ -->
+    <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}">
+
+
+
+    </div>
+</header>
+<main class="container" align="center">
+    <!--=================== logo ============================ -->
+    <div class="col-sm-12" align="center">
+        <img th:src="@{/images/logo.png/}" style="">
+    </div>
+
+    <form id="contact" th:action="@{/insert/ticket}" th:object="${profile}" method="post" class="w-50">
+        <h3 style="text-align: center">Contact Form</h3>
+        <h4></h4>
+        <div class="form-group ml-5 mr-5">
+            <input placeholder="Enter Title" name="ticket_title" type="text" class="form-control" >
+        </div>
+        <div class="form-group ml-5 mr-5">
+            <input name="ticket_ownerName" th:value="*{profile_firstname + profile_lastname}" type="text" class="form-control" >
+        </div>
+        <div class="form-group ml-5 mr-5">
+            <input name="ticket_ownerMail" style="display: none" th:value="${user.user_mail}" type="text" class="form-control">
+        </div>
+        <div class="form-group ml-5 mr-5">
+            <textarea placeholder="Description" name="ticket_context" required class="form-control"></textarea>
+        </div>
+        <!--=================== Submit button ============================ -->
+        <button class="btn form-button ml-5 mr-5" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+    </form>
+
+</main>
+<!--=================== Footer ============================ -->
+<div th:replace="partials/footer :: footerFragment"></div>
+
+</body>
+</html>

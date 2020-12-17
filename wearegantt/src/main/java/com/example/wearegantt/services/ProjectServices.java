@@ -2,6 +2,8 @@ package com.example.wearegantt.services;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,5 +78,10 @@ public class ProjectServices {
         }
         System.out.println(numberOfDays);
         return numberOfDays;
+    }
+    public String returnTime(Timestamp timestamp){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        return sdf.format(timestamp);
     }
 }

@@ -2,6 +2,8 @@ package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
+import com.example.wearegantt.services.ObjectManager;
+import com.example.wearegantt.services.ProjectServices;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -24,6 +28,15 @@ public class ProfileController {
     UserRepo userRepo       = new UserRepo();
 
     ProfileRepo profileRepo = new ProfileRepo();
+
+    ProjectRepo projectRepo = new ProjectRepo();
+
+
+//    =================
+
+    ProjectServices projectServices = new ProjectServices();
+    ObjectManager objectManager = new ObjectManager();
+
 
 
 //   =========================================== GET ROUTES ===================================
@@ -81,7 +94,123 @@ public class ProfileController {
         return mav;
     }
 
+// =============== PROFILE SUPPORT ===============
+
+    @GetMapping("/profile/support")
+    public String profileSupport(Model model, Principal principal) {
+
+        User user = objectManager.userRepo.getOneUser(principal.getName());
+        List<SupportTicket> supportTicketList = objectManager.ticketRepo.getAllTicketsWUserMail(user.getUser_mail());
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+        Profile profile = objectManager.profileRepo.getOneProfile(user.getUser_id());
+
+
+        System.out.println(supportTicketList);
+
+        model.addAttribute("profile", profile);
+        model.addAttribute("user", user);
+        model.addAttribute("org", org);
+        model.addAttribute("user", user);
+        model.addAttribute("supportTicketList", supportTicketList);
+
+
+
+        return "profile/profileTicket";
+    }
+
+// =============== PROFILE TICKET =================
+
+    @GetMapping("/profile/ticket/{profile_id}")
+    private ModelAndView ticket(@PathVariable(name = "profile_id") int profile_id, Principal principal){
+        ModelAndView mav    = new ModelAndView("profile/support");
+
+        User user           = userRepo.getOneUser(principal.getName());
+        Profile profile     = profileRepo.getOneProfile(user.getUser_id());
+        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+
+
+//        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+
+        mav.addObject("org", org);
+        mav.addObject("user", user);
+        mav.addObject("profile", profile);
+
+        return mav;
+    }
+
+// =============== PROFILE CHAT ===============
+
+@GetMapping("/profile/support/chat/{ticket_id}")
+public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, Principal principal) {
+    ModelAndView mav = new ModelAndView("profile/profileChat");
+
+    List<SupportMessage> supportMessageList = objectManager.ticketRepo.getAllMessagesWTicketId(ticket_id);
+    SupportTicket supportTicket             = objectManager.ticketRepo.getOneTicket(ticket_id);
+    User user                               = objectManager.userRepo.getOneUser(principal.getName());
+    Profile profile                         = objectManager.profileRepo.getOneProfile(user.getUser_id());
+
+    mav.addObject("supportMessageList", supportMessageList);
+    mav.addObject("supportTicket", supportTicket);
+    mav.addObject("profile", profile);
+
+
+    return mav;
+}
+
 //  =================================  POST ROUTES =============================
+
+    // CREATE TICKET =======================
+
+//    @PostMapping("/insert/ticket")
+//    public String postUserTicket(WebRequest dataFromForm, Principal principal) {
+//        String ticket_title         = (dataFromForm.getParameter("ticket_title"));
+//        String ticket_ownerName     = (dataFromForm.getParameter("ticket_ownerName"));
+//        String ticket_ownerMail     = (dataFromForm.getParameter("ticket_ownerMail"));
+//        String ticket_context       = (dataFromForm.getParameter("ticket_context"));
+//        String user                 = dataFromForm.getRemoteUser();
+//        int ticket_active           = 1;
+//        int ticket_taken            = 0;
+//
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//
+//
+//        System.out.println("MAIL============="+ticket_ownerName);
+//        System.out.println("USER============="+user);
+//
+//        objectManager.ticketRepo.insertSupportTicket(ticket_title, ticket_context, timestamp, ticket_ownerMail, ticket_ownerName, ticket_active, ticket_taken);
+//        if(user == null){
+//            return "redirect:/";
+//        } else{
+//
+//            return "redirect:/editprofile/"+principal.getName();
+//        }
+//
+//
+//    }
+
+    // ============== SAVE MESSAGE ==============
+
+    @PostMapping("/profile/save/chat")
+    public String saveMessage(WebRequest dataFromForm) {
+        String user_mail           = (dataFromForm.getRemoteUser());
+        String message_context      = (dataFromForm.getParameter("message_context"));
+        String ticket_ownerMail    = (dataFromForm.getParameter("ticket_ownerMail"));
+        String ticket_id           = (dataFromForm.getParameter("ticket_id"));
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        String time = projectServices.returnTime(timestamp);
+
+        int ticketIdParsed  = Integer.parseInt(ticket_id);
+
+
+// INSERT MESSAGE
+        objectManager.ticketRepo.insertMessage(message_context, time, ticketIdParsed, ticket_ownerMail);
+// UPDATE MESSAGE
+        objectManager.ticketRepo.messageUpdateTicketUser(ticketIdParsed);
+
+        return "redirect:/profile/support";
+    }
 
 //    INSERT ORGANIZATION =============
 
@@ -210,4 +339,6 @@ public class ProfileController {
 
         return "redirect:/login?logout";
     }
+//    INSERT TICKET =============
+
 }

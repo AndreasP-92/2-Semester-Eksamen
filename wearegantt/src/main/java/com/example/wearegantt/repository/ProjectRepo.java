@@ -576,6 +576,9 @@ public class ProjectRepo {
 
     }
 
+
+    //    ================== DELETE TASK ================
+
     public void deleteTask(int task_id){
         try {
             PreparedStatement ps = establishConnection().prepareStatement("DELETE FROM task WHERE task_id = ?");

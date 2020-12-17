@@ -1,19 +1,12 @@
 package com.example.wearegantt.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+public class GetTicketUser {
 
-public class SupportTicket {
     private int supportTicket_id;
     private String supportTicket_title;
     private String supportTicket_context;
-//    @JsonFormat(pattern = "yyyy-mm-dd hh:mm:ss")
     private String supportTicket_timestamp;
     private String supportTicket_ownerMail;
     private String supportTicket_ownerName;
@@ -21,8 +14,11 @@ public class SupportTicket {
     private int supportTicket_taken;
     private int supportTicket_adminReplied;
     private int supportTicket_userReplied;
+    private int ticketUser_id;
+    private int ticket_id;
+    private int user_id;
 
-    public SupportTicket(int supportTicket_id, String supportTicket_title, String supportTicket_context, String supportTicket_timestamp, String supportTicket_ownerMail, String supportTicket_ownerName, int supportTicket_active, int supportTicket_taken, int supportTicket_adminReplied, int supportTicket_userReplied) {
+    public GetTicketUser(int supportTicket_id, String supportTicket_title, String supportTicket_context, String supportTicket_timestamp, String supportTicket_ownerMail, String supportTicket_ownerName, int supportTicket_active, int supportTicket_taken, int supportTicket_adminReplied, int supportTicket_userReplied, int ticketUser_id, int ticket_id, int user_id) {
         this.supportTicket_id = supportTicket_id;
         this.supportTicket_title = supportTicket_title;
         this.supportTicket_context = supportTicket_context;
@@ -33,6 +29,9 @@ public class SupportTicket {
         this.supportTicket_taken = supportTicket_taken;
         this.supportTicket_adminReplied = supportTicket_adminReplied;
         this.supportTicket_userReplied = supportTicket_userReplied;
+        this.ticketUser_id = ticketUser_id;
+        this.ticket_id = ticket_id;
+        this.user_id = user_id;
     }
 
     public int getSupportTicket_id() {
@@ -115,9 +114,33 @@ public class SupportTicket {
         this.supportTicket_userReplied = supportTicket_userReplied;
     }
 
+    public int getTicketUser_id() {
+        return ticketUser_id;
+    }
+
+    public void setTicketUser_id(int ticketUser_id) {
+        this.ticketUser_id = ticketUser_id;
+    }
+
+    public int getTicket_id() {
+        return ticket_id;
+    }
+
+    public void setTicket_id(int ticket_id) {
+        this.ticket_id = ticket_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     @Override
     public String toString() {
-        return "SupportTicket{" +
+        return "GetTicketUser{" +
                 "supportTicket_id=" + supportTicket_id +
                 ", supportTicket_title='" + supportTicket_title + '\'' +
                 ", supportTicket_context='" + supportTicket_context + '\'' +
@@ -128,6 +151,9 @@ public class SupportTicket {
                 ", supportTicket_taken=" + supportTicket_taken +
                 ", supportTicket_adminReplied=" + supportTicket_adminReplied +
                 ", supportTicket_userReplied=" + supportTicket_userReplied +
+                ", ticketUser_id=" + ticketUser_id +
+                ", ticket_id=" + ticket_id +
+                ", user_id=" + user_id +
                 '}';
     }
 }

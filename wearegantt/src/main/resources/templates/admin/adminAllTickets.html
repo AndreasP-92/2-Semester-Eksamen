@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+    <title>Admin Page</title>
+</head>
+<body>
+<div class="container">
+    <a href="/admin" style="color:black;">
+        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+    </a>
+    <div class="row">
+        <div class="col-sm mt-5">
+            <h1 class="text-center">Support</h1>
+        </div>
+    </div>
+    <div class="row mt-5">
+            <div class="col-sm-6" align="center">
+                <a href="/admin/support/all" class="btn btn-danger w-75 p-3">All Tickets</a>
+            </div>
+            <div class="col-sm-6" align="center">
+                <a th:href="@{'/admin/support/assigned/' + ${user.getUser_id()}}" class="btn btn-danger w-75 p-3">Assigned Tickets</a>
+            </div>
+    </div>
+    <table class="table mt-5 table-striped table-bordered table-dark table-hover">
+        <thead class="thead-dark">
+            <a href="#">
+                <tr>
+                    <th scope="col ">From</th>
+                    <th scope="col">Ticket Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Topic</th>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Action</th>
+
+                </tr>
+            </a>
+        </thead>
+        <tbody>
+            <tr th:each=" ticket : ${supportTicketList}" style="cursor: help;"class="mt-5">
+                <th th:title="${ticket.supportTicket_context}" scope="row" th:text="${ticket.supportTicket_ownerMail}">Mail</th>
+                <td th:title="${ticket.supportTicket_context}" th:text="${ticket.supportTicket_id}">Ticket Number</td>
+                <td th:title="${ticket.supportTicket_context}" th:text="${ticket.supportTicket_ownerName}">Context</td>
+                <td th:title="${ticket.supportTicket_context}" th:text="${ticket.supportTicket_title}">Topic</td>
+                <td th:title="${ticket.supportTicket_context}" th:text="${ticket.supportTicket_timestamp}">Date</td>
+                <td>
+                    <form th:action="@{/admin/support/asignticket}" method="post">
+<!--                            th:href="@{'/admin/support/chat/' + ${ticket.ticket_id}}"-->
+                        <input style="display: none" name="ticket_context" type="text" th:value="${ticket.supportTicket_context}">
+                        <input style="display: none" name="ticket_timestamp" type="text" th:value="${ticket.supportTicket_timestamp}">
+                        <input style="display: none" name="ticket_ownerMail" type="text" th:value="${ticket.supportTicket_ownerMail}">
+                        <input style="display: none" name="ticket_id" type="text" th:value="${ticket.supportTicket_id}">
+                        <button type="submit" class="btn btn-danger">Asign</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

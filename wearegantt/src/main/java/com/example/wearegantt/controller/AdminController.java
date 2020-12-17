@@ -2,6 +2,7 @@ package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.repository.*;
+import com.example.wearegantt.services.ObjectManager;
 import com.example.wearegantt.services.ProjectServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
 
@@ -33,24 +33,30 @@ public class AdminController {
 
     NewsfeedRepo newsRepo = new NewsfeedRepo();
 
-    ProjectServices ps = new ProjectServices();
+//    ===================
 
-//    GET ROUTES ==================
-    // Admin Index
+    ProjectServices projectServices = new ProjectServices();
+
+    ObjectManager objectManager = new ObjectManager();
+
+//   ============================================================== GET ROUTES ==================================================================
+
+// =============== Admin Index ===============
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
 
-        User user = userRepo.getOneUser(principal.getName());
-        Profile profile = profileRepo.getOneProfile(user.getUser_id());
-
-        model.addAttribute("profile", profile);
+//        User user = userRepo.getOneUser(principal.getName());
+//        Profile profile = profileRepo.getOneProfile(user.getUser_id());
+//
+//        model.addAttribute("profile", profile);
 
         return "admin/adminIndex";
     }
 
 
-    // Admin Look Up User
+// =============== Admin Look Up User ===============
+
     @GetMapping("/admin/lookupuser")
     public String adminLookUpUsers(Model model) {
 
@@ -60,7 +66,8 @@ public class AdminController {
         return "/admin/adminLookUpUser";
     }
 
-    // Admin EDIT PROFILE =================
+// =============== Admin EDIT PROFILE =================
+
     @GetMapping("/admin/editprofile/{user_id}")
     public ModelAndView adminEditProfile(@PathVariable(name = "user_id") int user_id) {
         ModelAndView mav = new ModelAndView("admin/adminEditProfile");
@@ -78,18 +85,61 @@ public class AdminController {
         return mav;
     }
 
-    // Admin Support
-    @GetMapping("/admin/support")
-    public String adminSupport() {
-        return "admin/adminSupport";
+// =============== ADMIN SUPPORT ALL TICKETS =============
+
+    @GetMapping("/admin/support/all")
+    public String adminSupport(Model model, Principal principal) {
+
+        List<SupportTicket> supportTicketList = objectManager.ticketRepo.getAllTickets();
+        User user = objectManager.userRepo.getOneUser(principal.getName());
+
+        System.out.println(supportTicketList);
+
+        model.addAttribute("user", user);
+        model.addAttribute("supportTicketList", supportTicketList);
+
+
+
+        return "admin/adminAllTickets";
     }
 
-    //Admin Chat
-    @GetMapping("/admin/chat")
-    public String adminChat() {
-        return "admin/adminChat";
+// =============== ADMIN SUPPORT ASSIGNED TICKETS =============
+
+    @GetMapping("/admin/support/assigned/{user_id}")
+    public ModelAndView assignedTickets(@PathVariable(name = "user_id")int user_id, Principal principal) {
+        ModelAndView mav = new ModelAndView("admin/adminAssignedTickets");
+
+        List<GetTicketUser> supportTicketList = objectManager.ticketRepo.getAllUserTickets(user_id);
+        User user = objectManager.userRepo.getOneUser(principal.getName());
+
+        System.out.println(supportTicketList);
+
+        mav.addObject("supportTicketList", supportTicketList);
+        mav.addObject("user", user);
+
+        return mav;
     }
 
+// =============== ADMIN CHAT ===============
+
+    @GetMapping("/admin/support/chat/{ticket_id}")
+    public ModelAndView adminChat(@PathVariable(name = "ticket_id")int ticket_id, Principal principal) {
+        ModelAndView mav = new ModelAndView("admin/adminChat");
+
+        List<SupportMessage> supportMessageList = objectManager.ticketRepo.getAllMessagesWTicketId(ticket_id);
+        SupportTicket supportTicket             = objectManager.ticketRepo.getOneTicket(ticket_id);
+        User user                               = objectManager.userRepo.getOneUser(principal.getName());
+        Profile profile                         = objectManager.profileRepo.getOneProfile(user.getUser_id());
+
+        mav.addObject("supportMessageList", supportMessageList);
+        mav.addObject("supportTicket", supportTicket);
+        mav.addObject("profile", profile);
+
+
+        return mav;
+    }
+
+// ===============Admin CREATE USER ===============
 
     @GetMapping("/admin/createuser")
     public String adminCreateUser() {
@@ -97,7 +147,8 @@ public class AdminController {
     }
 
 
-    // Admin Look Up Organization
+// =============== Admin Look Up Organization ===============
+
     @GetMapping("/admin/lookuporganization")
     public String adminLookUpOrganizations(Model model) {
 
@@ -108,7 +159,8 @@ public class AdminController {
     }
 
 
-    //Admin Edit Organisation
+// =============== Admin Edit Organisation ===============
+
     @GetMapping("/admin/editorganizations/{org_id}")
     public ModelAndView adminEditOrganization(@PathVariable(name = "org_id") int org_id) {
         ModelAndView mav = new ModelAndView("admin/adminEditOrganizations");
@@ -121,7 +173,8 @@ public class AdminController {
 
     }
 
-    //Admin Projects
+// =============== Admin Projects ===============
+
     @GetMapping("/admin/lookupproject")
     public String adminLookUpProjects(Model model){
 
@@ -131,7 +184,8 @@ public class AdminController {
         return "admin/adminLookUpProject";
     }
 
-    //Admin Edit Projects
+// =============== Admin Edit Projects ===============
+
     @GetMapping("/admin/editprojects/{project_id}")
     public ModelAndView adminEditProject(@PathVariable(name = "project_id") int project_id) {
         ModelAndView mav = new ModelAndView("admin/adminEditProjects");
@@ -190,6 +244,76 @@ public class AdminController {
         return mav;
     }
 
+//========================================= POST TICKETS =========================================================================
+
+// ============== SAVE MESSAGE ==============
+
+    @PostMapping("/admin/save/chat")
+    public String saveMessage(WebRequest dataFromForm) {
+        String user_mail           = (dataFromForm.getRemoteUser());
+        String message_context      = (dataFromForm.getParameter("message_context"));
+        String ticket_ownerMail    = (dataFromForm.getParameter("ticket_ownerMail"));
+        String ticket_id           = (dataFromForm.getParameter("ticket_id"));
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        String time = projectServices.returnTime(timestamp);
+
+        int ticketIdParsed  = Integer.parseInt(ticket_id);
+// OBJECTS
+        User user = objectManager.userRepo.getOneUser(user_mail);
+
+// INSERT MESSAGE
+        objectManager.ticketRepo.insertMessage(message_context, time, ticketIdParsed, ticket_ownerMail);
+// UPDATE TICKET
+        objectManager.ticketRepo.messageUpdateTicketAdmin(ticketIdParsed);
+
+
+        return "redirect:/admin/support/assigned/"+user.getUser_id();
+    }
+
+// ============== CLOSE TICKET ==============
+
+@PostMapping("/admin/support/closeticket")
+public String closeTicket(WebRequest dataFromForm) {
+    String user_mail            = (dataFromForm.getRemoteUser());
+    String ticket_id            = (dataFromForm.getParameter("ticket_id"));
+
+    int ticketIdParsed  = Integer.parseInt(ticket_id);
+
+    User user = objectManager.userRepo.getOneUser(user_mail);
+
+    objectManager.ticketRepo.closeTicket(ticketIdParsed);
+
+    return "redirect:/admin/support/assigned/"+user.getUser_id();
+}
+
+// ============== ASIGN TICKET ==============
+
+    @PostMapping("/admin/support/asignticket")
+    public String postAsignedTickets(WebRequest dataFromForm) {
+        String user_mail            = (dataFromForm.getRemoteUser());
+        String ticket_context       = (dataFromForm.getParameter("ticket_context"));
+        String ticket_timestamp     = (dataFromForm.getParameter("ticket_timestamp"));
+        String ticket_ownerMail     = (dataFromForm.getParameter("ticket_ownerMail"));
+        String ticket_id            = (dataFromForm.getParameter("ticket_id"));
+
+        int ticketIdParsed  = Integer.parseInt(ticket_id);
+
+        User user = objectManager.userRepo.getOneUser(user_mail);
+
+//        ASIGN
+        objectManager.ticketRepo.assignTicket(ticketIdParsed, user.getUser_id());
+        objectManager.ticketRepo.assignTicket02(ticketIdParsed);
+
+        SupportMessage supportMessage = objectManager.ticketRepo.getOneMessage(ticketIdParsed);
+
+//CHECK IF NOT ASIGNED ALREADY
+        if(supportMessage == null){
+            objectManager.ticketRepo.insertMessage(ticket_context, ticket_timestamp, ticketIdParsed, ticket_ownerMail);
+        }
+        return "redirect:/admin/support/assigned/"+user.getUser_id();
+    }
 
 //========================================= POST ROUTES =========================================================================
 
@@ -285,7 +409,7 @@ public class AdminController {
         String project_end        = (dataFromForm.getParameter("project_end"));
         String user_mail          = (dataFromForm.getParameter("user_mail"));
 
-        int totalDays   = ps.calcTotalDays2(project_start, project_end);
+        int totalDays   = projectServices.calcTotalDays2(project_start, project_end);
         int idParsed    = Integer.parseInt(project_id);
 
         User user = userRepo.getOneUser(user_mail);
