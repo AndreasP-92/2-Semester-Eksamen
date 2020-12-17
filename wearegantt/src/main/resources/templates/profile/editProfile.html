@@ -88,21 +88,11 @@
                             <button type="submit" name="button" class="btn login_btn1 mt-3 mb-3" >Delete</button>
 
                         </form>
-<!--=== CHANGE SUBSCRIPTION === -->
-                    <form action="" method="post">
-                        <select>
-                            <option value="0">Select new Subscriptoin</option>
-                            <option value="NORMAL_USER">Select Normal User</option>
-                            <option value="SUPER_USER">Select new Subscriptoin</option>
-                        </select>
 
-                        <input class="btn login_btn mt-3 mb-3" type="submit" value="Change Subscription">
-                    </form>
+                        <a      class="btn login_btn mt-3 mb-3"
+                                th:href="@{'/login/userType/'}">Change Subscription</a>
 
-<!--=== CREATE SUPPORT TICKET === -->
-                    <a th:href="@{'/profile/support'}" class="btn login_btn mt-3 mb-3">Support</a>
-
-<!--                    <a th:href="@{'/profile/ticket/' + ${profile.getProfile_id()}}" class="btn login_btn mt-3 mb-3">Create Support Ticket</a>-->
+                        <a href="/login/userType" class="btn login_btn mt-3 mb-3">Change Subscription</a>
 
 <!-- === EDIT / NEW ORGANIZATION === -->
                         <div th:if="${user.fk_orgId == 0}">

@@ -34,7 +34,7 @@ public class LoginController {
     }
 
     @GetMapping("/register")
-    private String register() {
+    public String register(){
 
         return "login/register";
     }
@@ -65,6 +65,7 @@ public class LoginController {
         String jobTitle = (dataFromForm.getParameter("jobTitle"));
         String password = (dataFromForm.getParameter("password"));
         String email = (dataFromForm.getParameter("email"));
+        String role      = (dataFromForm.getParameter("role"));
 
 
         int zipParsed = Integer.parseInt(zipcode);
@@ -80,7 +81,7 @@ public class LoginController {
 
         userRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed, jobTitle, userObj.getUser_id());
 
-        userRepo.insertAuthUser("ROLE_USER", userObj.getUser_mail());
+        userRepo.insertAuthUser(role, userObj.getUser_mail());
 
 
 

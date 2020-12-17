@@ -330,7 +330,7 @@ public String closeTicket(WebRequest dataFromForm) {
         String jobTitle  = (dataFromForm.getParameter("jobTitle"));
         String password  = (dataFromForm.getParameter("password"));
         String mail      = (dataFromForm.getParameter("mail"));
-
+        String role      = (dataFromForm.getParameter("role"));
 
         int zipParsed = Integer.parseInt(zipcode);
         int phoneParsed = Integer.parseInt(phone);
