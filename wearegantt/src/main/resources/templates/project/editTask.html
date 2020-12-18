@@ -11,7 +11,8 @@
 <body>
 <header>
     <!--=================== NAVIGATION Start ============================ -->
-    <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}">
+    <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+
 
 
 
@@ -19,41 +20,40 @@
     <!--=================== NAVIGATION End ============================ -->
 </header>
 
-<main class="container main p-2" align="center">
-    <div class="row">
-
-        <div class="col-sm-4">
-
+<main class="container">
+    <a th:href="@{'/gantt/' + ${project.getProject_id()}}" style="color:black;">
+        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+    </a>
+    <div align="center">
+        <div class="col-sm-12">
+            <img th:src="@{/images/logo.png/}" style="">
         </div>
-
-
-        <div class="loginbox col-sm-4">
-
-
-            <!-- == INSERT JOBTITLE FORM == -->
-            <form th:action="@{/update/newTask}" method="post">
+<!-- == INSERT JOBTITLE FORM == -->
+            <form class="contact w-50" th:action="@{/update/newTask}" method="post">
 
                 <input class="text-center" type="text" style="display: none;" name="project_name" th:value="${project.project_name}">
                 <input class="text-center" type="text" style="display: none;" name="task_id" th:value="${task.task_id}">
 
 
-                <h3>Edit your Organization</h3>
+                <h3>Edit Task</h3>
                 <div align="left" class="form-group">
                     <label for="taskName">Task Name</label>
-                    <input class="form-control text-center p-3 mb-1" id="taskName" type="text"  required  name="task_name" th:value="${task.getTask_name()}">
+                    <input class="form-control" id="taskName" type="text"  required  name="task_name" th:value="${task.getTask_name()}">
                 </div>
                 <div align="left" class="form-group">
                     <label for="task_Description">Task Description</label><br>
-                    <textarea class="form-control text-center form-control" id="task_description" required  rows="3" name="task_description" th:text="${task.getTask_desc()}"></textarea>
+                    <textarea class="form-control" id="task_description" required  rows="3" name="task_description" th:text="${task.getTask_desc()}"></textarea>
                 </div>
                 <div align="left" class="form-group">
                     <label for="taskStart">Task Start</label>
-                    <input class="form-control text-center" id="taskStart" type="date" required  name="task_start" th:value="${task.getTask_start()}">
+                    <input class="form-control" id="taskStart" type="date" required  name="task_start" th:value="${task.getTask_start()}">
                 </div>
+                <p class="valid" th:text="${'*Warning* Calender year ' + yearNow + ' Only'}"></p>
+
 
                 <div align="left" class="form-group">
                     <label for="taskEnd">Task End</label>
-                    <input class="form-control text-center" id="taskEnd" type="date" required  name="task_end" th:value="${task.getTask_end()}">
+                    <input class="form-control" id="taskEnd" type="date" required  name="task_end" th:value="${task.getTask_end()}">
                 </div>
                 <!--                        </div>-->
 
@@ -86,16 +86,14 @@
                         </div>
                     </select>
                 </div>
-                <input type="submit" value="Save" name="button" class="btn login_btn mt-3 mb-3">
+                <input type="submit" value="Save" name="button" class="w-50 btn form-button ml-5 mr-5">
 
             </form>
-            <form th:action="@{/delete/task}" method="post">
+            <form class="contact w-50"  th:action="@{/delete/task}" method="post">
                 <input name="project_id" th:value="${project.getProject_id()}" style="display: none;">
                 <input name="task_id" th:value="${task.getTask_id()}" style="display: none;">
-                <input type="submit" value="Delete" name="button" class="btn btn-danger mt-3 mb-3">
+                <input type="submit" value="Delete" name="button" class="btn btn-danger mt-3 mb-3 w-50">
             </form>
-        </div>
-    </div>
     </div>
 
 </main>
@@ -109,4 +107,5 @@
 <!--&lt;!&ndash;=================== Footer ============================ &ndash;&gt;-->
 
 </body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </html>

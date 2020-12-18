@@ -12,7 +12,8 @@
 <body>
     <header>
         <!--=================== NAVIGATION ============================ -->
-        <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${org},user=${user}">
+        <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+
 
 
 
@@ -27,37 +28,39 @@
                 <a th:href="@{'/projects/create/task/'+${project.getProject_id()}}">Add Task</a>
                 <a th:href="@{'/profile/organization/'+${org.getOrg_name()}}">Add Employee</a>
                 <a th:href="@{'/projects/edit/'+${project.getProject_id}}">Edit Project</a>
-                <a href="#">Edit Gantt</a>
 
-                <form class="">
-                    <h2 class="sidenavHeaders">Gantt Titles</h2>
-                    <div class="form-check" style="color:white;">
-                        <input class="form-check-input" checked type="checkbox" name="analysis">
-                        <label class="form-check-label sidenavLabel"  name="analysis">Analysis</label>
-                    </div>
-                    <div class="form-check" style="color:white;">
-                        <input class="form-check-input" checked type="checkbox" name="design">
-                        <label class="form-check-label sidenavLabel"  name="design">Design</label>
-                    </div>
-                    <div class="form-check" style="color:white;">
-                        <input class="form-check-input" checked type="checkbox" name="development">
-                        <label class="form-check-label sidenavLabel"  name="development">Development</label>
-                    </div>
-                    <div class="form-check" style="color:white;">
-                        <input class="form-check-input" checked type="checkbox" name="testing">
-                        <label class="form-check-label sidenavLabel"  name="testing">Testing</label>
-                    </div>
+<!--                <form class="">-->
+<!--                    <h2 class="sidenavHeaders">Gantt Titles</h2>-->
+<!--                    <div class="form-check" style="color:white;">-->
+<!--                        <input class="form-check-input" checked type="checkbox" name="analysis">-->
+<!--                        <label class="form-check-label sidenavLabel"  name="analysis">Analysis</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check" style="color:white;">-->
+<!--                        <input class="form-check-input" checked type="checkbox" name="design">-->
+<!--                        <label class="form-check-label sidenavLabel"  name="design">Design</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check" style="color:white;">-->
+<!--                        <input class="form-check-input" checked type="checkbox" name="development">-->
+<!--                        <label class="form-check-label sidenavLabel"  name="development">Development</label>-->
+<!--                    </div>-->
+<!--                    <div class="form-check" style="color:white;">-->
+<!--                        <input class="form-check-input" checked type="checkbox" name="testing">-->
+<!--                        <label class="form-check-label sidenavLabel"  name="testing">Testing</label>-->
+<!--                    </div>-->
 
-                    <div align="center">
-                        <button class="mt-3 btn w-50 submitbtn">Save</button>
+<!--                    <div align="center">-->
+<!--                        <button class="mt-3 btn w-50 submitbtn">Save</button>-->
 
-                    </div>
-                </form>
+<!--                    </div>-->
+<!--                </form>-->
             </div>
         </div>
 
         <!-- Use any element to open the sidenav -->
-        <span id="sideNavBurger" onclick="openNav()"><i class="fas fa-bars" style="font-size: 35px; padding-top: 40px; padding-left: 40px; width: 40px;"></i></span>
+        <span id="sideNavBurger" onclick="openNav()">
+            <i class="fas fa-bars" style="font-size: 35px; padding-top: 40px; padding-left: 40px; width: 40px;"></i>
+        </span>
+        <h4 class="ml-4 mt-2">Settings</h4>
 
 <!-- END -->
         <div class="row">

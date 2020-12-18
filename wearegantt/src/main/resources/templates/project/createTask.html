@@ -11,7 +11,8 @@
 <body>
 <header>
     <!--=================== NAVIGATION Start ============================ -->
-    <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}">
+    <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+
 
 
 
@@ -19,35 +20,33 @@
     <!--=================== NAVIGATION End ============================ -->
 </header>
 
-<main class="container main p-2" align="center">
-    <div class="row">
-
-        <div class="col-sm-4">
-
+<main class="container">
+    <a th:href="@{'/gantt/' + ${project.getProject_id()}}" style="color:black;">
+        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+    </a>
+    <div align="center">
+        <div class="col-sm-12">
+            <img th:src="@{/images/logo.png/}" style="">
         </div>
+<!-- == INSERT NEW TASK == -->
+                <form  class="contact w-50" th:action="@{/insert/newTask}" method="post">
 
-
-        <div class="loginbox col-sm-4">
-
-
-                <!-- == INSERT NEW TASK == -->
-                <form th:action="@{/insert/newTask}" method="post">
-
-                    <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_name" th:value="${project.project_name}">
+                    <input type="text" style="display: none;" name="project_name" th:value="${project.project_name}">
 
                             <h3>Add Task</h3>
                             <div align="left" class="form-group">
                                 <label for="taskName">Task Name</label>
-                                <input class="text-center p-3 mb-1" id="taskName" type="text"  required name="task_name" placeholder="Task Name">
+                                <input class="form-control" id="taskName" type="text"  required name="task_name" placeholder="Task Name">
                             </div>
                             <div align="left" class="form-group">
                                 <label for="task_Description">Task Description</label><br>
-                                <textarea class="text-center form-control p-3 mb-1" id="task_description" required  rows="3" name="task_description" placeholder="Task Description"></textarea>
+                                <textarea class="form-control" id="task_description" required  rows="3" name="task_description" placeholder="Task Description"></textarea>
                             </div>
                             <div align="left" class="form-group">
                                 <label for="taskStart">Task Start</label>
-                                <input class="text-center p-3 mb-1" id="taskStart" type="date" required  name="task_start" placeholder="Task Start">
+                                <input class="form-control" id="taskStart" type="date" required  name="task_start" placeholder="Task Start">
                             </div>
+                            <p class="valid" th:text="${'*Warning* Calender year ' + yearNow + ' Only'}"></p>
 
                             <div align="left" class="form-group">
                                 <label for="taskEnd">Task End</label>
@@ -87,11 +86,9 @@
 <!--     -->
 <!--                        </div>-->
 <!--                    </div>-->
-                    <input type="submit" value="Save" name="button" class="btn login_btn mt-3 mb-3">
+                    <input type="submit" value="Save" name="button" class="w-50 btn form-button ml-5 mr-5">
 
                 </form>
-            </div>
-        </div>
     </div>
 
 </main>
@@ -105,4 +102,5 @@
 <!--&lt;!&ndash;=================== Footer ============================ &ndash;&gt;-->
 
 </body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </html>

@@ -13,9 +13,9 @@
 <body>
 <div class="container">
     <div class="menu">
-        <a href="#" class="back"><i class="fa fa-angle-left"></i> <img src="https://i.imgur.com/G4EjwqQ.jpg" draggable="false"/></a>
-        <div class="name">Random chat</div>
-        <div class="members"><b>You</b>, Marga, Charo & Brotons</div>
+        <a href="/admin/support/all" class="back"><i class="fa fa-angle-left"></i></a>
+        <div class="name" th:text="${'Topic : ' + supportTicket.getSupportTicket_title()}"></div>
+        <div class="members" th:text="${supportTicket.getSupportTicket_ownerName()}"><b>You</b></div>
     </div>
 <!--    <div th:if="">-->
         <ol th:each="message : ${supportMessageList}" class="chat">
@@ -29,6 +29,7 @@
                 </div>
         </ol>
 <!--    </div>-->
+    <div id="bottom"></div>
     <div class="typezone">
         <form th:action="@{/admin/save/chat}" th:object="${supportTicket}" method="post">
             <!--            <input style="display: none;" th:field="*{}" type="text" placeholder="test">-->
@@ -40,4 +41,5 @@
         <div class="emojis"></div></div>
 </div>
 </body>
+<script>window.scrollTo(0,document.body.scrollHeight);</script>
 </html>

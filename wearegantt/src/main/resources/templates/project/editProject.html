@@ -4,63 +4,66 @@
     <meta charset="UTF-8">
     <title>Your Organization Projects</title>
 
-    <link th:href="@{/css/profile/editproject.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/project/editproject.css}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
 <header>
     <!--=================== NAVIGATION ============================ -->
-    <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}">
+    <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+
 
 
 
     </div>
 </header>
-    <main class="container main p-2" align="center">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="d-flex justify-content-center">
-                    <div class="logo_brand p-4">
-                        <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                    </div>
-                </div>
-                <br>
-                <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
-            </div>
-            <div class="col-sm-8">
-                <div class="d-flex justify-content-center h-100">
-                    <div class="loginbox">
-                        <div class="w-100" style="text-align: center !important;">
-                            <h4 style="text-align: center !important;">Edit Your Project</h4>
-                        </div>
+    <main class="container">
+        <a th:href="@{'/projects/'}" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+        </a>
+        <div align="center">
+        <div class="col-sm-12">
+            <img th:src="@{/images/logo.png/}" style="">
+        </div>
                         <div class="row">
 
 <!-- == UPDATE PROJECT == -->
-                            <form class="col-sm-6" th:action="@{/update/project}" th:object="${project}" method="post" >
+                            <form class="col-sm-6 contact w-50" th:action="@{/update/project}" th:object="${project}" method="post" >
+                                <div class="form-group ml-5 mr-5">
                                     <label>Project Id</label>
-                                    <input class="form-control cInpu" readonly type="text"  th:field="*{project_id}">
+                                    <input class="form-control" readonly type="text"  th:field="*{project_id}">
+                                </div>
 
+                                <div class="form-group ml-5 mr-5">
                                     <label>Project Name</label>
-                                    <input class="form-control cInpu" type="text"  th:field="*{project_name}">
+                                    <input class="form-control" type="text"  th:field="*{project_name}">
+                                </div>
 
+                                <div class="form-group ml-5 mr-5">
                                     <label>Project Description</label>
-                                    <input class="form-control cInpu" type="text"  th:field="*{project_desc}">
+                                    <input class="form-control" type="text"  th:field="*{project_desc}">
+                                </div>
 
+                                <div class="form-group ml-5 mr-5">
                                     <label>Project Start</label>
-                                        <input class="form-control cInpu" type="date"  th:field="*{project_start}">
+                                    <input class="form-control" type="date"  th:field="*{project_start}">
+                                </div>
 
+                                <div class="form-group ml-5 mr-5">
                                     <label>Project End</label>
                                     <input class="form-control" type="date"  th:field="*{project_end}">
+                                </div>
 
+                                <div class="form-group ml-5 mr-5">
                                     <label>Project Duration </label>
                                     <input class="form-control cInpu" type="text" disabled  th:value="${project.getProject_duration()} + ' Days'">
+                                </div>
 
-                                    <button type="submit" name="button" class="btn login_btn mt-3 mb-3 w-100">Save Project</button>
+                                    <button type="submit" name="button" class="btn form-button ml-5 mr-5 w-50">Save Project</button>
                             </form>
-                            <div class="col-sm-6" align="left">
-
 <!-- == JOBTITLE OPTION == -->
+                            <div class="col-sm-6 contact w-50" align="left">
                                 <div th:each="jobtitle : ${jobTitlesList}">
                                     <form th:action="@{/delete/projectJobTitle}" method="post" th:object="${project}">
                                         <div class="row">
@@ -68,32 +71,27 @@
                                                 <input style="display: none;" type="text" th:field="*{project_id}">
 
                                                 <input style="display: none;" type="text" name="projectJobTitle_id" th:value="${jobtitle.getProjectJobTitle_id()}">
-                                                <p th:text="${jobtitle.getJobTitle_name()}"></p>
+                                                <p class="text-white" th:text="${jobtitle.getJobTitle_name()}"></p>
                                             </div>
                                             <div class="col-sm-6">
-                                                <button type="submit" class="btn login_btn mt-3 mb-3">Remove</button>
+                                                <button type="submit" class="btn form-button mt-3 mb-3">Remove</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <a class="btn login_btn mt-3 mb-3 100" th:href="@{'/projects/create/newJobtitles/'+${project.project_id}}">Add More Job Titles</a>
+                                <a class="btn form-button mt-3 mb-3 100" th:href="@{'/projects/create/newJobtitles/'+${project.project_id}}">Add More Job Titles</a>
                             </div>
-                        </div>
-                        <div align="left">
-
 <!-- == DELETE PROJECT == -->
-                            <form th:action="@{/delete/project}" method="post" th:object="${project}">
 
-                                <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{project_id}">
-
-                                <button type="submit" name="button" class="btn bg-danger w-50 text-light">DELETE PROJECT</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="row align-items-end">
+        <div align="center">
+            <form class="contact w-50" th:action="@{/delete/project}" method="post" th:object="${project}" align="center">
+
+                <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{project_id}">
+
+                <button type="submit" name="button" class="btn bg-danger w-50 text-light">DELETE PROJECT</button>
+            </form>
+        </div>
         </div>
     </main>
 

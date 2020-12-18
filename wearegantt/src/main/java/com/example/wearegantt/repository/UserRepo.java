@@ -1,5 +1,7 @@
 package com.example.wearegantt.repository;
 
+import com.example.wearegantt.model.Authorities;
+import com.example.wearegantt.model.AuthorityCheck;
 import com.example.wearegantt.model.User;
 
 
@@ -74,7 +76,40 @@ public class UserRepo {
     }
 
 
-// ========= FIND ONE USER WITH USER MAIL===========
+// ========= CHECK IF USER EXISTS ===========
+
+    public boolean CheckUsernameExists(String user_mail)
+    {
+        boolean usernameExists = false;
+
+        try
+        {
+
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE user_mail = ?");
+            ps.setString(1,user_mail);
+
+            ResultSet rs =ps .executeQuery();
+            String usernameCounter;
+            if(rs.next())
+            {
+                usernameCounter =  rs.getString("user_mail");
+                if(usernameCounter.equals(user_mail))
+                {
+                    System.out.println("It already exists");
+                    usernameExists = true;
+                }
+            }
+
+
+        }
+
+        catch (SQLException e)
+        {
+            System.out.println( e);
+        }
+
+        return usernameExists;
+    }
 
     public User getOneUser(String user_mail){
         User userToReturn = null;
@@ -192,6 +227,36 @@ public class UserRepo {
     }
 
 
+//    =================================================================== AUTHORITY ==========================================================================
+
+    public List<AuthorityCheck> getAllAuthorities(){
+        List<AuthorityCheck> allAuthorities = new ArrayList<>();
+
+        try {
+
+            //lavet et statement
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM authCheck");
+
+            //eksekvere en query
+            ResultSet rs = ps.executeQuery();
+
+            //Bruge resultatet til noget
+            while(rs.next()){
+                AuthorityCheck tmp = new AuthorityCheck(
+                        rs.getInt(1),
+                        rs.getString(2)
+
+                );
+                allAuthorities.add(tmp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            return null;
+        }
+        return allAuthorities;
+    }
+
 //    ================== INSERT AUTHORITY ================
 
 
@@ -211,6 +276,54 @@ public class UserRepo {
         }
 
     }
+
+    //    ================== GET AUTH USER ROLE ================
+
+
+    public Authorities getOneAuthWUserMail(String user_mail){
+        String sql = "INSERT INTO auth(auth_role, fk_userMail) VALUES (?, ?)";
+        Authorities authToReturn = null;
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM auth WHERE fk_userMail = ?");
+            ps.setString(1 , user_mail);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                authToReturn = new Authorities(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3)
+                );
+            }
+
+
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+
+        return authToReturn;
+    }
+
+    //    ================== Delete User ================
+
+    public void updateAuthorities(String auth_role, String fk_userMail) {
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE auth SET auth_role = ? WHERE fk_userMail = ?");
+            ps.setString(1, auth_role);
+            ps.setString(2, fk_userMail);
+
+            int row = ps.executeUpdate();
+            System.out.println("User disabled");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
 
     //    ================== Delete User ================
 
@@ -286,6 +399,7 @@ public class UserRepo {
         }
 
     }
+
     //    ================== UPDATE USER ORG WITH ID ================
 
     public void updateUserWId(int user_id, int org_id){
@@ -297,6 +411,21 @@ public class UserRepo {
             int row = ps.executeUpdate();
             System.out.println( "user = "+user_id + " added to organization with ID = " + org_id);
 
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    //    ================== UPDATE MAIL WITH USER ================
+
+    public void updateMailWUserId(String user_mail, int user_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ? WHERE user_id = ?");
+            ps.setString(1, user_mail);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
 
         }catch (SQLException e){
             System.out.println(e);

@@ -38,7 +38,7 @@
             <td th:text="${user.user_enabled}">Enabled Profile</td>
             <td>
                 <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/editprofile/' + ${user.getUser_id()}}" class="btn btn-danger">Edit</a>
+                    <a th:href="@{'/admin/profile/' + ${user.getUser_id()}}" class="btn btn-danger">Edit</a>
                 </div>
 
                 <div class="d-flex justify-content-center mt--1 p-2 login_container" >

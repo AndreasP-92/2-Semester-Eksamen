@@ -46,10 +46,12 @@ public class AdminController {
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
 
-//        User user = userRepo.getOneUser(principal.getName());
-//        Profile profile = profileRepo.getOneProfile(user.getUser_id());
-//
-//        model.addAttribute("profile", profile);
+        User user = userRepo.getOneUser(principal.getName());
+        Profile profile = profileRepo.getOneProfile(user.getUser_id());
+        Organization organization = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+
+        model.addAttribute("organization", organization);
+        model.addAttribute("profile", profile);
 
         return "admin/adminIndex";
     }
@@ -68,7 +70,7 @@ public class AdminController {
 
 // =============== Admin EDIT PROFILE =================
 
-    @GetMapping("/admin/editprofile/{user_id}")
+    @GetMapping("/admin/profile/{user_id}")
     public ModelAndView adminEditProfile(@PathVariable(name = "user_id") int user_id) {
         ModelAndView mav = new ModelAndView("admin/adminEditProfile");
 
@@ -76,10 +78,13 @@ public class AdminController {
 
         Profile profile = profileRepo.getOneProfile(user_id);
 
+        List<AuthorityCheck> authCheck = objectManager.userRepo.getAllAuthorities();
+        Authorities authorities = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
         System.out.println(profile);
 
+        mav.addObject("auth", authorities);
+        mav.addObject("authCheck", authCheck);
         mav.addObject("profile", profile);
-
         mav.addObject("user", user);
 
         return mav;
@@ -363,26 +368,24 @@ public String closeTicket(WebRequest dataFromForm) {
         String profile_country      = (dataFromForm.getParameter("profile_country"));
         String profile_zip          = (dataFromForm.getParameter("profile_zip"));
         String profile_jobTitle     = (dataFromForm.getParameter("profile_jobTitle"));
-        String password             = (dataFromForm.getParameter("user_password"));
-        String mail                 = (dataFromForm.getParameter("user_mail"));
+        String user_mail            = (dataFromForm.getParameter("user_mail"));
+        String first_mail           = (dataFromForm.getParameter("first_mail"));
         String role                 = (dataFromForm.getParameter("role"));
+
+        System.out.println("ROLE========"+role);
 
         int idParse     = Integer.parseInt(profile_id);
         int phoneParse  = Integer.parseInt(profile_phone);
         int zipParsed   = Integer.parseInt(profile_zip);
 
-        userRepo.insertUser(mail, password, 1);
-        User userObj = userRepo.getOneUser(mail);
+        User user = userRepo.getOneUser(first_mail);
 
-        System.out.println(userObj);
-
-        User user = userRepo.getOneUser(principal.getName());
-
+// UPDATING ...
+        objectManager.userRepo.updateMailWUserId(user_mail, user.getUser_id());
         profileRepo.updateAdminProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
+        objectManager.userRepo.updateAuthorities(role, user.getUser_mail());
 
-        userRepo.insertAuthUser(role, userObj.getUser_mail());
-
-        return "redirect:/";
+        return "redirect:/admin/lookupuser";
     }
 
     @PostMapping("/admin/delete/user")

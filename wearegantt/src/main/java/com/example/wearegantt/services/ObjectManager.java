@@ -1,17 +1,18 @@
 package com.example.wearegantt.services;
 
+import com.example.wearegantt.model.Organization;
 import com.example.wearegantt.model.Profile;
-import com.example.wearegantt.repository.ProfileRepo;
-import com.example.wearegantt.repository.TicketRepo;
-import com.example.wearegantt.repository.UserRepo;
+import com.example.wearegantt.repository.*;
 
 public class ObjectManager {
 
 //  =============  Repositories ===============
 
-    public TicketRepo   ticketRepo  = new TicketRepo();
-    public UserRepo     userRepo    = new UserRepo();
-    public ProfileRepo  profileRepo = new ProfileRepo();
+    public TicketRepo       ticketRepo          = new TicketRepo();
+    public UserRepo         userRepo            = new UserRepo();
+    public ProfileRepo      profileRepo         = new ProfileRepo();
+    public OrganizationRepo organizationRepo    = new OrganizationRepo();
+    public JobTitleRepo     jobTitleRepo        = new JobTitleRepo();
 
 
 }

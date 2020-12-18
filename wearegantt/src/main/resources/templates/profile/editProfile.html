@@ -13,20 +13,13 @@
 <body>
 <header>
     <!--=================== NAVIGATION ============================ -->
-    <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg}, user=${user}, activePage=${activePage}"></div>
+    <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
 </header>
 
 
 <main class="container main p-2" align="center">
     <div class="row">
         <div class="col-sm">
-            <div class="d-flex justify-content-center">
-                <div class="logo_brand p-4">
-                    <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                </div>
-            </div>
-            <br>
-            <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
         </div>
         <div class="col-sm">
             <div class="d-flex justify-content-center h-100">
@@ -99,16 +92,11 @@
                         <input class="btn login_btn mt-3 mb-3" type="submit" value="Change Subscription">
                     </form>
 
-                    <!--=== CREATE SUPPORT TICKET === -->
-                    <a th:href="@{'/profile/support'}" class="btn login_btn mt-3 mb-3">Support</a>
-
-                    <!--                    <a th:href="@{'/profile/ticket/' + ${profile.getProfile_id()}}" class="btn login_btn mt-3 mb-3">Create Support Ticket</a>-->
-
-                    <!-- === EDIT / NEW ORGANIZATION === -->
-                    <div th:if="${user.fk_orgId == 0}">
+    <!-- === EDIT / NEW ORGANIZATION === -->
+                    <div th:if="${user.fk_orgId == 0 && auth.getAuth_role() == 'ROLE_SUPERUSER' || user.fk_orgId == 0 &&  auth.getAuth_role() == 'ROLE_TRIAL'}">
                         <li class="nav-item">
                             <a class="nav-link text-truncate text-black btn login_btn mt-3 mb-3"
-                               th:href="@{'/profile/organization/' + ${org.org_id}}">New Organization</a>
+                               href="/profile/organization/">New Organization</a>
                         </li>
                     </div>
                     <div th:if="${user.fk_orgId > 0}">

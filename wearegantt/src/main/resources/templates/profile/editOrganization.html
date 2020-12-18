@@ -15,90 +15,72 @@
 
         </div>
     </header>
-    <main>
-        <div class="container main p-2" align="center">
-            <div class="row">
-                <div class="col-sm">
-                    <div class="d-flex justify-content-center">
-                        <div class="logo_brand p-4">
-                            <img   src="https://cdn.pixabay.com/photo/2020/04/17/07/52/flower-5053686_960_720.png" class ="brand_logo" alt="logo">
-                        </div>
-                    </div>
-                    <br>
-                    <h3 class="userHeadline">Admin<br> since 27/11/20</h3>
-                </div>
-                <div class="col-sm">
-                    <div class="d-flex justify-content-center h-100">
-                        <div class="loginbox">
-<!-- ==== UPDATE ORGANIZATION === -->
-                            <form th:action="@{admin/update/org}" th:object="${org}" method="post">
-                                <h3>Edit your Organization</h3>
-                                <div align="left">
-                                    <label for="emailinput">Your Organization ID</label>
-                                    <input class="text-center p-3 mb-1" id="emailinput" readonly type="text" th:field="*{org_id}">
-                                </div>
-                                <div align="left">
-                                    <label for="emailinput">Organization Name</label>
-                                    <input class="text-center p-3 mb-1" id="nameinput" type="text" th:field="*{org_name}">
-                                </div>
-
-                                <div align="left">
-                                    <label for="addressinput">Organization Address</label>
-                                    <input class="text-center p-3 mb-1" id="addressinput" type="text" th:field="*{org_address}">
-                                </div>
-
-                                <div align="left">
-                                    <label for="cvrinput">Organization CVR Number</label>
-                                    <input class="text-center p-3 mb-1" id="cvrinput" type="number" th:field="*{org_cvr}">
-                                </div>
-
-                                <input type="submit" value="Save" name="button" class="btn login_btn mt-3 mb-3">
-
-
-                            </form>
-<!-- ==== ADD ANOTHER USER TO ORGANIZATION === -->
-                            <h3>Add Another User</h3>
-                            <form th:action="@{/insert/org/user}" method="post" th:object="${org}">
-
-                                <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{org_id}">
-
-
-                                <input class="text-center p-3 mb-1" type="text" name="user_mail" placeholder="User Mail">
-
-                                <button type="submit" name="button" class="btn login_btn mt-3 mb-3">Save</button>
-                            </form>
-
-                            <form th:action="@{/delete/org}" method="post" th:object="${org}">
-
-                                <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{org_id}">
-
-
-                                <button type="submit" name="button" class="btn bg-danger w-100 text-light">DELETE ORGANIZATION</button>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm row align-items-end">
-                    <div class="row rightcol mb-5">
-                        <div class="col-6">
-
-                        </div>
-                        <div class="col-6">
-
-                        </div>
-                    </div>
-                </div>
+    <main class="container">
+        <a th:href="@{'/editprofile/' + ${user.getUser_mail()}}" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+        </a>
+            <div align="center">
+            <!--=================== logo ============================ -->
+            <div class="col-sm-12">
+                <img th:src="@{/images/logo.png/}" style="">
             </div>
+<!-- ==== UPDATE ORGANIZATION === -->
+                <form class="contact w-50" th:action="@{admin/update/org}" th:object="${org}" method="post">
+                    <h3>Edit your Organization</h3>
+                    <div class="form-group ml-5 mr-5">
+                        <label for="emailinput">Your Organization ID</label>
+                        <input class="form-control" id="emailinput" readonly type="text" required autofocus th:field="*{org_id}">
+                    </div>
+                    <div class="form-group ml-5 mr-5">
+                        <label for="emailinput">Organization Name</label>
+                        <input class="form-control" id="nameinput" type="text" required autofocus th:field="*{org_name}">
+                    </div>
+
+                    <div class="form-group ml-5 mr-5">
+                        <label for="addressinput">Organization Address</label>
+                        <input class="form-control" id="addressinput" type="text" required autofocus th:field="*{org_address}">
+                    </div>
+
+                    <div class="form-group ml-5 mr-5">
+                        <label for="cvrinput">Organization CVR Number</label>
+                        <input class="form-control" id="cvrinput" type="number" required autofocus th:field="*{org_cvr}">
+                    </div>
+
+                    <button type="submit" name="button" class="w-50 btn form-button ml-5 mr-5">Save</button>
+                </form>
+
+<!-- ==== ADD ANOTHER USER TO ORGANIZATION === -->
+                <form class="contact w-50" th:action="@{/insert/org/user}" method="post" th:object="${org}">
+                    <h3>Add Another User</h3>
+
+                    <div class="form-group ml-5 mr-5">
+                        <input class="form-control" style="display: none" type="text" required th:field="*{org_id}">
+                    </div>
+
+                    <div class="form-group ml-5 mr-5">
+                        <input class="form-control" type="text" name="user_mail" placeholder="User Mail">
+                    </div>
+
+                    <button type="submit" name="button" class="w-50 btn form-button ml-5 mr-5">Save</button>
+                </form>
+
+                <form class="contact w-50"  th:action="@{/delete/org}" method="post" th:object="${org}">
+
+                    <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{org_id}">
+
+
+                    <button type="submit" name="button" class="w-50 btn form-button ml-5 mr-5 bg-danger text-light">DELETE ORGANIZATION</button>
+                </form>
         </div>
 
-        </div>
         <!--=================== Body End ============================ -->
 
+    </main>
         <!--=================== Footer ============================ -->
 
 
         <div th:replace="partials/footer :: footerFragment"></div>
-    </main>
 </body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 </html>

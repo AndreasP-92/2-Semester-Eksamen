@@ -19,65 +19,95 @@
             <h1 class="text-center mb-2">Edit User</h1>
         </div>
     </div>
-    <div class="d-flex justify-content-center form_container">
+    <div align="center">
 
-        <form th:action="@{/admin/update/user}" method="post">
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${user.user_mail}">
-            </div>
-            <div class="input-group mb-2">
-                <input type="password" class="form-control input_pass" th:field="${user.user_password}">
-            </div>
-            <div class="input-group mb-2">
-                <input type="password" class="form-control input_pass" th:field="${user.user_password}">
-            </div>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" readonly th:field="${profile.profile_id}">
-            </div>
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${profile.profile_firstname}">
-            </div>
+        <form class="contact w-50" th:action="@{/admin/update/user}" method="post" align="center">
+            <input type="text" class="form-control" style="display: none;" name="first_mail"th:value="${user.user_mail}">
 
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${profile.profile_lastname}">
+            <div class="form-group ml-5 mr-5">
+                <label for="user_mail">User Mail</label>
+                <input type="text" class="form-control" required th:field="${user.user_mail}">
+            </div>
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_id">Profile Id</label>
+                <input type="text"class="form-control" required readonly th:field="${profile.profile_id}">
+            </div>
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_firstname">Profile Firstname</label>
+                <input type="text" class="form-control" required th:field="${profile.profile_firstname}">
             </div>
 
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${profile.profile_phone}">
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_lastname">Profile Lastname</label>
+                <input type="text" class="form-control" required th:field="${profile.profile_lastname}">
             </div>
 
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${profile.profile_country}">
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_phone">Profile Phone</label>
+                <input type="number"class="form-control" required th:field="${profile.profile_phone}">
             </div>
 
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${profile.profile_address}">
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_country">Profile Country</label>
+                <input type="text"class="form-control"required th:field="${profile.profile_country}">
             </div>
 
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${profile.profile_zip}">
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_address">Profile Address</label>
+                <input type="text" class="form-control" required th:field="${profile.profile_address}">
             </div>
 
-            <div class="input-group mb-2">
-                <input type="text" class="form-control input_pass" th:field="${profile.profile_jobTitle}">
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_zip">Profile Zip</label>
+                <input type="number" class="form-control" required th:field="${profile.profile_zip}">
             </div>
 
-            <select name="role" class="input-group mb-2">
-                <option selected>Open this select menu to choose role</option>
-                <option value="ADMIN_ROLE">Admin</option>
-                <option value="TRIAL_ROLE">Trail</option>
-                <option value="SUPERUSER_ROLE">SuperUser</option>
-                <option value="NORMALUSER_ROLE">NormalUser</option>
-            </select>
+            <div class="form-group ml-5 mr-5">
+                <label for="profile_jobTitle">Profile Job Title</label>
+                <input type="text" class="form-control" required th:field="${profile.profile_jobTitle}">
+            </div>
 
+            <div class="form-group ml-5 mr-5">
+                <label for="Authority">Authority</label>
+                <select name="role"  id="Authority" class="form-control" required>
+                    <div th:each="authCheck : ${authCheck}">
+                        <option th:selected="${authCheck.getAutchcheck_role() == auth.getAuth_role()}" th:value="${authCheck.getAutchcheck_role()}" th:text="${authCheck.getAutchcheck_role()}"></option>
+                    </div>
+                </select>
+            </div>
 
-                <input  type="submit" name="button" class="btn login_btn" value="Save">
+                <input  type="submit" class="w-50 btn form-button ml-5 mr-5" value="Save">
 
-                <input  type="submit" name="button" class="btn login_btn" value="Delete">
+<!--                <input  type="submit" class="w-50 btn btn-danger ml-5 mt-3 mr-5" value="Delete">-->
 
 
         </form>
+
+        <form class="contact w-50" id="registerForm" th:action="@{/update/credentials}" th:object="${user}" method="post">
+
+            <input style="display: none;" type="text" th:field="*{user_id}">
+            <input style="display: none;" type="text" th:field="*{user_mail}">
+
+            <h3>Change Passowrd </h3>
+            <div class="form-group ml-5 mr-5">
+                <label for="password">Enter Your Password</label>
+                <input type="password" class="form-control" required id="password" th:field="*{user_password}">
+            </div>
+            <div id="passwordValid" class="valid"></div>
+
+            <div class="form-group ml-5 mr-5">
+                <label for="confirm_password">Confirm Your Password</label>
+                <input type="password" class="form-control" required id="confirm_password">
+            </div>
+
+            <input id="submitButton"  type="submit" class="w-50 btn form-button ml-5 mr-5" value="Update">
+
+
+        </form>
+
     </div>
 </div>
 </body>
+<script src="/js/admin/adminEditProfile.js"></script>
+
 </html>

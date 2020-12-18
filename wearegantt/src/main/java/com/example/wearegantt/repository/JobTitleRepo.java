@@ -212,6 +212,36 @@ public class JobTitleRepo {
         }
     }
 
+    // ========= CHECK IF JOB TITLES EXISTS ALREADY ===========
+
+    public boolean checkJobTitleExists(int jobTitle) {
+        boolean jobTitleExists = false;
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project_jobTitle WHERE jobTitle_id = ?");
+            ps.setInt(1,jobTitle);
+
+            ResultSet rs =ps .executeQuery();
+            int jobTitleCounter;
+
+            if(rs.next()) {
+                jobTitleCounter =  rs.getInt("jobTitle_id");
+                System.out.println("counter======"+jobTitleCounter);
+                System.out.println("jobtitle======"+jobTitle);
+
+                if(jobTitleCounter == jobTitle) {
+                    System.out.println("It already exists");
+                    jobTitleExists = true;
+
+                }
+            }
+        }catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println("It doesn't exist already");
+        return jobTitleExists;
+    }
+
     // =================== GET ONE PROJECT JOB TITLE ==================
 
     public List<GetProjectJobTitles> getOneProjectJobTitle(int prject_id){

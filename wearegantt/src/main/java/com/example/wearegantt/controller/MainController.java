@@ -48,10 +48,39 @@ public class MainController {
 
 //    =================================== GET ROUTES ==================
 
+//    404 PAGE =================
+    @GetMapping("/*")
+    public String handle(Model model, Principal principal) {
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+
+        model.addAttribute("auth", authorities);
+        model.addAttribute("org", organization);
+        model.addAttribute("user", user);
+
+
+        return "main/404";
+    }
+
     @GetMapping("/")
     private String index(){
 
         return "main/index";
+    }
+
+    @GetMapping("/waiting")
+    private String index(Model model, Principal principal){
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+
+        model.addAttribute("activePage", "projects");
+        model.addAttribute("auth", authorities);
+        model.addAttribute("org", organization);
+        model.addAttribute("user", user);
+
+        return "main/newUser";
     }
 
     // CONTACT ==========
@@ -78,18 +107,22 @@ public class MainController {
     // NEWSFEED ==========
 
     @GetMapping("/newsfeed/{fk_orgName}")
-    private ModelAndView newsfeed(@PathVariable(name = "fk_orgName") String fk_orgName){
+    private ModelAndView newsfeed(@PathVariable(name = "fk_orgName") String fk_orgName, Principal principal){
         ModelAndView mav = new ModelAndView("main/newsfeed");
 
         List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
 
         Organization organization = orgRep.getOneOrg(fk_orgName);
         Project project = projRepo.getOneProjectWOrgId(organization.getOrg_id());
-        User user = userRepo.getOneUserWOrgId(organization.getOrg_id());
+        User user = objectManager.userRepo.getOneUser(principal.getName());
         Profile profile = profRepo.getOneProfile(user.getUser_id());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+
+        System.out.println("AUTHOR=========="+authorities);
 
 
         System.out.println(listNewsfeed);
+        mav.addObject("auth", authorities);
         mav.addObject("listNewsfeed", listNewsfeed);
         mav.addObject("org", organization);
         mav.addObject("project", project);
@@ -107,7 +140,9 @@ public class MainController {
 
         User user                   = userRepo.getOneUser(principal.getName());
         Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
+        mav.addObject("auth", authorities);
         mav.addObject("org", organization);
         mav.addObject("user", user);
 
@@ -118,12 +153,18 @@ public class MainController {
     //    UPDATE NEWS ======================
 
     @GetMapping("/edit/newsfeed/{newsfeed_id}")
-    private ModelAndView updateNews(@PathVariable(name = "newsfeed_id") int newsfeed_id){
+    private ModelAndView updateNews(@PathVariable(name = "newsfeed_id") int newsfeed_id, Principal principal){
         ModelAndView mav = new ModelAndView("main/editNewsfeed");
 
-        Newsfeed newsfeed = newsRepo.getOneNews(newsfeed_id);
-        mav.addObject("newsfeed", newsfeed);
+        Newsfeed newsfeed           = newsRepo.getOneNews(newsfeed_id);
+        User user                   = userRepo.getOneUser(principal.getName());
+        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
+        mav.addObject("newsfeed", newsfeed);
+        mav.addObject("auth", authorities);
+        mav.addObject("org", organization);
+        mav.addObject("user", user);
         System.out.println(newsfeed.getNewsfeed_datetime());
 
         return mav;
@@ -219,14 +260,17 @@ public class MainController {
 
     @PostMapping("/delete/newsfeed")
     public String deleteNews(WebRequest dataFromForm) {
-        String newsfeed_id               = (dataFromForm.getParameter("newsfeed_id"));
+        String newsfeed_id              = (dataFromForm.getParameter("newsfeed_id"));
+        String user_mail                = (dataFromForm.getRemoteUser());
 
         int idParsed = Integer.parseInt(newsfeed_id);
 
+        User user = objectManager.userRepo.getOneUser(user_mail);
+        Organization organization = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
         newsRepo.deleteNews(idParsed);
 
         System.out.println(idParsed);
 
-        return "redirect:/";
+        return "redirect:/newsfeed/"+organization.getOrg_name();
     }
 }

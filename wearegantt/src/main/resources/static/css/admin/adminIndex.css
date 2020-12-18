@@ -20,7 +20,7 @@ body{
     color: white !important;
     border: none;
     outline: none;
-    height: 40px;
+    height: 60px;
     font-size: 18px;
 }
 .btn-danger:focus {

@@ -1,130 +1,33 @@
-body{
-    background: #ffffff !important;
-    background-size: cover;
-    background-position: center;
-    font-family: sans-serif;
+.valid{
+    background-color: #ff5050;
+    border-radius: 25px;
 }
 
-/*Logo Start*/
-
-.brand_logo_container {
-    position: absolute;
-    height: 90px;
-    width: 90px;
-    top: -25px;
-    border-radius: 50%;
-    background: #ffffff;
-    text-align: center;
-}
-.brand_logo {
-    height: 90px;
-    width: 90px;
-    border-radius: 50%;
-}
-
-
-/*Logo Slut*/
-
-/*Headers Start*/
-h1{
-    margin: 0;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-}
-
-h2{
-    margin: 0;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-}
-.userHeadline{
-    margin: -25px;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-    color: #ffffff;
-}
-
-h4 {
-    margin: 30px;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-}
-/*Headers Slut*/
-
-/*input indstillinger Start*/
-
-.loginbox{
+.contact {
     background: #707070;
+    margin-top:1%;
+    padding:25px;
+    border-radius: 25px;
+}
+
+.contact h3 {
     color: #ffffff;
-    box-sizing: border-box;
-    margin-top: 5%;
-
+    display: block;
+    font-size: 30px;
+    font-weight: 400;
 }
 
-.loginbox input{
-    width: 100%;
-    margin-bottom: 20px;
+.contact h4 {
+    margin:5px 0 15px;
+    display:block;
+    font-size:13px;
 }
-
-.loginbox input[type="text"], input[type="password"], input[type="number"]{
-    border:none;
-    border-bottom: 1px solid #ffffff;
-    outline: none;
-    height: 40px;
-    color: black;
-    font-size: 16px;
+.contact label{
+    color: white;
+}
+.form-button{
+    background-color: #34d4b1;
 }
 
 
-.loginbox input[type="submit"]{
-    border: none;
-    outline: none;
-    height: 40px;
-    background: #34d4b1;
-    color: black;
-    font-size: 18px;
 
-}
-.loginbox input[type="submit"]:hover{
-    cursor: pointer;
-    background: #ffc107;
-    color: black;
-}
-/*input indstillinger Slut*/
-
-/*button Start*/
-
-.form_container {
-    margin-top: 100px;
-}
-.login_btn{
-    width: 100%;
-    background: #34d4b1 !important;
-    color: black !important;
-    border: none;
-    outline: none;
-    height: 40px;
-    font-size: 18px;
-}
-.login_btn:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
-}
-.login_container {
-    padding: 0 2rem;
-}
-/*Button End*/
-
-
-.rightcol{
-    padding-bottom: 5%;
-}
-
-.main{
-    margin-top: 5%;
-    background: #707070;
-}

@@ -49,10 +49,12 @@ public class ProfileController {
     private ModelAndView profile(@PathVariable(name = "user_mail")String user_mail){
         ModelAndView mav = new ModelAndView("profile/editProfile");
 
-        User user           = userRepo.getOneUser(user_mail);
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-        Profile profile     = profileRepo.getOneProfile(user.getUser_id());
+        User user                   = userRepo.getOneUser(user_mail);
+        Organization org            = orgRep.getOneOrgWId(user.getFk_orgId());
+        Profile profile             = profileRepo.getOneProfile(user.getUser_id());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
+        mav.addObject("auth", authorities);
         mav.addObject("profile", profile);
         mav.addObject("org", org);
         mav.addObject("user", user);
@@ -71,7 +73,9 @@ public class ProfileController {
 
         User user                   = userRepo.getOneUser(principal.getName());
         Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
+        model.addAttribute("auth", authorities);
         model.addAttribute("org", organization);
         model.addAttribute("user", user);
 
@@ -87,7 +91,9 @@ public class ProfileController {
 
         Organization org    = orgRep.getOneOrg(org_name);
         User user           = userRepo.getOneUser(principal.getName());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
+        mav.addObject("auth", authorities);
         mav.addObject("user", user);
         mav.addObject("org", org);
 
@@ -103,15 +109,17 @@ public class ProfileController {
         List<SupportTicket> supportTicketList = objectManager.ticketRepo.getAllTicketsWUserMail(user.getUser_mail());
         Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
         Profile profile = objectManager.profileRepo.getOneProfile(user.getUser_id());
-
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         System.out.println(supportTicketList);
 
+        model.addAttribute("auth", authorities);
         model.addAttribute("profile", profile);
         model.addAttribute("user", user);
         model.addAttribute("org", org);
         model.addAttribute("user", user);
         model.addAttribute("supportTicketList", supportTicketList);
+        model.addAttribute("activePage", "support");
 
 
 
@@ -127,10 +135,11 @@ public class ProfileController {
         User user           = userRepo.getOneUser(principal.getName());
         Profile profile     = profileRepo.getOneProfile(user.getUser_id());
         Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
 
 //        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
-
+        mav.addObject("auth", authorities);
         mav.addObject("org", org);
         mav.addObject("user", user);
         mav.addObject("profile", profile);

@@ -4,21 +4,20 @@
 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link th:href="@{/css/profile/editOrganization.css}" type="text/css" rel="stylesheet">
     <title>Support</title>
 </head>
 <body>
 <header>
     <!--=================== NAVIGATION ============================ -->
-    <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}">
+    <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+
 
 
     </div>
 </header>
 <main class="container">
-    <a href="/admin" style="color:black;">
-        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
-    </a>
     <div class="row">
         <div class="col-sm mt-5">
             <h1 class="text-center">Support</h1>
@@ -57,17 +56,13 @@
             <td th:title="${ticket.supportTicket_context}" th:text="${ticket.supportTicket_timestamp}">Date</td>
             <td>
                 <a class="btn btn-danger" th:href="@{'/profile/support/chat/' + ${ticket.supportTicket_id}}">Enter Chat</a>
-                <form class="mt-3" th:action="@{/admin/support/closeticket}" method="post">
-                    <input style="display: none" name="ticket_id" type="text" th:value="${ticket.supportTicket_id}">
-                    <button type="submit" class="btn btn-danger">Close Ticket</button>
-                </form>
             </td>
             <td>
                 <div th:if="${ticket.supportTicket_adminReplied == 1}">
-                    <button class="btn btn-danger">New Update</button>
+                    <p class="btn btn-warning">New Update</p>
                 </div>
                 <div th:if="${ticket.supportTicket_adminReplied == 0}">
-                    <button class="btn btn-danger">No new Update</button>
+                    <p class="btn btn-success">No new Update</p>
                 </div>
             </td>
         </tr>

@@ -28,11 +28,15 @@
             </div>
             <form th:action="@{/saveUser}" method="post" class="pt-5" id="registerForm">
                 <input class="text-center p-3 mb-1" type="text"  name="email" placeholder="Email">
+                <div th:if="${error}">
+                    <p>Account Exists Already</p>
+                </div>
 
                 <input class="text-center p-3 mb-1" type="password" id="password" name="password" placeholder="Password">
                 <div id="passwordValid" class="valid"></div>
 
                 <input class="text-center p-3 mb-1" type="password" id="confirm_password" name="pass" placeholder="Password">
+
 
                 <input class="text-center p-3 mb-1" type="text" name="firstname" placeholder="Firstname">
 
@@ -52,9 +56,9 @@
 
                 <select name="role" class="input-group mb-2">
                     <option selected>Open this select menu to choose role</option>
-                    <option value="TRIAL_ROLE">Trial-->Free</option>
-                    <option value="NORMALUSER_ROLE">NormalUser-->4£ per month</option>
-                    <option value="SUPERUSER_ROLE">SuperUser-->12£ per month</option>
+                    <option value="ROLE_TRIAL">Trial-->Free</option>
+                    <option value="ROLE_NORMALUSER">Normal User-->4£ per month</option>
+                    <option value="ROLE_SUPERUSER">Super User-->12£ per month</option>
                 </select>
 
                 <div class="d-flex justify-content-center mt--3 p-3 login_container">
@@ -76,6 +80,7 @@
 
         <!--=================== Footer End ============================ -->
 </body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script src="/js/register/paypal.js"></script>
 <script src="/js/register/register.js"></script>

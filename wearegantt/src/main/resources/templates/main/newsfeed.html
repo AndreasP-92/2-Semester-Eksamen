@@ -11,7 +11,8 @@
 <body>
 <header>
     <!--=================== NAVIGATION ============================ -->
-    <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}, activePage=${activePage}">
+    <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+
 
 
     </div>
@@ -38,8 +39,8 @@
                 <div class="projectBox m3" align="center">
                     <h4 th:text="${news.newsfeed_title}" class="pt-2" align="center"></h4>
                     <p th:text="${news.newsfeed_news}" class="p-3"></p>
-                    <p th:text="${news.newsfeed_datetime}" class="p-3"></p>
-                    <a th:href="@{'/edit/newsfeed/' + ${news.newsfeed_id}}" class="buttons w-25 mt-1">Edit Newsfeed</a>
+                    <p th:text="${news.newsfeed_datetime}" class="P-3 moveBottom"></p>
+                    <a th:href="@{'/edit/newsfeed/' + ${news.newsfeed_id}}" class="buttons M-3 mt-1 moveButtonBottom">Edit Newsfeed</a>
                 </div>
             </div>
         </div>
@@ -50,4 +51,5 @@
         <div th:replace="partials/footer :: footerFragment"></div>
 
 </body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </html>

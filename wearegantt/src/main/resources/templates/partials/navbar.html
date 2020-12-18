@@ -1,34 +1,62 @@
 <html xmlns:th = "http://www.thymeleaf.org">
 
 <nav th:fragment="navigation" class="navbar navbar-transparent navbar-expand-md" style="background-color : #808080c7!important;">
-    <div class="d-flex w-50 order-0">
+    <div class="d-flex w-25 order-0">
         <a class="navbar-brand mr-1" href="/"><img th:src="@{/images/smallLogo.png}"/></a>
         <h3 class="mt-4">WeAreGantt</h3>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-    <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
-        <ul class="navbar-nav" th:if="${org != null && user != null}">
-                <li class="nav-item active">
+    <!--  ============= MENU ITEMS =========== -->
+
+    <div class="navbar-collapse w-25 justify-content-center order-2" id="collapsingNavbar">
+        <div th:if="${user != null}">
+
+            <ul class="navbar-nav">
+                <div th:if="${auth.getAuth_role == 'ROLE_ADMIN'}">
+                    <li class="nav-link text-truncate text-white">
+                        <a href="/admin">Admin</a>
+                    </li>
+                </div>
+                <li class="nav-item" th:if="${org != null}">
                     <a th:class="${activePage == 'newsfeed'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" th:href="@{'/newsfeed/' + ${org.getOrg_name}}">News Feed</a>
                 </li>
-                <li class="nav-item">
-                    <a th:class="${activePage == 'projects'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" href="/projects/">Data Model</a>
+                <li class="nav-item" th:if="${org != null}">
+                    <a th:class="${activePage == 'projects'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" href="/projects/">Project</a>
                 </li>
                 <li class="nav-item">
                     <a th:class="${activePage == 'profile'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" th:href="@{'/editprofile/' + ${user.getUser_mail}}">Edit Profile</a>
                 </li>
+                <li class="nav-item">
+                    <a th:class="${activePage == 'support'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" th:href="@{'/profile/support'}">Support</a>
+                </li>
+            </ul>
+        </div>
 
-            <li class="nav-item">
-                <a class="nav-link text-truncate text-white" href="/login?logout">Logout</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav" th:if="${org == null && project == null && user == null}">
-            <li class="nav-item">
-                <a class="nav-link text-truncate text-white" href="/login">Login</a>
-            </li>
-        </ul>
     </div>
-    <span class="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last"></span>
+<!--  =============  LOGIN / LOGUD =========== -->
+    <div class="navbar-collapse collapse justify-content-center order-2" id="collapsingNavbar">
+        <div th:if="${user != null}">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-truncate text-white" href="/login?logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <i class="fas fa-sign-out-alt" style='font-size:36px'></i>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${org == null && project == null && user == null}">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-truncate text-white" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <i class="fas fa-sign-in-alt" style='font-size:36px'></i>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>

@@ -1,5 +1,8 @@
 package com.example.wearegantt.configuration;
 
+import com.example.wearegantt.model.Organization;
+import com.example.wearegantt.model.User;
+import com.example.wearegantt.services.ObjectManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -27,6 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    ObjectManager objectManager = new ObjectManager();
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin").permitAll()
                 .antMatchers("/newsfeed").permitAll()
-                .antMatchers("/projects").permitAll()
+                .antMatchers("/projects").hasAnyRole("ADMIN", "TRIAL", "NORMALUSER", "SUPERUSER")
                 .antMatchers("/profile/{profile_mail}").permitAll()
                 .antMatchers("/").permitAll()
                 .and().formLogin()
@@ -66,7 +71,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         String name = authentication.getName();
                         System.out.println("Logged in user: " + name);
 
-                        String url = "/projects";
+                        String url;
+
+                        User user = objectManager.userRepo.getOneUser(name);
+                        Organization organization = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+
+                        if(user.getFk_orgId() == 0){
+                            url = "/waiting";
+
+                        }else{
+                            url = "/newsfeed/"+organization.getOrg_name();
+
+                        }
+
 
                         httpServletResponse.sendRedirect(url);
 

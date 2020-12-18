@@ -1,6 +1,3 @@
-.nav-active{
-    border-bottom: 2px solid white;
-}
 
 .contact {
     background: #707070;
@@ -25,7 +22,7 @@
     color: white;
 }
 .form-button{
-    background-color: #34d4b1;
+    background-color: #34d4b1!important;
 }
 
 

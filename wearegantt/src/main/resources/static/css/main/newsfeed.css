@@ -1,3 +1,13 @@
+.moveButtonBottom{
+    position: absolute;
+    bottom: 0;
+}
+
+.moveBottom{
+    position: absolute;
+    bottom: 17px;
+}
+
 .nav-active{
     border-bottom: 2px solid white;
 }

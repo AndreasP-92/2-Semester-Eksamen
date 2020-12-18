@@ -1,23 +1,27 @@
 
 
-#contact {
+.contact {
     background: #707070;
     margin-top:1%;
     padding:25px;
-    margin-left:275px;
+    border-radius: 25px;
 }
 
-#contact h3 {
+.contact h3 {
     color: #ffffff;
     display: block;
     font-size: 30px;
     font-weight: 400;
 }
 
-#contact h4 {
+.contact h4 {
     margin:5px 0 15px;
     display:block;
     font-size:13px;
+}
+
+.contact label{
+    color: white;
 }
 
 .form-button{
@@ -25,7 +29,7 @@
 
 }
 
-#delete-submit{
+.delete-submit{
 
     background-color:red;
 }

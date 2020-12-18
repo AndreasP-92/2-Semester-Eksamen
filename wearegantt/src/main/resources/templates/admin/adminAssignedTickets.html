@@ -58,10 +58,10 @@
             </td>
             <td>
                 <div th:if="${ticket.supportTicket_userReplied == 1}">
-                    <button class="btn btn-danger">New Update</button>
+                    <button style="cursor: default!important" class="btn btn-warning">New Update</button>
                 </div>
                 <div th:if="${ticket.supportTicket_userReplied == 0}">
-                    <button class="btn btn-danger">No new Update</button>
+                    <button style="cursor: default!important" class="btn btn-success">No new Update</button>
                 </div>
             </td>
         </tr>
