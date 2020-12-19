@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
-public class newsfeedController {
+public class NewsfeedController {
 
     //    =================== SERVICES ==================
 
