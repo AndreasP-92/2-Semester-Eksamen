@@ -94,7 +94,7 @@ public class LoginController {
         // CHECKS IF USER EXISTS IN DB
         boolean userCheck = objectManager.userRepo.CheckUsernameExists(email);
 
-        //  IF USER EXISTS RETURN Account Exists Aldready
+        //  IF USER EXISTS RETURN Account Exists Allready
         if(userCheck == true){
             redirectAttributes.addFlashAttribute("error", "Account Exists Already");
             return new RedirectView("/register");
