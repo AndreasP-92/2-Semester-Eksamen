@@ -10,52 +10,46 @@
     <title>Admin Page</title>
 </head>
 <body>
-<div class="container">
-    <a href="/admin" style="color:black;">
-        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
-    </a>
-    <div class="row">
-        <div class="col-sm mt-5">
-            <h1 class="text-center">News</h1>
-        </div>
-    </div>
-
-    <table class="table mt-5 table-striped table-bordered table-dark table-hover">
-        <thead class="thead-dark">
-        <a href="#">
-            <tr>
-                <th scope="col ">News ID</th>
-                <th scope="col">News</th>
-                <th scope="col">News Title</th>
-                <th scope="col">Datetime</th>
-                <th scope="col">Action</th>
-            </tr>
+    <main class="container">
+        <a href="/admin/organization" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
         </a>
-        </thead>
-        <tbody>
-        <tr th:each = "news : ${listNewsfeed}">
-            <th th:text="${news.newsfeed_id}">News Id</th>
-            <th th:text="${news.newsfeed_news}">News</th>
-            <td th:text="${news.newsfeed_title}">News Title</td>
-            <td th:text="${news.newsfeed_datetime}">Datetime</td>
+        <div class="row">
+            <div class="col-sm mt-5">
+                <h1 class="text-center">News</h1>
+            </div>
+        </div>
 
-            <td>
-                <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/news/edit/' + ${news.getNewsfeed_id()}}" class="btn btn-danger">Edit</a>
-                </div>
+        <table class="table mt-5 table-striped table-bordered table-dark table-hover">
+            <thead class="thead-dark">
+            <a href="#">
+                <tr>
+                    <th scope="col ">News ID</th>
+                    <th scope="col">News</th>
+                    <th scope="col">News Title</th>
+                    <th scope="col">Datetime</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </a>
+            </thead>
 
-                <div class="d-flex justify-content-center mt--1 p-2 login_container" >
-                    <form th:action="@{/admin/delete/news}" method="post">
-                        <input type="submit" class="btn btn-danger" value="Delete" >
-                        <input type="text" name="newsfeed_id" style="display: none;" th:value="${news.getNewsfeed_id()}">
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<!-- === NEWS LIST === -->
+            <tbody>
+            <tr align="center" th:each = "news : ${listNewsfeed}">
+                <th th:text="${news.newsfeed_id}">News Id</th>
+                <th th:text="${news.newsfeed_news}">News</th>
+                <td th:text="${news.newsfeed_title}">News Title</td>
+                <td th:text="${news.newsfeed_datetime}">Datetime</td>
+                <td>
+                    <!-- ACTIONS -->
+                    <a th:href="@{'/admin/news/edit/' + ${news.getNewsfeed_id()}}" class="mt-3 w-75 btn btn-info">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
 </body>
+<script src="/static/js/admin/adminMain.js"></script>
 </html>
 
 

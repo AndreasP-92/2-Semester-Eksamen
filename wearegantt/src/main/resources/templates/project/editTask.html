@@ -36,30 +36,36 @@
 
 
                 <h3>Edit Task</h3>
+
+                <!-- TASK NAME -->
                 <div align="left" class="form-group">
                     <label for="taskName">Task Name</label>
                     <input class="form-control" id="taskName" type="text"  required  name="task_name" th:value="${task.getTask_name()}">
                 </div>
+
+                <!-- TASK DESC -->
                 <div align="left" class="form-group">
                     <label for="task_Description">Task Description</label><br>
                     <textarea class="form-control" id="task_description" required  rows="3" name="task_description" th:text="${task.getTask_desc()}"></textarea>
                 </div>
+
+                <!-- TASK START -->
                 <div align="left" class="form-group">
                     <label for="taskStart">Task Start</label>
                     <input class="form-control" id="taskStart" type="date" required  name="task_start" th:value="${task.getTask_start()}">
                 </div>
                 <p class="valid" th:text="${'*Warning* Calender year ' + yearNow + ' Only'}"></p>
 
-
+                <!-- TASK END -->
                 <div align="left" class="form-group">
                     <label for="taskEnd">Task End</label>
                     <input class="form-control" id="taskEnd" type="date" required  name="task_end" th:value="${task.getTask_end()}">
                 </div>
-                <!--                        </div>-->
 
+                <!-- TASK EMPLOYEE -->
                 <div class="form-group">
                     <label for="sel1">Select Employee</label>
-                    <select class="form-control" id="sel1" name="profile_name">
+                    <select class="form-control" id="sel1" required name="profile_name">
                         <option class="font-weight-bold" disabled> Select One </option>
                         <div th:each="profile : ${profile}">
                             <option th:selected="${profile.getProfile_firstname() == profile.profile_firstname}" th:value="${profile.profile_firstname}" th:text="${profile.profile_firstname + space + profile.profile_lastname}"></option>
@@ -67,9 +73,10 @@
                     </select>
                 </div>
 
+                <!-- TASK PHASE NAME -->
                 <div class="form-group">
-                    <label for="sel2">Select Gantt Title</label>
-                    <select class="form-control" id="sel2" name="ganttPhase_name">
+                    <label for="sel2">Select Gantt Phase</label>
+                    <select class="form-control" id="sel2" required name="ganttPhase_name">
                         <option class="font-weight-bold" disabled> Select One </option>
                         <div th:each="phaseList : ${phaseList}">
                             <option th:selected="${phaseList.ganttPhase_name == task.getFk_ganttPhaseName()}" th:value="${phaseList.ganttPhase_name}" th:text="${phaseList.ganttPhase_name}"></option>
@@ -77,22 +84,32 @@
                     </select>
                 </div>
 
+                <!-- TASK JOB TITLE NAME -->
                 <div class="form-group">
                     <label for="sel1">Select a Profession</label>
-                    <select class="form-control" id="sel3" name="jobTitle_name">
+                    <select class="form-control" id="sel3" required name="jobTitle_name">
                         <option class="font-weight-bold" disabled> Select One </option>
                         <div th:each="jobTitles : ${jobTitles}">
                             <option th:selected="${jobTitles.jobTitle_name == task.getFk_jobTitleName()}" th:value="${jobTitles.jobTitle_name}" th:text="${jobTitles.jobTitle_name}"></option>
                         </div>
                     </select>
                 </div>
-                <input type="submit" value="Save" name="button" class="w-50 btn form-button ml-5 mr-5">
 
+                <!-- SUBMIT -->
+                <input type="submit" value="Save" name="button" class="w-50 btn form-button ml-5 mr-5">
             </form>
-            <form class="contact w-50"  th:action="@{/delete/task}" method="post">
+
+<!-- === DELETE TASK === -->
+        <form class="contact w-50" id="deleteSubmitButton" th:action="@{/delete/task}" method="post">
+
+            <!-- PROJECT NAME -->
                 <input name="project_id" th:value="${project.getProject_id()}" style="display: none;">
+
+            <!-- TASK ID -->
                 <input name="task_id" th:value="${task.getTask_id()}" style="display: none;">
-                <input type="submit" value="Delete" name="button" class="btn btn-danger mt-3 mb-3 w-50">
+
+            <!-- SUBMIT -->
+                <input type="submit" value="Delete" id="deleteForm" class="btn btn-danger mt-3 mb-3 w-50">
             </form>
     </div>
 
@@ -108,4 +125,5 @@
 
 </body>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="/js/main/main.js"></script>
 </html>

@@ -11,8 +11,10 @@ import java.util.List;
 
 public class JobTitleRepo {
 
-    // =================================================================== JOB TITLES =================================================================
 
+// =================================================================== JOB TITLES =================================================================
+
+// *********************************************** SELECT JOBTITLE ******************************************
 
     // =================== GET ALL JOBTITLES ==================
 
@@ -44,7 +46,7 @@ public class JobTitleRepo {
         return allJobTitles;
     }
 
-    //    ================== GET ALL JOB TITLES WITH ORG ID================
+//    ================== GET ALL JOB TITLES WITH ORG ID ================
 
 
     public List<JobTitle> getAllJobTitlesWOrg(int fk_orgId){
@@ -76,7 +78,7 @@ public class JobTitleRepo {
         return allJobTitles;
     }
 
-    // =================== GET ONE WITH NAME ==================
+    // =================== GET ONE JOB TITLE WITH JOB TITLE NAME ==================
 
     public JobTitle getOneJobTitleWName(String jobTitle_name){
         JobTitle JobTitleToReturn = null;
@@ -107,7 +109,7 @@ public class JobTitleRepo {
 
     }
 
-//       =================== GET ONE JOB TITLE WITH JOBTITLE ID ==================
+//   =================== GET ONE JOB TITLE WITH JOBTITLE ID ==================
 
     public JobTitle getOneJobTitle(int jobTitle_id){
         JobTitle jobTitleToReturn = null;
@@ -130,7 +132,7 @@ public class JobTitleRepo {
         return jobTitleToReturn;
     }
 
-    // =================== GET ONE JOBTITLES WITH ORGANIZATION ID ==================
+// =================== GET ONE JOBTITLES WITH ORGANIZATION ID ==================
 
     public JobTitle getOneJobTitleWOrgId(int fk_orgId){
         JobTitle JobTitleToReturn = null;
@@ -161,11 +163,13 @@ public class JobTitleRepo {
 
     }
 
-    //    ================== INSERT JOBTITLE ================
+// *********************************************** INSERTS JOBTITLE ******************************************
+
+
+//   ================== INSERT JOBTITLE ================
 
     public void InsertJobTitle(String jobTitle_name, int jobTitle_fk_orgId){
         try {
-            System.out.println("JOBTITLE ===" + jobTitle_name);
             PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO jobTitle(jobTitle_name, fk_orgId) VALUES (?,?)");
             ps.setString(1, jobTitle_name);
             ps.setInt(2, jobTitle_fk_orgId);
@@ -179,6 +183,9 @@ public class JobTitleRepo {
 
     }
 
+// *********************************************** UPDATE JOBTITLE ******************************************
+
+
     //    ================== UPDATE JOBTITLE ================
 
     public void updateJobTitle(String jobTitle_name, int jobTitle_id){
@@ -188,16 +195,19 @@ public class JobTitleRepo {
             ps.setInt(2, jobTitle_id);
 
             int row = ps.executeUpdate();
-            System.out.println("JobTitle insert");
+            System.out.println("JobTitle updated");
 
         }catch (SQLException e){
             System.out.println(e);
         }
     }
 
-    // ============================================================= PROJECT JOB TITLES =================================================================
+// ============================================================= PROJECT JOB TITLES (MANY TO MANY) =================================================================
 
-    //    ================== INSERT PROJECT JOB TITLE ================
+// *********************************************** SELECT PROJECT JOB TITLES ******************************************
+
+
+//    ================== INSERT PROJECT JOB TITLE ================
 
     public void insertOneProjectJobTitle(int jobTitle_id, int project_id){
         try {
@@ -212,7 +222,7 @@ public class JobTitleRepo {
         }
     }
 
-    // ========= CHECK IF JOB TITLES EXISTS ALREADY ===========
+// ========= CHECK IF JOB TITLES EXISTS ALREADY ===========
 
     public boolean checkJobTitleExists(int jobTitle) {
         boolean jobTitleExists = false;
@@ -226,8 +236,6 @@ public class JobTitleRepo {
 
             if(rs.next()) {
                 jobTitleCounter =  rs.getInt("jobTitle_id");
-                System.out.println("counter======"+jobTitleCounter);
-                System.out.println("jobtitle======"+jobTitle);
 
                 if(jobTitleCounter == jobTitle) {
                     System.out.println("It already exists");
@@ -242,7 +250,7 @@ public class JobTitleRepo {
         return jobTitleExists;
     }
 
-    // =================== GET ONE PROJECT JOB TITLE ==================
+// =================== GET ONE PROJECT JOB TITLE ==================
 
     public List<GetProjectJobTitles> getOneProjectJobTitle(int prject_id){
         List<GetProjectJobTitles> AlljobTitles = new ArrayList<>();
@@ -269,6 +277,9 @@ public class JobTitleRepo {
         return AlljobTitles;
     }
 
+// *********************************************** DELETE PROJECT JOB TITLES ******************************************
+
+
     //    ================== DELETE PROJECT JOB TITLE ================
 
     public void deleteProjectJobTitle(int projectJobTitle_id){
@@ -277,7 +288,7 @@ public class JobTitleRepo {
             ps.setInt(1, projectJobTitle_id);
 
             int row = ps.executeUpdate();
-            System.out.println("Række slettet");
+            System.out.println("Række deleted");
 
         }catch (SQLException e){
             System.out.println(e);

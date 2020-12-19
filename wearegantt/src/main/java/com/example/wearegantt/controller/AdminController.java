@@ -1,7 +1,6 @@
 package com.example.wearegantt.controller;
 
 import com.example.wearegantt.model.*;
-import com.example.wearegantt.repository.*;
 import com.example.wearegantt.services.ObjectManager;
 import com.example.wearegantt.services.ProjectServices;
 import org.springframework.stereotype.Controller;
@@ -11,44 +10,38 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 
 public class AdminController {
 
-    JobTitleRepo jobTitleRepo = new JobTitleRepo();
 
-    OrganizationRepo orgRep = new OrganizationRepo();
-
-    ProjectRepo projectRepo = new ProjectRepo();
-
-    ProfileRepo profileRepo = new ProfileRepo();
-
-    UserRepo userRepo = new UserRepo();
-
-    NewsfeedRepo newsRepo = new NewsfeedRepo();
-
-//    ===================
+//    =================== SERVICES ==================
 
     ProjectServices projectServices = new ProjectServices();
 
     ObjectManager objectManager = new ObjectManager();
 
-//   ============================================================== GET ROUTES ==================================================================
+//   =================================================================== GET CONTROLLER ==========================================================================
 
 // =============== Admin Index ===============
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
 
-        User user = userRepo.getOneUser(principal.getName());
-        Profile profile = profileRepo.getOneProfile(user.getUser_id());
-        Organization organization = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
+        Profile profile             = objectManager.profileRepo.getOneProfile(user.getUser_id());
+        Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
 
         model.addAttribute("organization", organization);
         model.addAttribute("profile", profile);
@@ -57,30 +50,43 @@ public class AdminController {
     }
 
 
-// =============== Admin Look Up User ===============
+//    ******************************************* GET ADMIN USER *******************************************
+
+
+// =============== LOOK UP USER ===============
 
     @GetMapping("/admin/lookupuser")
     public String adminLookUpUsers(Model model) {
 
-        List<User> userlist = userRepo.getAllUsers();
+        List<User> userlist = objectManager.userRepo.getAllUsers();
+
         model.addAttribute("userlist", userlist);
 
         return "/admin/adminLookUpUser";
     }
 
-// =============== Admin EDIT PROFILE =================
+// =============== CREATE USER ===============
 
-    @GetMapping("/admin/profile/{user_id}")
-    public ModelAndView adminEditProfile(@PathVariable(name = "user_id") int user_id) {
-        ModelAndView mav = new ModelAndView("admin/adminEditProfile");
-
-        User user = userRepo.getOneUserWId(user_id);
-
-        Profile profile = profileRepo.getOneProfile(user_id);
-
+    @GetMapping("/admin/createuser")
+        public String adminCreateUser(Model model) {
         List<AuthorityCheck> authCheck = objectManager.userRepo.getAllAuthorities();
-        Authorities authorities = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-        System.out.println(profile);
+
+        model.addAttribute("authCheck", authCheck);
+
+        return "admin/adminCreateUser";
+    }
+
+
+// =============== EDIT USER =================
+
+    @GetMapping("/admin/user/{user_id}")
+    public ModelAndView adminEditProfile(@PathVariable(name = "user_id") int user_id) {
+        ModelAndView mav = new ModelAndView("admin/adminEditUser");
+
+        User user                       = objectManager.userRepo.getOneUserWId(user_id);
+        Profile profile                 = objectManager.profileRepo.getOneProfile(user_id);
+        List<AuthorityCheck> authCheck  = objectManager.userRepo.getAllAuthorities();
+        Authorities authorities         = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         mav.addObject("auth", authorities);
         mav.addObject("authCheck", authCheck);
@@ -90,20 +96,20 @@ public class AdminController {
         return mav;
     }
 
-// =============== ADMIN SUPPORT ALL TICKETS =============
+
+//    ******************************************* GET ADMIN SUPPORT *******************************************
+
+
+// =============== ALL SUPPORT TICKETS =============
 
     @GetMapping("/admin/support/all")
     public String adminSupport(Model model, Principal principal) {
 
-        List<SupportTicket> supportTicketList = objectManager.ticketRepo.getAllTickets();
-        User user = objectManager.userRepo.getOneUser(principal.getName());
-
-        System.out.println(supportTicketList);
+        List<SupportTicket> supportTicketList   = objectManager.ticketRepo.getAllTickets();
+        User user                               = objectManager.userRepo.getOneUser(principal.getName());
 
         model.addAttribute("user", user);
         model.addAttribute("supportTicketList", supportTicketList);
-
-
 
         return "admin/adminAllTickets";
     }
@@ -114,10 +120,8 @@ public class AdminController {
     public ModelAndView assignedTickets(@PathVariable(name = "user_id")int user_id, Principal principal) {
         ModelAndView mav = new ModelAndView("admin/adminAssignedTickets");
 
-        List<GetTicketUser> supportTicketList = objectManager.ticketRepo.getAllUserTickets(user_id);
-        User user = objectManager.userRepo.getOneUser(principal.getName());
-
-        System.out.println(supportTicketList);
+        List<GetTicketUser> supportTicketList   = objectManager.ticketRepo.getAllUserTickets(user_id);
+        User user                               = objectManager.userRepo.getOneUser(principal.getName());
 
         mav.addObject("supportTicketList", supportTicketList);
         mav.addObject("user", user);
@@ -140,37 +144,31 @@ public class AdminController {
         mav.addObject("supportTicket", supportTicket);
         mav.addObject("profile", profile);
 
-
         return mav;
     }
 
-// ===============Admin CREATE USER ===============
+//    ******************************************* GET ADMIN ORGANIZATION *******************************************
 
-    @GetMapping("/admin/createuser")
-    public String adminCreateUser() {
-        return "admin/adminCreateUser";
-    }
+// =============== ALL ORGANIZATIONS ===============
 
-
-// =============== Admin Look Up Organization ===============
-
-    @GetMapping("/admin/lookuporganization")
+    @GetMapping("/admin/organization")
     public String adminLookUpOrganizations(Model model) {
 
-        List<Organization> orglist = orgRep.getAllOrgs();
+        List<Organization> orglist = objectManager.organizationRepo.getAllOrgs();
+
         model.addAttribute("orglist", orglist);
 
         return "/admin/adminLookUpOrganization";
     }
 
 
-// =============== Admin Edit Organisation ===============
+// =============== GET EDIT ORGANIZATION ===============
 
-    @GetMapping("/admin/editorganizations/{org_id}")
+    @GetMapping("/admin/edit/organization/{org_id}")
     public ModelAndView adminEditOrganization(@PathVariable(name = "org_id") int org_id) {
         ModelAndView mav = new ModelAndView("admin/adminEditOrganizations");
 
-        Organization org = orgRep.getOneOrgWId(org_id);
+        Organization org = objectManager.organizationRepo.getOneOrgWId(org_id);
 
         mav.addObject("org", org);
 
@@ -178,24 +176,30 @@ public class AdminController {
 
     }
 
-// =============== Admin Projects ===============
 
-    @GetMapping("/admin/lookupproject")
-    public String adminLookUpProjects(Model model){
+//    ******************************************* GET ADMIN PROJECTS ****************************************
 
-        List<Project> projectList = projectRepo.getAllProjects();
+
+// =============== ADMIN ALL PROJECTS ===============
+
+    @GetMapping("/admin/project/{org_id}")
+    public String adminLookUpProjects(@PathVariable(name = "org_id")int org_id, Model model){
+
+        List<Project> projectList = objectManager.projectRepo.getAllProjectsWhere(org_id);
+
         model.addAttribute("projectList", projectList);
 
         return "admin/adminLookUpProject";
     }
 
-// =============== Admin Edit Projects ===============
+    // =============== EDIT ONE ADMIN PROJECT ===============
 
-    @GetMapping("/admin/editprojects/{project_id}")
+    @GetMapping("/admin/project/edit/{project_id}")
     public ModelAndView adminEditProject(@PathVariable(name = "project_id") int project_id) {
-        ModelAndView mav = new ModelAndView("admin/adminEditProjects");
-        Project project     = projectRepo.getOneProject(project_id);
-        List<GetProjectJobTitles> projectTitlesList = jobTitleRepo.getOneProjectJobTitle(project_id);
+        ModelAndView mav = new ModelAndView("admin/adminEditProject");
+
+        Project project                             = objectManager.projectRepo.getOneProject(project_id);
+        List<GetProjectJobTitles> projectTitlesList = objectManager.jobTitleRepo.getOneProjectJobTitle(project_id);
 
         mav.addObject("jobTitlesList", projectTitlesList);
         mav.addObject("project", project);
@@ -203,32 +207,40 @@ public class AdminController {
         return mav;
     }
 
-//    //Admin News
-//    @GetMapping("/admin/lookupnews")
-//    public String adminLookUpNews(Model model){
-//
-//        List<Newsfeed> newsfeedList = newsRepo.getAllNews();
-//        model.addAttribute("newsfeedList", newsfeedList);
-//
-//        return "admin/adminLookUpNews";
-//    }
+// =============== INSERT JOBTITLE =================
+    @GetMapping("/admin/project/newJobtitles/{project_id}")
+    private ModelAndView newjobtitle(@PathVariable(name = "project_id")String project_id, Principal principal, HttpServletRequest request){
+        ModelAndView mav                = new ModelAndView("admin/adminCreateJobTitles");
+        Map<String, ?> inputFlashMap    = RequestContextUtils.getInputFlashMap(request);
 
-    //Admin News
+        if (inputFlashMap != null) {
+            mav.addObject("error", inputFlashMap.get("error"));
+        }
+
+        int idParsed = Integer.parseInt(project_id);
+
+        Project project = objectManager.projectRepo.getOneProject(idParsed);
+
+        mav.addObject("project", project);
+
+        return mav;
+    }
+
+
+//    ******************************************* GET ADMIN NEWS ****************************************
+
+// =============== ALL NEWS =================
+
     @GetMapping("/admin/news/{fk_orgName}")
     public ModelAndView adminNews(@PathVariable(name = "fk_orgName") String fk_orgName){
         ModelAndView mav = new ModelAndView("admin/adminLookUpNews");
 
-        List<Newsfeed>listNewsfeed = newsRepo.getAllNews(fk_orgName);
+        List<Newsfeed>listNewsfeed  = objectManager.newsRepo.getAllNews(fk_orgName);
+        Organization organization   = objectManager.organizationRepo.getOneOrg(fk_orgName);
+        Project project             = objectManager.projectRepo.getOneProjectWOrgId(organization.getOrg_id());
+        User user                   = objectManager.userRepo.getOneUserWOrgId(organization.getOrg_id());
+        Profile profile             = objectManager.profileRepo.getOneProfile(user.getUser_id());
 
-        Organization organization = orgRep.getOneOrg(fk_orgName);
-        Project project = projectRepo.getOneProjectWOrgId(organization.getOrg_id());
-        User user = userRepo.getOneUserWOrgId(organization.getOrg_id());
-        Profile profile = profileRepo.getOneProfile(user.getUser_id());
-
-        System.out.println(organization);
-        System.out.println(project);
-
-        System.out.println(listNewsfeed);
         mav.addObject("listNewsfeed", listNewsfeed);
         mav.addObject("OneOrg", fk_orgName);
         mav.addObject("project", project);
@@ -237,19 +249,23 @@ public class AdminController {
         return mav;
     }
 
+// =============== EDIT NEWS =================
+
     @GetMapping("/admin/news/edit/{newsfeed_id}")
     private ModelAndView updateNews(@PathVariable(name = "newsfeed_id") int newsfeed_id){
         ModelAndView mav = new ModelAndView("admin/adminEditNews");
 
-        Newsfeed newsfeed = newsRepo.getOneNews(newsfeed_id);
-        mav.addObject("newsfeed", newsfeed);
+        Newsfeed newsfeed = objectManager.newsRepo.getOneNews(newsfeed_id);
 
-        System.out.println(newsfeed.getNewsfeed_datetime());
+        mav.addObject("newsfeed", newsfeed);
 
         return mav;
     }
 
-//========================================= POST TICKETS =========================================================================
+//   =================================================================== POST CONTROLLER ==========================================================================
+
+//    ******************************************* POST ADMIN SUPPORT ****************************************
+
 
 // ============== SAVE MESSAGE ==============
 
@@ -265,14 +281,11 @@ public class AdminController {
         String time = projectServices.returnTime(timestamp);
 
         int ticketIdParsed  = Integer.parseInt(ticket_id);
-// OBJECTS
+
         User user = objectManager.userRepo.getOneUser(user_mail);
 
-// INSERT MESSAGE
         objectManager.ticketRepo.insertMessage(message_context, time, ticketIdParsed, ticket_ownerMail);
-// UPDATE TICKET
         objectManager.ticketRepo.messageUpdateTicketAdmin(ticketIdParsed);
-
 
         return "redirect:/admin/support/assigned/"+user.getUser_id();
     }
@@ -320,44 +333,57 @@ public String closeTicket(WebRequest dataFromForm) {
         return "redirect:/admin/support/assigned/"+user.getUser_id();
     }
 
-//========================================= POST ROUTES =========================================================================
 
-    //    INSERT USER ==============
+//    ******************************************* POST ADMIN USER ****************************************
+
+
+    //  ==============  INSERT USER ==============
 
     @PostMapping("/admin/insert/user")
-    public String InsertAdminUser(WebRequest dataFromForm, Principal principal) {
-        String firstname = (dataFromForm.getParameter("firstname"));
-        String lastname  = (dataFromForm.getParameter("lastname"));
-        String address   = (dataFromForm.getParameter("address"));
-        String phone     = (dataFromForm.getParameter("phone"));
-        String country   = (dataFromForm.getParameter("country"));
-        String zipcode   = (dataFromForm.getParameter("zipcode"));
-        String jobTitle  = (dataFromForm.getParameter("jobTitle"));
+    public String InsertAdminUser(WebRequest dataFromForm) {
+        String firstname = (dataFromForm.getParameter("profile_firstname"));
+        String lastname  = (dataFromForm.getParameter("profile_lastname"));
+        String address   = (dataFromForm.getParameter("profile_address"));
+        String phone     = (dataFromForm.getParameter("profile_phone"));
+        String country   = (dataFromForm.getParameter("profile_country"));
+        String zipcode   = (dataFromForm.getParameter("profile_zip"));
+        String jobTitle  = (dataFromForm.getParameter("profile_jobTitle"));
         String password  = (dataFromForm.getParameter("password"));
-        String mail      = (dataFromForm.getParameter("mail"));
+        String mail      = (dataFromForm.getParameter("user_mail"));
         String role      = (dataFromForm.getParameter("role"));
 
         int zipParsed = Integer.parseInt(zipcode);
         int phoneParsed = Integer.parseInt(phone);
 
-        userRepo.insertUser(mail, password, 1);
-        User userObj = userRepo.getOneUser(mail);
+        objectManager.userRepo.insertUser(mail, password, 1);
+        User userObj = objectManager.userRepo.getOneUser(mail);
 
-        System.out.println(userObj);
+        objectManager.profileRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed, jobTitle, userObj.getUser_id());
 
-        profileRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed, jobTitle, userObj.getUser_id());
-
-        userRepo.insertAuthUser("ROLE_USER", userObj.getUser_mail());
+        objectManager.userRepo.insertAuthUser(role, userObj.getUser_mail());
 
 
-        return "redirect:/";
+        return "redirect:/admin/lookupuser";
+    }
+
+    //================== DELETE USER ===================
+
+    @PostMapping("/admin/delete/user")
+    public String deleteUser(WebRequest dataFromForm) {
+        String user_id      = (dataFromForm.getParameter("user_id"));
+
+        int idParsed = Integer.parseInt(user_id);
+
+        objectManager.userRepo.deleteUser(idParsed);
+
+        return "redirect:/admin/lookupuser";
     }
 
 
 
-////========================================= Admin EDIT PROFILE =======================================================================
 
-//================== Admin EDIT PROFILE ===================
+    //================== EDIT PROFILE ===================
+
     @PostMapping("/admin/update/user")
     public String updateAdminProfile(WebRequest dataFromForm,  Principal principal) {
         String profile_id           = (dataFromForm.getParameter("profile_id"));
@@ -372,36 +398,37 @@ public String closeTicket(WebRequest dataFromForm) {
         String first_mail           = (dataFromForm.getParameter("first_mail"));
         String role                 = (dataFromForm.getParameter("role"));
 
-        System.out.println("ROLE========"+role);
-
         int idParse     = Integer.parseInt(profile_id);
         int phoneParse  = Integer.parseInt(profile_phone);
         int zipParsed   = Integer.parseInt(profile_zip);
 
-        User user = userRepo.getOneUser(first_mail);
+        User user = objectManager.userRepo.getOneUser(first_mail);
 
 // UPDATING ...
         objectManager.userRepo.updateMailWUserId(user_mail, user.getUser_id());
-        profileRepo.updateAdminProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
-        objectManager.userRepo.updateAuthorities(role, user.getUser_mail());
-
-        return "redirect:/admin/lookupuser";
-    }
-
-    @PostMapping("/admin/delete/user")
-    public String deleteUser(WebRequest dataFromForm) {
-        String user_id      = (dataFromForm.getParameter("user_id"));
-
-        int idParsed = Integer.parseInt(user_id);
-
-        profileRepo.deleteUser(idParsed);
+        objectManager.profileRepo.updateAdminProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
+        objectManager.userRepo.updateAuthorities(role, first_mail);
 
         return "redirect:/admin/lookupuser";
     }
 
 
+// ******************************************* POST ADMIN PROJECT *******************************************
 
-//========================================================ADMIN PROJECT===============================================================
+//  ==================  DELETE PROJECT =============
+
+    @PostMapping("/admin/delete/project")
+    public String adminDeleteProject(WebRequest dataFromForm) {
+        String project_id               = (dataFromForm.getParameter("project_id"));
+
+        int idParsed = Integer.parseInt(project_id);
+
+        objectManager.projectRepo.deleteProject(idParsed);
+
+        return "redirect:/admin";
+    }
+
+//==================  UPDATE PROJECT =============
 
     @PostMapping("/admin/update/project")
     public String updateAdminProject(WebRequest dataFromForm,  Principal principal) throws ParseException {
@@ -415,50 +442,69 @@ public String closeTicket(WebRequest dataFromForm) {
         int totalDays   = projectServices.calcTotalDays2(project_start, project_end);
         int idParsed    = Integer.parseInt(project_id);
 
-        User user = userRepo.getOneUser(user_mail);
+        User user = objectManager.userRepo.getOneUser(user_mail);
 
-        projectRepo.updateProject(idParsed, project_name, project_desc, totalDays, project_start, project_end, user.getFk_orgId());
+        objectManager.projectRepo.updateProject(idParsed, project_name, project_desc, totalDays, project_start, project_end, user.getFk_orgId());
 
-        return "redirect:/";
+        return "redirect:/admin/project/edit/"+project_id;
     }
 
+//  =========== ADMIN INSERT JOBTITLE =============
 
-    //ADMIN DELETE PROJECT
-
-    @PostMapping("/admin/delete/project")
-    public String deleteAdminProject(WebRequest dataFromForm) {
-        String project_id               = (dataFromForm.getParameter("project_id"));
+    @PostMapping("/admin/insert/newjobtitle")
+    public RedirectView postNewTitleJob(RedirectAttributes redirectAttributes, WebRequest dataFromForm, Principal principal) {
+        String jobTitle_name     = (dataFromForm.getParameter("jobTitle_name"));
+        String project_id        = (dataFromForm.getParameter("project_id"));
 
         int idParsed = Integer.parseInt(project_id);
+        boolean jobTitleExists = false;
 
-        projectRepo.deleteAdminProject(idParsed);
 
+        User user               = objectManager.userRepo.getOneUser(principal.getName());
+        JobTitle jobTitleCheck  = objectManager.jobTitleRepo.getOneJobTitleWName(jobTitle_name);
 
-        return "redirect:/admin/lookupproject";
+        // IF JOB TITLE EXISTS IN DB VALIDATE IF EXISTS IN PROJECT
+        if(jobTitleCheck != null){
+            jobTitleExists  = objectManager.jobTitleRepo.checkJobTitleExists(jobTitleCheck.getJobTitle_Id());
+        }
+
+        // IF JOBTITLE DOESN'T EXISTS AT ALL - INSERT NEW JOBTITLE TO PROJECT + DB
+        if(jobTitleCheck == null){
+            objectManager.jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());
+            JobTitle jobTitle = objectManager.jobTitleRepo.getOneJobTitleWName(jobTitle_name);
+            objectManager.jobTitleRepo.insertOneProjectJobTitle(jobTitle.getJobTitle_Id(), idParsed);
+
+        // IF JOB TITLE EXIST IN DB - INSERT JOB TITLE TO PROJECT TABLE
+        }else{
+            if(jobTitleExists == true){
+
+                // IF JOB TITLE EXISTS IN DB AND PROJECT TABLE - RETURN "Job Title Already Exists"
+                redirectAttributes.addFlashAttribute("error", "Job Title Already Exists");
+                return new RedirectView("/admin/project/newJobtitles/"+project_id);
+            }
+            objectManager.jobTitleRepo.insertOneProjectJobTitle(jobTitleCheck.getJobTitle_Id(), idParsed);
+        }
+        return new RedirectView ("/admin/project/edit/"+project_id);
     }
 
-//========================================================ADMIN Organisation===============================================================
+// ================== DELETE PROJECT JOB TITLE =============
 
-    //    ================== ADMIN INSERT ORGANIZATION ================
-//    @PostMapping("/admin/edit/organization")
-//    public String postAdminOrganization(WebRequest dataFromForm, Principal principal) {
-//        String org_name         = (dataFromForm.getParameter("org_name"));
-//        String org_address      = (dataFromForm.getParameter("org_address"));
-//        String org_cvr          = (dataFromForm.getParameter("org_cvr"));
-//
-//        int cvrParsed = Integer.parseInt(org_cvr);
-//
-//        orgRep.insertOrg(org_name, org_address, cvrParsed);
-//
-//        User user           = userRepo.getOneUser(principal.getName());
-//        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-//
-//        orgRep.insertOrg(org_name, org_address, cvrParsed);
-//
-//        return "redirect:/";
-//    }
+    @PostMapping("/admin/delete/projectJobTitle")
+    public String deleteJobTitle(WebRequest dataFromForm) {
+        String projectJobTitle_id       = (dataFromForm.getParameter("projectJobTitle_id"));
+        String project_id               = (dataFromForm.getParameter("project_id"));
 
-    //================== ADMIN UPDATE ORGANIZATION ================
+        int idParsed = Integer.parseInt(projectJobTitle_id);
+
+        objectManager.jobTitleRepo.deleteProjectJobTitle(idParsed);
+
+        return "redirect:/admin/project/edit/"+project_id;
+    }
+
+// ******************************************* POST ADMIN ORGANIZATION *******************************************
+
+
+    //================== UPDATE ORGANIZATION ================
 
     @PostMapping("/admin/update/org")
     public String updateAdminOrg(WebRequest dataFromForm) {
@@ -470,11 +516,13 @@ public String closeTicket(WebRequest dataFromForm) {
         int cvrParsed   = Integer.parseInt(org_cvr);
         int idParsed    = Integer.parseInt(org_id);
 
-        orgRep.updateAdminOrg(idParsed, org_name, org_address, cvrParsed);
+        objectManager.organizationRepo.updateAdminOrg(idParsed, org_name, org_address, cvrParsed);
 
 
-        return "redirect:/";
+        return "redirect:/admin/organization";
     }
+
+    //================== DELETE ORGANIZATION ================
 
     @PostMapping("/admin/delete/org")
     public String deleteAdminOrg(WebRequest dataFromForm) {
@@ -482,15 +530,15 @@ public String closeTicket(WebRequest dataFromForm) {
 
         int idParsed = Integer.parseInt(org_id);
 
-        orgRep.deleteAdminOrg(idParsed);
+        objectManager.organizationRepo.deleteAdminOrg(idParsed);
 
 
         return "redirect:/admin/lookuporganization";
     }
 
-//========================================================ADMIN NEWS===============================================================
+// ******************************************* POST ADMIN NEW *******************************************
 
-    //    UPDATE NEWS =============
+    // ============= UPDATE NEWS =============
 
     @PostMapping("/admin/update/news")
     public String updateAdminNews(WebRequest dataFromForm) {
@@ -502,7 +550,7 @@ public String closeTicket(WebRequest dataFromForm) {
 
         int idParse         = Integer.parseInt(newsfeed_id);
 
-        newsRepo.updateAdminNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime);
+        objectManager.newsRepo.updateAdminNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime);
 
         return "redirect:/admin/lookuporganization";
     }
@@ -513,7 +561,7 @@ public String closeTicket(WebRequest dataFromForm) {
 
         int idParsed = Integer.parseInt(newsfeed_id);
 
-        newsRepo.deleteAdminNews(idParsed);
+        objectManager.newsRepo.deleteAdminNews(idParsed);
 
 
         return "redirect:/admin/lookuporganization";

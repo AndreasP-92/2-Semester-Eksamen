@@ -13,6 +13,7 @@ public class ObjectManager {
     public ProfileRepo      profileRepo         = new ProfileRepo();
     public OrganizationRepo organizationRepo    = new OrganizationRepo();
     public JobTitleRepo     jobTitleRepo        = new JobTitleRepo();
-
+    public ProjectRepo      projectRepo         = new ProjectRepo();
+    public NewsfeedRepo     newsRepo            = new NewsfeedRepo();
 
 }

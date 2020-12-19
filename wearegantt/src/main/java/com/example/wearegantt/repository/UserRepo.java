@@ -11,6 +11,10 @@ import java.util.List;
 
 public class UserRepo {
 
+// ============================================================= USER =================================================================
+
+// *********************************************** SELECT USERS ******************************************
+
 // =================== GET ALL USERS ==================
 
     public List<User> getAllUsers(){
@@ -44,36 +48,36 @@ public class UserRepo {
         return allUsers;
     }
 
-    // =================== GET ALL USERS WITH ORGANIZATION ID ==================
-
-    public List<User> getAllUsersWOrgId(int fk_orgId){
-        List<User> allUsers = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE fk_orgId = ?");
-            ps.setInt(1 , fk_orgId);
-
-            ResultSet rs = ps.executeQuery();
-
-            //Bruge resultatet til noget
-            while(rs.next()){
-                User tmp = new User(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getInt(5)
-
-                );
-                allUsers.add(tmp);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-            return null;
-        }
-        return allUsers;
-    }
+// =================== GET ALL USERS WITH ORGANIZATION ID ==================
+//
+//    public List<User> getAllUsersWOrgId(int fk_orgId){
+//        List<User> allUsers = new ArrayList<>();
+//
+//        try {
+//            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE fk_orgId = ?");
+//            ps.setInt(1 , fk_orgId);
+//
+//            ResultSet rs = ps.executeQuery();
+//
+//            //Bruge resultatet til noget
+//            while(rs.next()){
+//                User tmp = new User(
+//                        rs.getInt(1),
+//                        rs.getString(2),
+//                        rs.getString(3),
+//                        rs.getInt(4),
+//                        rs.getInt(5)
+//
+//                );
+//                allUsers.add(tmp);
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//            return null;
+//        }
+//        return allUsers;
+//    }
 
 
 // ========= CHECK IF USER EXISTS ===========
@@ -111,6 +115,9 @@ public class UserRepo {
         return usernameExists;
     }
 
+// ========= GET ONE USER ===========
+
+
     public User getOneUser(String user_mail){
         User userToReturn = null;
 
@@ -142,7 +149,7 @@ public class UserRepo {
 
     }
 
-    // ========= FIND ONE USER WITH ORGANIZATION ID ===========
+// ========= FIND ONE USER WITH ORGANIZATION ID ===========
 
     public User getOneUserWOrgId(int fk_orgId){
         User userToReturn = null;
@@ -175,7 +182,7 @@ public class UserRepo {
 
     }
 
-    // ========= GET ONE USER WITH ID ===========
+// ========= GET ONE USER WITH ID ===========
 
     public User getOneUserWId(int user_id){
         User userToReturn = null;
@@ -208,6 +215,8 @@ public class UserRepo {
 
     }
 
+// *********************************************** INSERT USERS ******************************************
+
 //    ================== INSERT USER ================
 
     public void insertUser(String user_mail, String user_pass, int user_enabled){
@@ -223,11 +232,134 @@ public class UserRepo {
         }catch (SQLException e){
             System.out.println(e);
         }
+    }
 
+    //    ================== INSERT PAYMENT ================
+
+    public void insertPayment(int payment_price, Timestamp payment_date, int fk_userId){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO payment(payment_price, payment_date, fk_userId) VALUES (?, ?, ?)");
+            ps.setInt(1, payment_price);
+            ps.setTimestamp(2, payment_date);
+            ps.setInt(3, fk_userId);
+
+            int row = ps.executeUpdate();
+            System.out.println("payment insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
+// *********************************************** UPDATE USER AUTHORITY ******************************************
+
+
+    //    ================== UPDATE USER ================
+
+    public void disableUser(int user_id) {
+        int user_enabled = 0;
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_enabled = ? WHERE user_id = ?");
+            ps.setInt(1, user_enabled);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("User disabled");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    //    ================== UPDATE CREDENTIALS ================
+
+    public void updateCredentials(int user_id, String user_mail, String user_password) {
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ?, user_password = ? WHERE user_id = ?");
+            ps.setString(1, user_mail);
+            ps.setString(2, user_password);
+            ps.setInt(3, user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("password changed");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    //    ================== UPDATE EMAIL ================
+
+    public void updateEmail(int user_id, String user_mail) {
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ? WHERE user_id = ?");
+            ps.setString(1, user_mail);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("email changed");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    //    ================== UPDATE USER ORG WITH ID ================
+
+    public void updateUserWId(int user_id, int org_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET fk_orgId = ? WHERE user_id = ?");
+            ps.setInt(1, org_id);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    //    ================== UPDATE MAIL WITH USER ================
+
+    public void updateMailWUserId(String user_mail, int user_id){
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ? WHERE user_id = ?");
+            ps.setString(1, user_mail);
+            ps.setInt(2, user_id);
+
+            int row = ps.executeUpdate();
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+// *********************************************** DELETE USER ******************************************
+
+//    ================== ADMIN DELETE ================
+
+    public void deleteUser(int user_id){
+
+
+        try {
+            PreparedStatement ps = establishConnection().prepareStatement("DELETE  FROM users WHERE user_id = ?");
+
+            ps.setInt(1,    user_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("User Deleted");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
 
 //    =================================================================== AUTHORITY ==========================================================================
+
+// *********************************************** SELECT USER AUTHORITY ******************************************
+
+//    ================== GET ALL AUTHORITY ================
 
     public List<AuthorityCheck> getAllAuthorities(){
         List<AuthorityCheck> allAuthorities = new ArrayList<>();
@@ -257,6 +389,8 @@ public class UserRepo {
         return allAuthorities;
     }
 
+    // *********************************************** INSERT USER AUTHORITY ******************************************
+
 //    ================== INSERT AUTHORITY ================
 
 
@@ -277,11 +411,10 @@ public class UserRepo {
 
     }
 
-    //    ================== GET AUTH USER ROLE ================
+//    ================== GET AUTH USER ROLE ================
 
 
     public Authorities getOneAuthWUserMail(String user_mail){
-        String sql = "INSERT INTO auth(auth_role, fk_userMail) VALUES (?, ?)";
         Authorities authToReturn = null;
 
         try {
@@ -308,7 +441,9 @@ public class UserRepo {
         return authToReturn;
     }
 
-    //    ================== Delete User ================
+    // *********************************************** UPDATE USER AUTHORITY ******************************************
+
+    //    ================== UPDATE AUTH ROLE ================
 
     public void updateAuthorities(String auth_role, String fk_userMail) {
         try {
@@ -317,7 +452,7 @@ public class UserRepo {
             ps.setString(2, fk_userMail);
 
             int row = ps.executeUpdate();
-            System.out.println("User disabled");
+            System.out.println("UPDATE AUTH");
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -325,54 +460,7 @@ public class UserRepo {
     }
 
 
-    //    ================== Delete User ================
 
-    public void disableUser(int user_id) {
-        int user_enabled = 0;
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_enabled = ? WHERE user_id = ?");
-            ps.setInt(1, user_enabled);
-            ps.setInt(2, user_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("User disabled");
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
-
-    //    ================== UPDATE Credentials ================
-
-    public void updateCredentials(int user_id, String user_mail, String user_password) {
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ?, user_password = ? WHERE user_id = ?");
-            ps.setString(1, user_mail);
-            ps.setString(2, user_password);
-            ps.setInt(3, user_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("password changed");
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
-    //    ================== UPDATE Email ================
-
-    public void updateEmail(int user_id, String user_mail) {
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ? WHERE user_id = ?");
-            ps.setString(1, user_mail);
-            ps.setInt(2, user_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("email changed");
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
 //    ================== INSERT PROFILE ================
 
 
@@ -400,66 +488,9 @@ public class UserRepo {
 
     }
 
-    //    ================== UPDATE USER ORG WITH ID ================
-
-    public void updateUserWId(int user_id, int org_id){
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET fk_orgId = ? WHERE user_id = ?");
-            ps.setInt(1, org_id);
-            ps.setInt(2, user_id);
-
-            int row = ps.executeUpdate();
-            System.out.println( "user = "+user_id + " added to organization with ID = " + org_id);
-
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-
-    //    ================== UPDATE MAIL WITH USER ================
-
-    public void updateMailWUserId(String user_mail, int user_id){
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET user_mail = ? WHERE user_id = ?");
-            ps.setString(1, user_mail);
-            ps.setInt(2, user_id);
-
-            int row = ps.executeUpdate();
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-
-//    ================== UPDATE USER ORG WITH MAIL ================
-
-
-    public void updateUserOrg(String user_mail, int fk_orgId){
-        try {
-            if(fk_orgId != 0){
-                PreparedStatement ps = establishConnection().prepareStatement("UPDATE users SET fk_orgId = ? WHERE user_mail = ?");
-                ps.setInt(1, fk_orgId);
-                ps.setString(2, user_mail);
-
-                int row = ps.executeUpdate();
-                System.out.println(user_mail + "added to organization" + fk_orgId);
-            } else{
-
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE jobTitle SET jobTitle_name = ? WHERE jobTitle_id = ?");
-
-            int row = ps.executeUpdate();
-            System.out.println("Job Title insert");
-            }
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-
 // ============================================================= ESTABLISH CONNECTION =================================================================
 
     private Connection establishConnection() throws SQLException {
-        //Lav en forbindelse
         Connection conn = DriverManager.getConnection("jdbc:mysql://138.197.186.159:3306/wag_app","captain","Uxr56vem.captain");
 
         return conn;

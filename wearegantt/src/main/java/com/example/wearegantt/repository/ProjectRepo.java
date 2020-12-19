@@ -12,7 +12,9 @@ public class ProjectRepo {
 
 // ============================================================= PROJECTS =================================================================
 
-    // GET ALL Projects ======================
+    // *********************************************** SELECT PROJECTS ******************************************
+
+    // ====================== GET ALL PROJECTS ======================
 
     public List<Project> getAllProjects(){
         List<Project> allProjects = new ArrayList<>();
@@ -46,7 +48,7 @@ public class ProjectRepo {
         return allProjects;
     }
 
-// GET ALL Projects WHERE ORGANIZATION ==================
+// =================== GET ALL PROJECTS WITH ORG ID ==================
 
     public List<Project> getAllProjectsWhere(int fk_orgId){
         List<Project> allProjects = new ArrayList<>();
@@ -80,7 +82,7 @@ public class ProjectRepo {
         return allProjects;
     }
 
-// Get ONE PROJECT WITH PROJECT NAME ===========
+// ================= GET ONE PROJECT WITH PROJECT NAME ===========
 
     public Project getOneProjectWPName(String project_name){
         Project ProjectToReturn = null;
@@ -115,7 +117,7 @@ public class ProjectRepo {
 
     }
 
-// Get ONE PROJECT WHERE PROJECT ID ===========
+// ====================== Get ONE PROJECT WHERE PROJECT ID ===========
 
     public Project getOneProject(int project_id){
         Project ProjectToReturn = null;
@@ -150,7 +152,7 @@ public class ProjectRepo {
 
     }
 
-    // Get ONE PROJECT WITH PROJECT NAME ===========
+// ============= Get ONE PROJECT WITH PROJECT NAME ===========
 
     public Project getOneProjectWName(String project_name){
         Project ProjectToReturn = null;
@@ -185,34 +187,6 @@ public class ProjectRepo {
 
     }
 
-//    ================== INSERT Project ================
-
-
-    public void InsertProject(String project_name, String project_desc, int project_duration, String project_start,String project_end, int project_fk_orgId){
-//    OPRET TASK FØRST OG HENT DYNAMISK TASK ID
-//    OPRET ORGANAZIATION FØRST OG HENT DYNAMISK ORG ID
-//    OPRET JOBTITLE FØRST OG HENT DYNAMISK JOB ID
-//    TÆNK OVER UI TIL DETTE
-        try {
-            System.out.println("PROJECT ===" + project_duration);
-            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name, project_desc, project_duration, project_start, project_end, fk_orgId) VALUES (?, ?, ?, ?, ?, ?)");
-            ps.setString(1, project_name);
-            ps.setString(2, project_desc);
-            ps.setInt(3, project_duration);
-            ps.setString(4, project_start);
-            ps.setString(5, project_end);
-            ps.setInt(6, project_fk_orgId);
-
-            int row = ps.executeUpdate();
-            System.out.println("project insert");
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-
-
-
     // Get ONE PROJECT WITH ORG ID ===========
 
     public Project getOneProjectWOrgId(int org_id){
@@ -236,8 +210,6 @@ public class ProjectRepo {
                         rs.getInt(7)
                 );
             }
-
-
         }
         catch(SQLException e){
             System.out.println(e);
@@ -247,6 +219,32 @@ public class ProjectRepo {
         return ProjectToReturn;
 
     }
+
+    // *********************************************** INSERT PROJECTS ******************************************
+
+//    ================== INSERT Project ================
+
+
+    public void InsertProject(String project_name, String project_desc, int project_duration, String project_start,String project_end, int project_fk_orgId){
+        try {
+            System.out.println("PROJECT ===" + project_duration);
+            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name, project_desc, project_duration, project_start, project_end, fk_orgId) VALUES (?, ?, ?, ?, ?, ?)");
+            ps.setString(1, project_name);
+            ps.setString(2, project_desc);
+            ps.setInt(3, project_duration);
+            ps.setString(4, project_start);
+            ps.setString(5, project_end);
+            ps.setInt(6, project_fk_orgId);
+
+            int row = ps.executeUpdate();
+            System.out.println("project insert");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+// *********************************************** UPDATE PROJECTS ******************************************
 
 
 //    ================== UPDATE Project ================
@@ -265,37 +263,14 @@ public class ProjectRepo {
             ps.setInt(7,    project_id);
 
             int row = ps.executeUpdate();
-            System.out.println("Project insert");
+            System.out.println("Project updated");
 
         }catch (SQLException e){
             System.out.println(e);
         }
-
     }
 
-    //    ================== UPDATE Project ================
-
-    public void updateAdminProject(int project_id, String project_name, String project_desc, String project_duration, String project_start, String project_end, int fk_orgId){
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE project SET project_name = ?, project_desc = ?, project_duration = ?, project_start = ?, project_end = ?, fk_orgId = ? WHERE project_id = ?");
-
-
-            ps.setString(1, project_name);
-            ps.setString(2, project_desc);
-            ps.setString(3, project_duration);
-            ps.setString(4, project_start);
-            ps.setString(5, project_end);
-            ps.setInt(6,    fk_orgId);
-            ps.setInt(7,    project_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("Project insert");
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-
-    }
+// *********************************************** DELETE PROJECTS ******************************************
 
 //    ================== Delete Project ================
 
@@ -319,89 +294,12 @@ public class ProjectRepo {
 
     }
 
-    //    ================== Admin Delete Project ================
+// ======================================================================== PROJECT TASKS =====================================================================================
 
-    public void deleteAdminProject(int project_id){
-
-
-        ProjectRepo projectRepo = new ProjectRepo();
-
-        try {
-            PreparedStatement ps = establishConnection().prepareStatement("DELETE  FROM project WHERE project_id = ?");
-
-            ps.setInt(1,    project_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("Project Deleted");
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
+// *********************************************** GET PROJECTS ******************************************
 
 
-    }
-
-// ============================================================= PROJECT JOB TITLES =================================================================
-
-    //    ================== INSERT PROJECT JOB TITLE ================
-
-//    public void insertOneProjectJobTitle(int jobTitle_id, int project_id){
-//        try {
-//            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project_jobTitle(project_id, jobTitle_id) VALUES (?, ?)");
-//            ps.setInt(1, project_id);
-//            ps.setInt(2, jobTitle_id);
-//
-//            int row = ps.executeUpdate();
-//            System.out.println("Job Title insert");
-//        }catch (SQLException e){
-//            System.out.println(e);
-//        }
-//    }
-//
-//    // =================== GET ONE PROJECT JOB TITLE ==================
-//
-//    public List<GetProjectJobTitles> getOneProjectJobTitle(int prject_id){
-//        List<GetProjectJobTitles> AlljobTitles = new ArrayList<>();
-//
-//        try {
-//            PreparedStatement ps = establishConnection().prepareStatement("SELECT project_jobTitle.projectJobTitle_id, project_jobTitle.project_id, jobTitle.jobTitle_name FROM project_jobTitle INNER JOIN jobTitle ON project_jobTitle.jobTitle_id = jobTitle.jobTitle_id WHERE project_id = ?");
-//            ps.setInt(1, prject_id);
-//
-//            ResultSet rs = ps.executeQuery();
-//
-//            while(rs.next()){
-//                GetProjectJobTitles tmp = new GetProjectJobTitles(
-//                        rs.getInt(1),
-//                        rs.getInt(2),
-//                        rs.getString(3)
-//                );
-//                AlljobTitles.add(tmp);
-//            }
-//        } catch (SQLException e){
-//            System.out.println(e);
-//            return null;
-//        }
-//        return AlljobTitles;
-//    }
-//
-//    //    ================== DELETE PROJECT JOB TITLE ================
-//
-//    public void deleteProjectJobTitle(int projectJobTitle_id){
-//        try {
-//            PreparedStatement ps = establishConnection().prepareStatement("DELETE FROM project_jobTitle WHERE projectJobTitle_id = ?");
-//            ps.setInt(1, projectJobTitle_id);
-//
-//            int row = ps.executeUpdate();
-//            System.out.println("Række slettet");
-//
-//        }catch (SQLException e){
-//            System.out.println(e);
-//        }
-//    }
-
-// ============================================================= TASKS =================================================================
-
-    // Get ONE PROJECT WHERE PROJECT ID ===========
+    // =========== Get ONE PROJECT WHERE PROJECT ID ===========
 
     public Task getAllTasksWId(int task_id){
         Task taskToReturn = null;
@@ -441,7 +339,7 @@ public class ProjectRepo {
 
     }
 
-// GET ALL PROJECTS + TASKS WITH PROJECT ID ==================
+// =========== GET ALL PROJECTS + TASKS WITH PROJECT ID ==================
 
     public List<Task> getAllPTasksWProjectId(int fk_projectId){
         List<Task> allTasks = new ArrayList<>();
@@ -517,6 +415,9 @@ public class ProjectRepo {
         return allTasks;
     }
 
+// *********************************************** INSERT PROJECT TASKS ******************************************
+
+
 //    ================== INSERT TASK ================
 
 
@@ -539,12 +440,15 @@ public class ProjectRepo {
 
 
             int row = ps.executeUpdate();
-            System.out.println("project insert");
+            System.out.println("task insert");
 
         }catch (SQLException e){
             System.out.println(e);
         }
     }
+
+// *********************************************** UPDATE PROJECT TASKS ******************************************
+
 
     //    ================== UPDATE TASK ================
 
@@ -568,7 +472,7 @@ public class ProjectRepo {
 
 
             int row = ps.executeUpdate();
-            System.out.println("Project insert");
+            System.out.println("update task");
 
         }catch (SQLException e){
             System.out.println(e);
@@ -576,8 +480,9 @@ public class ProjectRepo {
 
     }
 
+// *********************************************** DELETE PROJECT TASKS ******************************************
 
-    //    ================== DELETE TASK ================
+//    ================== DELETE TASK ================
 
     public void deleteTask(int task_id){
         try {
@@ -585,7 +490,7 @@ public class ProjectRepo {
             ps.setInt(1, task_id);
 
             int row = ps.executeUpdate();
-            System.out.println("Række slettet");
+            System.out.println("row deleted");
 
         }catch (SQLException e){
             System.out.println(e);
@@ -593,7 +498,9 @@ public class ProjectRepo {
     }
 
 
-// ============================================================= GANTT PHASES =================================================================
+// ============================================================= PROJECT GANTT PHASES =================================================================
+
+    // ************************************ SELECT PROJECT GANTT PHASES ***************************************
 
     // GET ALL Projects ======================
 

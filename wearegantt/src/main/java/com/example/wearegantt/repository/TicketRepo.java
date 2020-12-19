@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketRepo {
-// ============================================================= Ticket =================================================================
+// ============================================================= TICKET =================================================================
 
-    // GET ALL Tickets ======================
+// *********************************************** SELECT TICKETS ******************************************
+
+    // =============== GET ALL Tickets ================
 
     public List<SupportTicket> getAllTickets(){
         List<SupportTicket> allTickets = new ArrayList<>();
@@ -48,7 +50,7 @@ public class TicketRepo {
         return allTickets;
     }
 
-    // ====================== GET ALL Tickets WITH USER MAIL ======================
+// =============== GET ALL Tickets WITH USER MAIL ================
 
     public List<SupportTicket> getAllTicketsWUserMail(String user_mail){
         List<SupportTicket> allTickets = new ArrayList<>();
@@ -87,7 +89,7 @@ public class TicketRepo {
     }
 
 
-    // GET ALL Tickets WITH user_id ======================
+    // =============== GET ALL Tickets WITH user_id =================
 
     public List<GetTicketUser> getAllUserTickets(int user_id){
         List<GetTicketUser> allTickets = new ArrayList<>();
@@ -130,7 +132,7 @@ public class TicketRepo {
         return allTickets;
     }
 
-
+// =============== GET ONE TICKET =================
 
     public SupportTicket getOneTicket(int fk_ticketId){
         SupportTicket ticketToReturn = null;
@@ -161,7 +163,9 @@ public class TicketRepo {
         return ticketToReturn;
     }
 
-    //    ================== INSERT TICKET USER ================
+    // *********************************************** INSERT TICKETS ******************************************
+
+//    ================== INSERT TICKET USER ================
 
 
     public void InsertTicketUser(int ticket_id, int user_id) {
@@ -200,42 +204,7 @@ public class TicketRepo {
         }
     }
 
-//    ================== ASIGN TICKET 02 ================
-
-    public void assignTicket02(int ticket_id){
-
-        try{
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_taken = 1 WHERE supportTicket_id = ?");
-            ps.setInt(1, ticket_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("SUPPORT TICKET TAKEN");
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-
-    }
-
-//    ================== CLOSE TICKET ================
-
-    public void closeTicket(int ticket_id){
-
-        try{
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_active = 0 WHERE supportTicket_id = ?");
-            ps.setInt(1, ticket_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("SUPPORT TICKET CLOSED");
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-
-    }
-
-
-    //    ================== INSERT SUPPORT TICKET ================
+//    ================== INSERT SUPPORT TICKET ================
 
     public void insertSupportTicket(String ticket_title, String ticket_context, Timestamp ticket_timestamp, String ticket_ownerMail, String ticket_ownerName, int ticket_active, int ticket_taken, int admin_replied, int user_replied){
         try{
@@ -260,10 +229,49 @@ public class TicketRepo {
         }
     }
 
+    // *********************************************** UPDATE TICKETS ******************************************
+
+//    ================== ASIGN TICKET 02 ================
+
+    public void assignTicket02(int ticket_id){
+
+        try{
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_taken = 1 WHERE supportTicket_id = ?");
+            ps.setInt(1, ticket_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("SUPPORT TICKET TAKEN");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
+
+//    ================== CLOSE TICKET ================
+
+    public void closeTicket(int ticket_id){
+
+        try{
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_active = 0 WHERE supportTicket_id = ?");
+            ps.setInt(1, ticket_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("SUPPORT TICKET CLOSED");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+    }
+
 //    ================================================================================= MESSAGES =============================================================
 
+// *********************************************** SELECT MESSAGES ******************************************
 
-    //    ================== INSERT SUPPORT MESSAGE ================
+
+//    ================== INSERT SUPPORT MESSAGE ================
 
     public void insertMessage(String message_context, String message_timestamp, int fk_ticketId, String fk_profileFirstname){
         try{
@@ -281,54 +289,6 @@ public class TicketRepo {
             System.out.println(e);
         }
     }
-    //    ================== MESSAGE UPDATE ADMIN TICKET ================
-
-    public void messageUpdateTicketAdmin(int ticket_id) {
-        try{
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_adminReplied = 1, supportTicket_userReplied = 0 WHERE supportTicket_id = ?");
-            ps.setInt(1, ticket_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("ADMIN UPDATED A TICKET");
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-
-    //    ================== MESSAGE UPDATE USER TICKET ================
-
-    public void messageUpdateTicketUser(int ticket_id) {
-        try{
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_userReplied = 1, supportTicket_adminReplied = 0 WHERE supportTicket_id = ?");
-            ps.setInt(1, ticket_id);
-
-            int row = ps.executeUpdate();
-            System.out.println("USER UPDATED A TICKET");
-
-        }catch (SQLException e){
-            System.out.println(e);
-        }
-    }
-
-    //    ================== INSERT SUPPORT MESSAGE WITH TICKET ID ================
-//
-//    public void insertMessageWTicketId(String message_context, String message_timestamp, int fk_ticketId, String fk_profileFirstname){
-//        try{
-//            PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO supportMessage(message_context, message_timestamp, fk_ticketId, fk_profileFirstname) VALUES ( ?, ?, ?, ?)");
-//            ps.setString(1, message_context);
-//            ps.setString(2, message_timestamp);
-//            ps.setInt(3, fk_ticketId);
-//            ps.setString(4, fk_profileFirstname);
-//
-//            int row = ps.executeUpdate();
-//
-//            System.out.println("MESSAGE INSERT");
-//
-//        } catch (SQLException e){
-//            System.out.println(e);
-//        }
-//    }
 
     //    ================== GET ONE SUPPORT MESSAGE ================
 
@@ -342,11 +302,11 @@ public class TicketRepo {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 messageToReturn = new SupportMessage(
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getInt(4),
-                    rs.getString(5)
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5)
                 );
             }
         } catch (SQLException e){
@@ -360,17 +320,11 @@ public class TicketRepo {
         List<SupportMessage> allMessages = new ArrayList<>();
 
         try {
-
-//            PreparedStatement ps = establishConnection().prepareStatement("SELECT *, DATE_FORMAT(supportTicket_timestamp, '%m/%d/%Y %H:%i') AS ticket_timestamp FROM supportTicket");
-
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM supportMessage WHERE fk_ticketId = ?");
             ps.setInt(1, ticket_id);
 
-            //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
             while (rs.next()) {
                 SupportMessage tmp = new SupportMessage(
                         rs.getInt(1),
@@ -387,6 +341,38 @@ public class TicketRepo {
             return null;
         }
         return allMessages;
+    }
+
+// *********************************************** UPDATE MESSAGES ******************************************
+
+    //    ================== MESSAGE UPDATE ADMIN TICKET ================
+
+    public void messageUpdateTicketAdmin(int ticket_id) {
+        try{
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_adminReplied = 1, supportTicket_userReplied = 0 WHERE supportTicket_id = ?");
+            ps.setInt(1, ticket_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("ADMIN UPDATED A TICKET");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+//    ================== MESSAGE UPDATE USER TICKET ================
+
+    public void messageUpdateTicketUser(int ticket_id) {
+        try{
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE supportTicket SET supportTicket_userReplied = 1, supportTicket_adminReplied = 0 WHERE supportTicket_id = ?");
+            ps.setInt(1, ticket_id);
+
+            int row = ps.executeUpdate();
+            System.out.println("USER UPDATED A TICKET");
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
     }
 
 

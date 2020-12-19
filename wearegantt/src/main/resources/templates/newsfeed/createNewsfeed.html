@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Newsfeed</title>
+
+    <link th:href="@{/css/main/createNewsfeed.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <!--=================== NAVIGATION ============================ -->
+        <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+    </header>
+
+    <main class="container">
+        <a th:href="@{'/newsfeed/' + ${org.getOrg_name()}}" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+        </a>
+        <div align="center">
+            <div class="col-sm-12" align="center">
+                <img th:src="@{/images/logo.png}" style="">
+            </div>
+
+        <!--==== CREATE NEWSFEED ==== -->
+            <form class="contact w-50" th:action="@{/insert/news}" th:object="${user}" method="post">
+                <div class="valid" id="notFilled"></div>
+
+                <h3 style="text-align: center">Create Your News</h3>
+
+                <!-- TITLE -->
+                <div class="form-group ml-5 mr-5">
+                    <input class="form-control" placeholder="Enter Your Title" name="newsfeed_title" type="text" required autofocus>
+                </div>
+
+                <!-- NEWS -->
+                <div class="form-group ml-5 mr-5">
+                    <textarea class="form-control" rows="3" placeholder="Enter your News" name="newsfeed_news" required></textarea>
+                </div>
+
+                <!-- Submit button -->
+                <div class="btn-group" role="group" aria-label="">
+                    <button class="btn form-button ml-5 mr-5" type="submit" id="create" >Submit</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <!--=================== Footer ============================ -->
+
+    <div th:replace="partials/footer :: footerFragment"></div>
+
+</body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</html>

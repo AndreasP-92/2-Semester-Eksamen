@@ -18,7 +18,10 @@
     </header>
     <!--=================== MAIN ============================ -->
     <main class="container">
-            <a th:href="@{'/editprofile/' + ${user.getUser_mail()}}" style="color:black;">
+
+            <a th:href="@{'/profile/' + ${user.getUser_mail()}}" style="color:black;">
+                <div class="valid" id="notFilled"></div>
+
                 <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
             </a>
             <div align="center">
@@ -29,21 +32,28 @@
     <!-- === CREATE ORGANIZATION FORM === -->
                 <form class="contact w-50"  th:action="@{/insert/org}" th:fragment="newOrgForm" method="post">
                     <h3>Create Your Organization</h3>
+
+                    <!-- ORGANIZATION NAME -->
                     <div class="form-group ml-5 mr-5">
-                        <input class="form-control" id="emailinput" type="text" name="org_name" placeholder="Organizatoin Name">
+                        <label for="org_name">Organization Name</label>
+                        <input class="form-control" id="org_name" required type="text" name="org_name" placeholder="Organizatoin Name">
                     </div>
 
+                    <!-- ORGANIZATION ADDRESS -->
                     <div class="form-group ml-5 mr-5">
-                        <input class="form-control" type="text" name="org_address" placeholder="Organization Address">
+                        <label for="org_address">Organization Address</label>
+                        <input class="form-control" type="text" id="org_address" required name="org_address" placeholder="Organization Address">
                     </div>
 
+                    <!-- ORGANIZATION CVR -->
                     <div class="form-group ml-5 mr-5">
-                        <input class="form-control" type="number" name="org_cvr" placeholder="Organization CVR">
+                        <label for="org_cvr">Organization CVR</label>
+                        <input class="form-control" type="number" id="org_cvr" required name="org_cvr" placeholder="Organization CVR">
                     </div>
 
-                    <input type="submit" value="Save" name="button" class="w-50 btn form-button ml-5 mr-5">
+                    <!-- SUBMIT -->
+                    <input type="submit" value="Save" class="w-50 btn form-button ml-5 mr-5">
                 </form>
-
             </div>
     </main>
     <!--=================== Footer ============================ -->

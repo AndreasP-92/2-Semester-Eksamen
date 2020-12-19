@@ -20,7 +20,9 @@
     <main>
         <h1>Ops..</h1>
         <p>You got no Organization</p>
-        <!--        <a class="button" href="#"><i class="icon-home"></i> Go back in initial page, is better.</a>-->
+        <div th:if="${auth.getAuth_role() == 'ROLE_NORMALUSER' || auth.getAuth_role() == 'ROLE_TRIALUSER' }">
+            <a class="btn btn-info button" href="/profile/organization"><i class="icon-home"></i> Create Organization</a>
+        </div>
     </main>
 
     <!--=================== Footer ============================ -->

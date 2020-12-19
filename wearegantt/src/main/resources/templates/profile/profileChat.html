@@ -11,33 +11,34 @@
     <title>Admin Page</title>
 </head>
 <body>
-<div class="container">
-    <div class="menu">
-        <a href="#" class="back"><i class="fa fa-angle-left"></i> <img src="https://i.imgur.com/G4EjwqQ.jpg" draggable="false"/></a>
-        <div class="name">Random chat</div>
-        <div class="members"><b>You</b>, Marga, Charo & Brotons</div>
-    </div>
-    <!--    <div th:if="">-->
-    <ol th:each="message : ${supportMessageList}" class="chat">
-        <li th:class="${message.fk_profileFirstname == profile.profile_firstname ? 'self' : 'other'}">
-            <div class="msg">
-                <div class="user"><p th:text="${message.fk_profileFirstname}"></p></div>
-                <div>
-                    <p th:text="*{message.message_context}"></p>
+    <main class="container">
+        <div class="menu">
+            <a href="/profile/support" class="back"><i class="fa fa-angle-left"></i></a>
+            <div class="name" th:text="${'Topic : ' + supportTicket.getSupportTicket_title()}"></div>
+            <div class="members" th:text="${profile.getProfile_firstname()}"><b>You</b>, Marga, Charo & Brotons</div>
+        </div>
+
+    <!--  === CHAT === -->
+        <ol th:each="message : ${supportMessageList}" class="chat">
+            <li th:class="${message.fk_profileFirstname == profile.profile_firstname ? 'self' : 'other'}">
+                <div class="msg">
+                    <div class="user"><p th:text="${message.fk_profileFirstname}"></p></div>
+                    <div>
+                        <p th:text="*{message.message_context}"></p>
+                    </div>
+                    <p th:text="${message.message_timestamp}"></p>
                 </div>
-                <p th:text="${message.message_timestamp}"></p>
-            </div>
-    </ol>
-    <!--    </div>-->
-    <div class="typezone">
-        <form th:action="@{/profile/save/chat}" th:object="${supportTicket}" method="post">
-            <!--            <input style="display: none;" th:field="*{}" type="text" placeholder="test">-->
-            <input style="display: none;" name="ticket_id" th:value="${supportTicket.getSupportTicket_id()}" type="text">
-            <input style="display: none;" name="ticket_ownerMail" th:value="${profile.getProfile_firstname()}" type="text">
-            <textarea th:name="message_context" type="text" placeholder="Say something"></textarea>
-            <input type="submit" class="send" value=""/>
-        </form>
-        <div class="emojis"></div></div>
-</div>
+        </ol>
+
+    <!--  === REPLY === -->
+        <div class="typezone">
+            <form th:action="@{/profile/save/chat}" th:object="${supportTicket}" method="post">
+                <input style="display: none;" name="ticket_id" th:value="${supportTicket.getSupportTicket_id()}" type="text">
+                <input style="display: none;" name="ticket_ownerMail" th:value="${profile.getProfile_firstname()}" type="text">
+                <textarea th:name="message_context" type="text" placeholder="Say something"></textarea>
+                <input type="submit" class="send" value=""/>
+            </form>
+            <div class="emojis"></div></div>
+    </main>
 </body>
 </html>

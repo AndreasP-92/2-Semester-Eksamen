@@ -10,66 +10,75 @@
 <body>
     <header>
         <!--=================== NAVIGATION ============================ -->
-        <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}">
+        <div th:replace="partials/navbar :: navigation" th:with="OneOrg=${OneOrg},user=${user}"></div>
 
-
-        </div>
     </header>
     <main class="container">
-        <a th:href="@{'/editprofile/' + ${user.getUser_mail()}}" style="color:black;">
+        <a th:href="@{'/profile/' + ${user.getUser_mail()}}" style="color:black;">
             <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
         </a>
             <div align="center">
-            <!--=================== logo ============================ -->
             <div class="col-sm-12">
                 <img th:src="@{/images/logo.png/}" style="">
             </div>
+
 <!-- ==== UPDATE ORGANIZATION === -->
-                <form class="contact w-50" th:action="@{admin/update/org}" th:object="${org}" method="post">
+                <form class="contact w-50" th:action="@{/update/org}" th:object="${org}" method="post">
                     <h3>Edit your Organization</h3>
+
+                    <!-- ORGANIZATION ID -->
                     <div class="form-group ml-5 mr-5">
                         <label for="emailinput">Your Organization ID</label>
                         <input class="form-control" id="emailinput" readonly type="text" required autofocus th:field="*{org_id}">
                     </div>
+
+                    <!-- ORGANIZATION NAME -->
                     <div class="form-group ml-5 mr-5">
                         <label for="emailinput">Organization Name</label>
                         <input class="form-control" id="nameinput" type="text" required autofocus th:field="*{org_name}">
                     </div>
 
+                    <!-- ORGANIZATION ADDRESS -->
                     <div class="form-group ml-5 mr-5">
                         <label for="addressinput">Organization Address</label>
                         <input class="form-control" id="addressinput" type="text" required autofocus th:field="*{org_address}">
                     </div>
 
+                    <!-- ORGANIZATION CVR -->
                     <div class="form-group ml-5 mr-5">
                         <label for="cvrinput">Organization CVR Number</label>
                         <input class="form-control" id="cvrinput" type="number" required autofocus th:field="*{org_cvr}">
                     </div>
 
-                    <button type="submit" name="button" class="w-50 btn form-button ml-5 mr-5">Save</button>
+                    <!-- SUBMIT -->
+                    <button type="submit" class="w-50 btn form-button ml-5 mr-5">Save</button>
                 </form>
 
 <!-- ==== ADD ANOTHER USER TO ORGANIZATION === -->
                 <form class="contact w-50" th:action="@{/insert/org/user}" method="post" th:object="${org}">
                     <h3>Add Another User</h3>
 
+                    <!-- ORGANIZATION ID -->
                     <div class="form-group ml-5 mr-5">
                         <input class="form-control" style="display: none" type="text" required th:field="*{org_id}">
                     </div>
 
+                    <!-- USER MAIL -->
                     <div class="form-group ml-5 mr-5">
-                        <input class="form-control" type="text" name="user_mail" placeholder="User Mail">
+                        <input class="form-control" type="text" required name="user_mail" placeholder="User Mail">
                     </div>
 
-                    <button type="submit" name="button" class="w-50 btn form-button ml-5 mr-5">Save</button>
+                    <!-- SUBMIT -->
+                    <button type="submit" class="w-50 btn form-button ml-5 mr-5">Save</button>
                 </form>
 
-                <form class="contact w-50"  th:action="@{/delete/org}" method="post" th:object="${org}">
-
+    <!-- === DELETE ORGANIZATION === -->
+                <form class="contact w-50" id="deleteForm" th:action="@{/delete/org}" method="post" th:object="${org}">
+                    <!-- ORGANIZATION ID -->
                     <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{org_id}">
 
-
-                    <button type="submit" name="button" class="w-50 btn form-button ml-5 mr-5 bg-danger text-light">DELETE ORGANIZATION</button>
+                    <!-- SUBMIT -->
+                    <button type="submit" id="deleteSubmitButton" class="w-50 btn form-button ml-5 mr-5 bg-danger text-light">DELETE ORGANIZATION</button>
                 </form>
         </div>
 
@@ -82,5 +91,5 @@
         <div th:replace="partials/footer :: footerFragment"></div>
 </body>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-
+<script src="/js/main/main.js"></script>
 </html>

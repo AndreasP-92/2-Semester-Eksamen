@@ -17,11 +17,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -29,23 +26,75 @@ import java.util.Map;
 @Controller
 public class ProjectController {
 
-//REPOSITORIES ====================
-
-    OrganizationRepo orgRep = new OrganizationRepo();
-
-    ProjectRepo projectRepo = new ProjectRepo();
-
-    UserRepo userRepo = new UserRepo();
-
-    JobTitleRepo jobTitleRepo = new JobTitleRepo();
-
-    ProfileRepo profileRepo = new ProfileRepo();
+//    =================== SERVICES ==================
 
     ProjectServices projectServices = new ProjectServices();
 
     ObjectManager objectManager = new ObjectManager();
 
-// ================================================== GANTT =====================================
+//   =================================================================== GET CONTROLLER ==========================================================================
+
+
+// ================ PROJECTS ================
+
+    @GetMapping("/projects")
+    private String projects(Model model, Principal principal){
+
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
+        Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+        List<Project> listProjects  = objectManager.projectRepo.getAllProjects();
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+
+        model.addAttribute("auth", authorities);
+        model.addAttribute("listProjects", listProjects);
+        model.addAttribute("activePage", "projects");
+        model.addAttribute("org", organization);
+        model.addAttribute("user", user);
+
+        return "project/project";
+    }
+
+    //  ================  CREATE PROJECT =======================
+
+    @GetMapping("/projects/create")
+    private ModelAndView createproject(Principal principal){
+        ModelAndView mav = new ModelAndView("project/createProject");
+
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
+        Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+
+        mav.addObject("auth", authorities);
+        mav.addObject("org", organization);
+        mav.addObject("user", user);
+
+        return mav;
+    }
+
+//   ================ UPDATE PROJECT ======================
+
+    @GetMapping("/projects/edit/{id}")
+    private ModelAndView project(@PathVariable(name = "id")int id, Principal principal){
+        ModelAndView mav    = new ModelAndView("project/editProject");
+
+        User user                                   = objectManager.userRepo.getOneUser(principal.getName());
+        Organization organization                   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+        Project project                             = objectManager.projectRepo.getOneProject(id);
+        List<GetProjectJobTitles> projectTitlesList = objectManager.jobTitleRepo.getOneProjectJobTitle(id);
+        Authorities authorities                     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+
+        mav.addObject("auth", authorities);
+        mav.addObject("jobTitlesList", projectTitlesList);
+        mav.addObject("project", project);
+        mav.addObject("org", organization);
+        mav.addObject("user", user);
+
+        return mav;
+    }
+
+//    ******************************************* GET PROJECT GANTT *******************************************
+
+//   ================ GANTT ======================
 
     @GetMapping("/gantt/{project_id}")
     private ModelAndView gantt(@PathVariable(name = "project_id") String project_id, Principal principal){
@@ -53,18 +102,14 @@ public class ProjectController {
 
         int idParsed    = Integer.parseInt(project_id);
 
-        Project project             = projectRepo.getOneProject(idParsed);
-        Organization org            = orgRep.getOneOrgWId(project.getFk_orgId());
-        List<Task> taskList         = projectRepo.getAllTasksWProjectId(project.getProject_name());
-        User user                   = userRepo.getOneUser(principal.getName());
+        Project project             = objectManager.projectRepo.getOneProject(idParsed);
+        Organization org            = objectManager.organizationRepo.getOneOrgWId(project.getFk_orgId());
+        List<Task> taskList         = objectManager.projectRepo.getAllTasksWProjectId(project.getProject_name());
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         mav.addObject("auth", authorities);
-        System.out.println(project);
 
-        System.out.println(taskList);
-
-        System.out.println(org.getOrg_name());
         mav.addObject("days", " days");
         mav.addObject("user", user);
         mav.addObject("test", "5/13");
@@ -75,7 +120,10 @@ public class ProjectController {
         return mav;
     }
 
-// CREATE TASK ================
+//    ******************************************* GET PROJECT TASKS *******************************************
+
+
+// ================ CREATE TASK ================
 
     @GetMapping("/projects/create/task/{project_id}")
     private ModelAndView tasks(@PathVariable(name = "project_id") String project_id){
@@ -84,19 +132,13 @@ public class ProjectController {
         int idParsed = Integer.parseInt(project_id);
         int yearNow = Calendar.getInstance().get(Calendar.YEAR);
 
-        Project project                     = projectRepo.getOneProject(idParsed);
-        User user                           = userRepo.getOneUserWOrgId(project.getFk_orgId());
-        Organization organization           = orgRep.getOneOrgWId(project.getFk_orgId());
-        Profile profile                     = profileRepo.getOneProfile(user.getUser_id());
-        List<GetProjectJobTitles> jobTitles = jobTitleRepo.getOneProjectJobTitle(project.getProject_id());
-        List<GanttPhases> phaseList         = projectRepo.getAllGanttPhases();
-        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-
-        System.out.println("projects=======" + project);
-        System.out.println("jobTitles=======" + jobTitles);
-        System.out.println("user=======" + user);
-        System.out.println("profiel=======" + profile);
+        Project project                     = objectManager.projectRepo.getOneProject(idParsed);
+        User user                           = objectManager.userRepo.getOneUserWOrgId(project.getFk_orgId());
+        Organization organization           = objectManager.organizationRepo.getOneOrgWId(project.getFk_orgId());
+        Profile profile                     = objectManager.profileRepo.getOneProfile(user.getUser_id());
+        List<GetProjectJobTitles> jobTitles = objectManager.jobTitleRepo.getOneProjectJobTitle(project.getProject_id());
+        List<GanttPhases> phaseList         = objectManager.projectRepo.getAllGanttPhases();
+        Authorities authorities             = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         mav.addObject("yearNow", yearNow);
         mav.addObject("auth", authorities);
@@ -111,29 +153,24 @@ public class ProjectController {
         return mav;
     }
 
-    // EDIT TASK ================
+// ================ EDIT TASK ================
 
     @GetMapping("/gantt/edit/task/{task_id}")
     private ModelAndView editTask(@PathVariable(name = "task_id") String task_id){
         ModelAndView mav = new ModelAndView("project/editTask");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-
-
         int idParsed = Integer.parseInt(task_id);
         int yearNow = Calendar.getInstance().get(Calendar.YEAR);
 
-        Task task                           = projectRepo.getAllTasksWId(idParsed);
-        Project project                     = projectRepo.getOneProjectWPName(task.getFk_projectName());
-        Organization organization           = orgRep.getOneOrgWId(project.getFk_orgId());
-        User user                           = userRepo.getOneUserWOrgId(organization.getOrg_id());
-        Profile profile                     = profileRepo.getOneProfile(user.getUser_id());
-        List<GanttPhases> phaseList         = projectRepo.getAllGanttPhases();
-        List<GetProjectJobTitles> jobTitles = jobTitleRepo.getOneProjectJobTitle(project.getProject_id());
+        Task task                           = objectManager.projectRepo.getAllTasksWId(idParsed);
+        Project project                     = objectManager.projectRepo.getOneProjectWPName(task.getFk_projectName());
+        Organization organization           = objectManager.organizationRepo.getOneOrgWId(project.getFk_orgId());
+        User user                           = objectManager.userRepo.getOneUserWOrgId(organization.getOrg_id());
+        Profile profile                     = objectManager.profileRepo.getOneProfile(user.getUser_id());
+        List<GanttPhases> phaseList         = objectManager.projectRepo.getAllGanttPhases();
+        List<GetProjectJobTitles> jobTitles = objectManager.jobTitleRepo.getOneProjectJobTitle(project.getProject_id());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-        System.out.println("projects=======" + task);
-
+        
         mav.addObject("yearNow", yearNow);
         mav.addObject("auth", authorities);
 //        mav.addObject("timeStart", timeStart);
@@ -150,45 +187,25 @@ public class ProjectController {
         return mav;
     }
 
-// PROJECTS ================
+//    ******************************************* GET PROJECT JOBTITLES *******************************************
 
-    @GetMapping("/projects")
-    private String projects(Model model, Principal principal){
 
-        User user                   = userRepo.getOneUser(principal.getName());
-        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
-        List<Project> listProjects  = projectRepo.getAllProjects();
-        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-        System.out.println(authorities);
-
-        model.addAttribute("auth", authorities);
-        model.addAttribute("listProjects", listProjects);
-        model.addAttribute("activePage", "projects");
-        model.addAttribute("org", organization);
-        model.addAttribute("user", user);
-
-        return "project/project";
-    }
-// JOBTITLE =================
+    // ================ JOBTITLE =================
     @GetMapping("/projects/create/newJobtitles/{project_id}")
     private ModelAndView newjobtitle(@PathVariable(name = "project_id")String project_id, Principal principal, HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("project/newJobtitle");
+        ModelAndView mav = new ModelAndView("project/createJobtitle");
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (inputFlashMap != null) {
-            System.out.println(inputFlashMap.get("error"));
             mav.addObject("error", inputFlashMap.get("error"));
         }
 
         int idParsed = Integer.parseInt(project_id);
 
-        User user                   = userRepo.getOneUser(principal.getName());
-        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
-        Project project             = projectRepo.getOneProject(idParsed);
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
+        Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+        Project project             = objectManager.projectRepo.getOneProject(idParsed);
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-        System.out.println("USER ============="+user);
 
         mav.addObject("auth", authorities);
         mav.addObject("project", project);
@@ -199,104 +216,13 @@ public class ProjectController {
         return mav;
     }
 
-//    CREATE PROJECT =======================
-
-    @GetMapping("/projects/create")
-    private ModelAndView createproject(Principal principal){
-        ModelAndView mav = new ModelAndView("project/createProject");
+//   =================================================================== POST CONTROLLER ==========================================================================
 
 
-
-        User user                   = userRepo.getOneUser(principal.getName());
-        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
-        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-        mav.addObject("auth", authorities);
-        mav.addObject("org", organization);
-        mav.addObject("user", user);
+//    ******************************************* POST PROJECT ****************************************
 
 
-        return mav;
-    }
-
-
-
-//    UPDATE PROJECT ======================
-
-    @GetMapping("/projects/edit/{id}")
-    private ModelAndView project(@PathVariable(name = "id")int id, Principal principal){
-        ModelAndView mav    = new ModelAndView("project/editProject");
-
-        User user                   = userRepo.getOneUser(principal.getName());
-        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
-        Project project             = projectRepo.getOneProject(id);
-        List<GetProjectJobTitles> projectTitlesList = jobTitleRepo.getOneProjectJobTitle(id);
-        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-        System.out.println(project);
-
-        mav.addObject("auth", authorities);
-        mav.addObject("jobTitlesList", projectTitlesList);
-        mav.addObject("project", project);
-        mav.addObject("org", organization);
-        mav.addObject("user", user);
-
-        return mav;
-    }
-
-//  =================================  POST ROUTES =============================
-
-    // INSERT JOBTITLE ===============================
-    @PostMapping("/insert/newjobtitle")
-    public RedirectView postNewTitleJob(RedirectAttributes redirectAttributes, WebRequest dataFromForm, Principal principal) {
-        String jobTitle_name     = (dataFromForm.getParameter("jobTitle_name"));
-        String project_id        = (dataFromForm.getParameter("project_id"));
-
-        System.out.println(project_id);
-
-        int idParsed = Integer.parseInt(project_id);
-
-
-        User user               = userRepo.getOneUser(principal.getName());
-        JobTitle jobTitleCheck  = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
-        boolean jobTitleExists   = objectManager.jobTitleRepo.checkJobTitleExists(jobTitleCheck.getJobTitle_Id());
-
-        if(jobTitleCheck == null){
-            jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());
-            JobTitle jobTitle = jobTitleRepo.getOneJobTitleWName(jobTitle_name);
-            System.out.println(jobTitle);
-            jobTitleRepo.insertOneProjectJobTitle(jobTitle.getJobTitle_Id(), idParsed);
-        }else{
-            if(jobTitleExists == true){
-                redirectAttributes.addFlashAttribute("error", "Job Title Already Exists");
-                return new RedirectView("/projects/create/newJobtitles/"+project_id);
-            }
-            jobTitleRepo.insertOneProjectJobTitle(jobTitleCheck.getJobTitle_Id(), idParsed);
-        }
-
-        return new RedirectView ("/projects/edit/"+project_id);
-    }
-
-    //    UPDATE JOBTITLE ======================
-
-    @PostMapping("/update/newjobtitle")
-    public String updateJobTitle(WebRequest dataFromForm,  Principal principal) {
-        // DataFromData objektet(WebRequest klasse) gør man kan hente data fra en form(HTML).
-        String jobTitle_name = (dataFromForm.getParameter("jobTitle_name"));
-        String jobTitle_id   = (dataFromForm.getParameter("jobTitle_id"));
-
-        // grunden til jeg converter, fordi URL er ALTID er en String.
-        int idParsed = Integer.parseInt(jobTitle_id);
-
-//        User user = userRepo.getOneUser(principal.getName());
-//        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
-        jobTitleRepo.updateJobTitle(jobTitle_name, idParsed);
-
-        return "redirect:/";
-    }
-
-
-// INSERT PROJECT =======================
+// ================ INSERT PROJECT ====================
 
     @PostMapping("/insert/project")
     public String postProject(WebRequest dataFromForm, Principal principal) throws ParseException {
@@ -307,17 +233,15 @@ public class ProjectController {
 
         int totalDays = projectServices.calcTotalDays2(project_start, project_end);
 
-        System.out.println(totalDays);
+        User user           = objectManager.userRepo.getOneUser(principal.getName());
+        Organization org    = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
 
-        User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-
-        projectRepo.InsertProject(project_name, project_desc, totalDays, project_start, project_end, org.getOrg_id());
+        objectManager.projectRepo.InsertProject(project_name, project_desc, totalDays, project_start, project_end, org.getOrg_id());
 
         return "redirect:/projects/";
     }
 
-// UPDATE PROJECT =======================
+// ================= UPDATE PROJECT ================
 
     @PostMapping("/update/project") //URL'en
     public String updateProject(WebRequest dataFromForm,  Principal principal) throws ParseException {
@@ -330,20 +254,84 @@ public class ProjectController {
 
         int totalDays = projectServices.calcTotalDays2(project_start, project_end);
 
-        System.out.println(totalDays);
-
-        // grunden til jeg converter, fordi URL er ALTID er en String.
         int idParsed = Integer.parseInt(project_id);
 
-        User user = userRepo.getOneUser(principal.getName());
-//        JobTitle jobTitle = jobTitleRepo.getOneJobTitleWOrgId(user.getFk_orgId());
-        Organization organization = orgRep.getOneOrgWId(user.getFk_orgId());
-        projectRepo.updateProject(idParsed, project_name, project_desc, totalDays, project_start, project_end, user.getFk_orgId());
+        User user = objectManager.userRepo.getOneUser(principal.getName());
+        objectManager.projectRepo.updateProject(idParsed, project_name, project_desc, totalDays, project_start, project_end, user.getFk_orgId());
 
         return "redirect:/projects/";
     }
 
-//    DELETE PROJECT JOB TITLE =============
+    //  ==============  DELETE PROJECT =============
+
+    @PostMapping("/delete/project")
+    public String deleteProject(WebRequest dataFromForm) {
+        String project_id               = (dataFromForm.getParameter("project_id"));
+
+        int idParsed = Integer.parseInt(project_id);
+
+        objectManager.projectRepo.deleteProject(idParsed);
+
+        return "redirect:/projects";
+    }
+
+
+//    ******************************************* POST PROJECT JOBTITLE ****************************************
+
+
+// ================= INSERT JOBTITLE ===============
+
+    @PostMapping("/insert/newjobtitle")
+    public RedirectView postNewTitleJob(RedirectAttributes redirectAttributes, WebRequest dataFromForm, Principal principal) {
+        String jobTitle_name     = (dataFromForm.getParameter("jobTitle_name"));
+        String project_id        = (dataFromForm.getParameter("project_id"));
+
+        int idParsed = Integer.parseInt(project_id);
+        boolean jobTitleExists = false;
+
+        User user               = objectManager.userRepo.getOneUser(principal.getName());
+        JobTitle jobTitleCheck  = objectManager.jobTitleRepo.getOneJobTitleWName(jobTitle_name);
+
+        // IF JOB TITLE EXISTS IN DB VALIDATE IF EXISTS IN PROJECT
+        if(jobTitleCheck != null){
+            jobTitleExists  = objectManager.jobTitleRepo.checkJobTitleExists(jobTitleCheck.getJobTitle_Id());
+        }
+
+        // IF JOBTITLE DOESN'T EXISTS AT ALL - INSERT NEW JOBTITLE TO PROJECT + DB
+        if(jobTitleCheck == null){
+            objectManager.jobTitleRepo.InsertJobTitle(jobTitle_name, user.getFk_orgId());
+            JobTitle jobTitle = objectManager.jobTitleRepo.getOneJobTitleWName(jobTitle_name);
+            System.out.println(jobTitle);
+            objectManager.jobTitleRepo.insertOneProjectJobTitle(jobTitle.getJobTitle_Id(), idParsed);
+
+        // IF JOB TITLE EXIST IN DB - INSERT JOB TITLE TO PROJECT TABLE
+        }else{
+            if(jobTitleExists == true){
+
+                // IF JOB TITLE EXISTS IN DB AND PROJECT TABLE - RETURN "Job Title Already Exists"
+                redirectAttributes.addFlashAttribute("error", "Job Title Already Exists");
+                return new RedirectView("/projects/create/newJobtitles/"+project_id);
+            }
+            objectManager.jobTitleRepo.insertOneProjectJobTitle(jobTitleCheck.getJobTitle_Id(), idParsed);
+        }
+        return new RedirectView ("/projects/edit/"+project_id);
+    }
+
+//   ====================== UPDATE JOBTITLE ======================
+
+    @PostMapping("/update/newjobtitle")
+    public String updateJobTitle(WebRequest dataFromForm) {
+        String jobTitle_name = (dataFromForm.getParameter("jobTitle_name"));
+        String jobTitle_id   = (dataFromForm.getParameter("jobTitle_id"));
+
+        int idParsed = Integer.parseInt(jobTitle_id);
+
+        objectManager.jobTitleRepo.updateJobTitle(jobTitle_name, idParsed);
+
+        return "redirect:/";
+    }
+
+//  ===============  DELETE PROJECT JOB TITLE =============
 
     @PostMapping("/delete/projectJobTitle")
     public String deleteJobTitle(WebRequest dataFromForm) {
@@ -352,57 +340,43 @@ public class ProjectController {
 
         int idParsed = Integer.parseInt(projectJobTitle_id);
 
-        jobTitleRepo.deleteProjectJobTitle(idParsed);
+        objectManager.jobTitleRepo.deleteProjectJobTitle(idParsed);
 
         return "redirect:/projects/edit/"+project_id;
     }
 
-    //    DELETE PROJECT JOB TITLE =============
 
-    @PostMapping("/delete/project")
-    public String deleteProject(WebRequest dataFromForm) {
-        String project_id               = (dataFromForm.getParameter("project_id"));
+//    ******************************************* POST TASKS ****************************************
 
-        int idParsed = Integer.parseInt(project_id);
 
-        projectRepo.deleteProject(idParsed);
-
-        return "redirect:/projects";
-    }
-
-    // INSERT TASK =======================
+// ====================== INSERT TASK =======================
 
     @PostMapping("/insert/newTask")
     public String postTask(WebRequest dataFromForm) throws ParseException {
         String project_name            = (dataFromForm.getParameter("project_name"));
         String task_name            = (dataFromForm.getParameter("task_name"));
         String task_description     = (dataFromForm.getParameter("task_description"));
-//        String task_duration        = (dataFromForm.getParameter("task_duration"));
         String task_start           = (dataFromForm.getParameter("task_start"));
         String task_end             = (dataFromForm.getParameter("task_end"));
         String profile_name           = (dataFromForm.getParameter("profile_name"));
         String ganttPhase_name          = (dataFromForm.getParameter("ganttPhase_name"));
         String jobTitle_name          = (dataFromForm.getParameter("jobTitle_name"));
 
-
         int totalDays = projectServices.calcTotalDays2(task_start, task_end);
-
-        System.out.println(totalDays);
-
 
         String processStart     = task_start.substring(5,7);
         String processEnd       = task_end.substring(5,7);
         int processStartParsed  = Integer.parseInt(processStart);
         int processEndParsed    = Integer.parseInt(processEnd);
 //        int task_durationParsed = Integer.parseInt(task_duration);
-        Project project = projectRepo.getOneProjectWName(project_name);
+        Project project = objectManager.projectRepo.getOneProjectWName(project_name);
 
-        projectRepo.insertTask(task_name, task_description, totalDays, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
+        objectManager.projectRepo.insertTask(task_name, task_description, totalDays, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
 
         return "redirect:/gantt/"+project.getProject_id();
     }
 
-// UPDATE TASK =======================
+// ====================== UPDATE TASK =======================
 
     @PostMapping("/update/newTask")
     public String updateTask(WebRequest dataFromForm) throws ParseException {
@@ -410,32 +384,27 @@ public class ProjectController {
         String project_name             = (dataFromForm.getParameter("project_name"));
         String task_name                = (dataFromForm.getParameter("task_name"));
         String task_description         = (dataFromForm.getParameter("task_description"));
-        String task_duration            = (dataFromForm.getParameter("task_duration"));
         String task_start               = (dataFromForm.getParameter("task_start"));
         String task_end                 = (dataFromForm.getParameter("task_end"));
         String profile_name             = (dataFromForm.getParameter("profile_name"));
         String ganttPhase_name          = (dataFromForm.getParameter("ganttPhase_name"));
         String jobTitle_name            = (dataFromForm.getParameter("jobTitle_name"));
 
-        System.out.println("PROFILE NAME ========================"+profile_name);
-
         int totalDays = projectServices.calcTotalDays2(task_start, task_end);
-
 
         String processStart     = task_start.substring(5,7);
         String processEnd       = task_end.substring(5,7);
         int taskIdParsed        = Integer.parseInt(task_id);
         int processStartParsed  = Integer.parseInt(processStart);
         int processEndParsed    = Integer.parseInt(processEnd);
-        Project project = projectRepo.getOneProjectWName(project_name);
+        Project project = objectManager.projectRepo.getOneProjectWName(project_name);
 
-
-        projectRepo.updateTask(taskIdParsed, task_name, task_description, totalDays, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
+        objectManager.projectRepo.updateTask(taskIdParsed, task_name, task_description, totalDays, task_start, task_end, processEndParsed ,processStartParsed, project_name, profile_name, ganttPhase_name, jobTitle_name);
 
         return "redirect:/gantt/"+project.getProject_id();
     }
 
-//    DELETE TASK =============
+//  ======================  DELETE TASK ======================
 
     @PostMapping("/delete/task")
     public String deletetask(WebRequest dataFromForm) {
@@ -444,7 +413,7 @@ public class ProjectController {
 
         int idParsed = Integer.parseInt(task_id);
 
-        projectRepo.deleteTask(idParsed);
+        objectManager.projectRepo.deleteTask(idParsed);
 
         return "redirect:/gantt/"+project_id;
     }

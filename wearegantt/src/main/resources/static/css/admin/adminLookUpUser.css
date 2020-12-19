@@ -17,15 +17,15 @@ body{
     color: black;
 }
 /*Buttons*/
-.btn-danger{
-    width: 100%;
-    background: red !important;
-    color: white !important;
-    border: none;
-    outline: none;
-    height: 40px;
-    font-size: 18px;
-}
+/*.btn-danger{*/
+/*    width: 100%;*/
+/*    background: red !important;*/
+/*    color: white !important;*/
+/*    border: none;*/
+/*    outline: none;*/
+/*    height: 40px;*/
+/*    font-size: 18px;*/
+/*}*/
 .btn-danger:focus {
     box-shadow: none !important;
     outline: 0px !important;

@@ -11,7 +11,11 @@ import java.util.List;
 @Repository
 public class NewsfeedRepo {
 
-    // =================== GET ALL NEWS ==================
+// =================================================================== NEWSFEED =================================================================
+
+// *********************************************** SELECT NEWSFEED ******************************************
+
+// =================== GET ALL NEWS ==================
 
     public List<Newsfeed> getAllNews(String fk_orgName){
         List<Newsfeed> allNews = new ArrayList<>();
@@ -48,7 +52,7 @@ public class NewsfeedRepo {
         return allNews;
     }
 
-    // Get ONE NEWS ===========
+// =========== Get ONE NEWS ===========
 
     public Newsfeed getOneNews(int newsfeed_id){
         Newsfeed NewsfeedToReturn = null;
@@ -83,7 +87,10 @@ public class NewsfeedRepo {
 
     }
 
-    //    ================== UPDATE NEWS ================
+// *********************************************** UPDATE NEWSFEED ******************************************
+
+
+//    ================== UPDATE NEWS ================
 
     public void updateNews(int newsfeed_id, String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime, String fk_orgName){
         try {
@@ -106,18 +113,16 @@ public class NewsfeedRepo {
 
     }
 
-    //    ================== UPDATE ADMIN NEWS ================
+//    ================== UPDATE ADMIN NEWS ================
 
     public void updateAdminNews(int newsfeed_id, String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime){
         try {
-            PreparedStatement ps = establishConnection().prepareStatement("UPDATE news SET newsfeed_news = ?, newsfeed_title = ?, newsfeed_img = ?, newsfeed_datetime = ? WHERE newsfeed_id = ?");
+            PreparedStatement ps = establishConnection().prepareStatement("UPDATE news SET newsfeed_news = ?, newsfeed_title = ? WHERE newsfeed_id = ?");
 
 
             ps.setString(1, newsfeed_news);
             ps.setString(2, newsfeed_title);
-            ps.setString(3, newsfeed_img);
-            ps.setString(4, newsfeed_datetime);
-            ps.setInt(   5,    newsfeed_id);
+            ps.setInt(3, newsfeed_id);
 
             int row = ps.executeUpdate();
             System.out.println("Newsfeed update");
@@ -128,7 +133,10 @@ public class NewsfeedRepo {
 
     }
 
-    //    ================== Delete NEWS ================
+// *********************************************** DELETE NEWSFEED ******************************************
+
+
+//    ================== Delete NEWS ================
 
     public void deleteNews(int newsfeed_id){
 
@@ -167,6 +175,9 @@ public class NewsfeedRepo {
         }
     }
 
+// *********************************************** INSERT NEWSFEED ******************************************
+
+
     //    ================== INSERT NEWS ================
 
     public void insertNews(String newsfeed_news, String newsfeed_title, String newsfeed_img, String newsfeed_datetime,String fk_orgName){
@@ -179,7 +190,7 @@ public class NewsfeedRepo {
             ps.setString(5, fk_orgName);
 
             int row = ps.executeUpdate();
-            System.out.println("news insert");
+            System.out.println("news inserted");
 
         }catch (SQLException e){
             System.out.println(e);

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Organization Projects</title>
+
+    <link th:href="@{/css/admin/adminEditProjects.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+<main class="container">
+    <a href="/admin/organization" style="color:black;">
+        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+    </a>
+    <div class="row" align="center">
+
+<!-- == UPDATE PROJECT == -->
+            <form class="col-sm-6 contact w-50" th:action="@{/admin/update/project}" th:object="${project}" method="post" >
+                <h3 class="mb-2">Edit Project</h3>
+
+                <!-- PROFEJCT ID -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Id</label>
+                    <input class="form-control" required readonly type="text"  th:field="*{project_id}">
+                </div>
+
+                <!-- PROFEJCT NAME -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Name</label>
+                 <input class="form-control" type="text" required  th:field="*{project_name}">
+                </div>
+
+                <!-- PROFEJCT E-MAIL -->
+                <div class="form-group ml-5 mr-5">
+                    <label>User E-Mail</label>
+                    <input class="form-control" type="text" required name="user_mail">
+                </div>
+
+                <!-- PROFEJCT ID -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Description</label>
+                    <input class="form-control" type="text" required  th:field="*{project_desc}">
+                </div>
+
+                <!-- PROFEJCT START -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Start</label>
+                    <input class="form-control" type="date" required th:field="*{project_start}">
+                </div>
+
+                <!-- PROFEJCT END -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project End</label>
+                    <input class="form-control" type="date" required th:field="*{project_end}">
+                </div>
+
+                <!-- PROFEJCT SUBMIT -->
+                <button type="submit" name="button" class="btn form-button ml-5 mr-5 w-50">Save Project</button>
+            </form>
+<!-- == JOBTITLE OPTION == -->
+            <div class="col-sm-6 contact w-50" align="left">
+                <div th:each="jobtitle : ${jobTitlesList}">
+                    <form th:action="@{/admin/delete/projectJobTitle}" method="post" th:object="${project}">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input style="display: none;" type="text" th:field="*{project_id}">
+
+                                <input style="display: none;" type="text" name="projectJobTitle_id" th:value="${jobtitle.getProjectJobTitle_id()}">
+                                <p class="text-white" th:text="${jobtitle.getJobTitle_name()}"></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn form-button mt-3 mb-3">Remove</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <a class="btn form-button mt-3 mb-3 100" th:href="@{'/admin/project/newJobtitles/'+${project.project_id}}">Add More Job Titles</a>
+            </div>
+        </div>
+
+<!-- == DELETE PROJECT == -->
+        <div align="center">
+            <form class="contact w-50" id="deleteForm" th:action="@{/admin/delete/project}" method="post" th:object="${project}" align="center">
+
+                <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{project_id}">
+
+                <button type="submit" name="button" id="deleteSubmitButton" class="btn bg-danger w-50 text-light">DELETE PROJECT</button>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+<script src="/js/admin/adminMain.js"></script>
+</html>

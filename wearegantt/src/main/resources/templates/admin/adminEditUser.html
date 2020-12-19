@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="/css/admin/adminCreateUser.css" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/admin/adminEditProfile.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Admin Page</title>
+</head>
+<body>
+    <main class="container">
+        <a href="/admin/lookupuser" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+        </a>
+        <div align="center">
+
+    <!-- === EDIT USER === -->
+            <form class="contact w-50" th:action="@{/admin/update/user}" method="post" align="center">
+                <!-- CURRENT USER MAIL -->
+                <input type="text" class="form-control" style="display: none;" name="first_mail"th:value="${user.user_mail}">
+
+                <h3 class="text-center mb-2">Edit User</h3>
+
+                <!-- USER MAIL -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="user_mail">User Mail</label>
+                    <input type="email" class="form-control" required th:field="${user.user_mail}">
+                </div>
+
+                <!-- USER ID -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_id">Profile ID</label>
+                    <input type="text"class="form-control" required readonly th:field="${profile.profile_id}">
+                </div>
+
+                <!-- USER FIRSTNAME -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_firstname">Profile Firstname</label>
+                    <input type="text" class="form-control" required th:field="${profile.profile_firstname}">
+                </div>
+
+                <!-- USER LASTNAME -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_lastname">Profile Lastname</label>
+                    <input type="text" class="form-control" required th:field="${profile.profile_lastname}">
+                </div>
+
+                <!-- USER PHONE -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_phone">Profile Phone</label>
+                    <input type="number"class="form-control" required th:field="${profile.profile_phone}">
+                </div>
+
+                <!-- USER COUNTRY -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_country">Profile Country</label>
+                    <input type="text"class="form-control"required th:field="${profile.profile_country}">
+                </div>
+
+                <!-- USER ADDRESS -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_address">Profile Address</label>
+                    <input type="text" class="form-control" required th:field="${profile.profile_address}">
+                </div>
+
+                <!-- USER ZIP -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_zip">Profile Zip</label>
+                    <input type="number" class="form-control" required th:field="${profile.profile_zip}">
+                </div>
+
+                <!-- USER JOB TITLE -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="profile_jobTitle">Profile Job Title</label>
+                    <input type="text" class="form-control" required th:field="${profile.profile_jobTitle}">
+                </div>
+
+                <!-- AUTHORITY -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="Authority">Authority</label>
+                    <select name="role"  id="Authority" class="form-control" required>
+                        <div th:each="authCheck : ${authCheck}">
+                            <option th:selected="${authCheck.getAutchcheck_role() == auth.getAuth_role()}" th:value="${authCheck.getAutchcheck_role()}" th:text="${authCheck.getAutchcheck_role()}"></option>
+                        </div>
+                    </select>
+                </div>
+
+                <!-- SUBMIT -->
+                <input  type="submit" class="w-50 btn form-button ml-5 mr-5" value="Save">
+
+            </form>
+<!-- === NEW PASSWORD === -->
+            <form class="contact w-50" id="registerForm" th:action="@{/update/credentials}" th:object="${user}" method="post">
+
+                <input style="display: none;" type="text" th:value="*{user_id}">
+                <input style="display: none;" type="text" th:value="*{user_mail}">
+
+                <!-- FIRST PASSWORD CHECK -->
+                <h3>Change Passowrd </h3>
+                <div class="form-group ml-5 mr-5">
+                    <label for="password">Enter Your Password</label>
+                    <input type="password" class="form-control" required id="password" th:field="*{user_password}">
+                </div>
+                <div id="passwordValid" class="valid"></div>
+
+                <!-- SECCOND PASSWORD CHECK -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="confirm_password">Confirm Your Password</label>
+                    <input type="password" class="form-control" required id="confirm_password">
+                </div>
+
+                <!-- SUBMIT -->
+                <button id="submitButton"  type="submit" class="w-50 btn form-button ml-5 mr-5" >Update Password</button>
+
+
+            </form>
+<!-- === DELETE USER === -->
+            <form class="contact w-50"  id="deleteForm" th:action="@{/admin/delete/user}" th:object="${user}" method="post" >
+                <input type="text" style="display: none;" th:value="*{user_id}">
+
+                <!-- SUBMIT -->
+                <button  type="submit" class="w-50 btn btn-danger ml-5 mr-5" id="deleteSubmitButton" value="Delete">Delete User</button>
+            </form>
+
+        </div>
+    </main>
+</body>
+<script src="/js/admin/adminMain.js"></script>
+</html>

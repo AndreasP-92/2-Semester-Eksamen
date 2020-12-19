@@ -9,7 +9,11 @@ import java.util.List;
 
 public class OrganizationRepo {
 
-    // =================== GET ALL USERS ==================
+// =================================================================== ORGANIZATION =================================================================
+
+// *********************************************** SELECT ORGANIZATION ******************************************
+
+// =================== GET ALL ORGS ==================
 
     public List<Organization> getAllOrgs(){
         List<Organization> allOrgs = new ArrayList<>();
@@ -41,7 +45,7 @@ public class OrganizationRepo {
         return allOrgs;
     }
 
-// =================== GET ONE ORG WITH NAME ==================
+// =================== GET ONE ORG WITH ORG NAME ==================
 
     public Organization getOneOrg(String org_name){
         Organization orgToReturn = null;
@@ -97,6 +101,7 @@ public class OrganizationRepo {
         return orgToReturn;
     }
 
+// *********************************************** INSERT ORGANIZATION ******************************************
 
     //    ================== INSERT ORGANIZATION ================
 
@@ -117,7 +122,9 @@ public class OrganizationRepo {
         return null;
     }
 
-    //    ================== UPDATE ORGANIZATION ================
+// *********************************************** UPDATE ORGANIZATION ******************************************
+
+//    ================== UPDATE ORGANIZATION ================
 
     public void updateOrg(int org_id, String org_name, String org_address, int org_cvr){
         try {
@@ -128,14 +135,14 @@ public class OrganizationRepo {
             ps.setInt(4, org_id);
 
             int row = ps.executeUpdate();
-            System.out.println("org insert");
+            System.out.println("org update");
 
         }catch (SQLException e){
             System.out.println(e);
         }
     }
 
-    //    ================== ADMIN UPDATE ORGANIZATION ================
+//    ================== ADMIN UPDATE ORGANIZATION ================
 
     public void updateAdminOrg(int org_id, String org_name, String org_address, int org_cvr){
         try {
@@ -153,6 +160,8 @@ public class OrganizationRepo {
         }
     }
 
+// *********************************************** DELETE ORGANIZATION ******************************************
+
     //    ================== DELETE ORGANIZATION ================
 
     public void deleteOrg(int org_id){
@@ -161,14 +170,14 @@ public class OrganizationRepo {
             ps.setInt(1, org_id);
 
             int row = ps.executeUpdate();
-            System.out.println("Række slettet");
+            System.out.println("row deleted");
 
         }catch (SQLException e){
             System.out.println(e);
         }
     }
 
-    //    ================== ADMIN DELETE ORGANIZATION ================
+//    ================== ADMIN DELETE ORGANIZATION ================
 
     public void deleteAdminOrg(int org_id){
         try {

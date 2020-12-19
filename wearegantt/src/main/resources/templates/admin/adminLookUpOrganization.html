@@ -1,128 +1,56 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th = "http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Your Organization Projects</title>-->
-
-<!--    <link th:href="@{/css/admin/adminOrganizations}" type="text/css" rel="stylesheet">-->
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">-->
-<!--</head>-->
-<!--<body>-->
-
-
-<!--&lt;!&ndash;=================== Body ============================ &ndash;&gt;-->
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th ="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <script src='https://kit.fontawesome.com/a076d05399.js'></script>-->
-<!--    <link href="/css/admin/adminCreateUser.css" type="text/css" rel="stylesheet">-->
-
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">-->
-
-<!--    <title>Admin Page</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="container">-->
-<!--    <a href="/admin" style="color:black;">-->
-<!--        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>-->
-<!--    </a>-->
-<!--    <div class="row">-->
-<!--        <div class="col-sm mt-5">-->
-<!--            <h1 class="text-center mb-2">Create Organizations</h1>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="d-flex justify-content-center form_container">-->
-
-<!--        <form>-->
-<!--            <div class="input-group mb-2">-->
-<!--                <input type="text" class="form-control input_pass" placeholder="Organizations Name">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-2">-->
-<!--                <input type="text" class="form-control input_pass" placeholder="Organizations Description">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-2">-->
-<!--                <input type="text" class="form-control input_pass" placeholder="Organizations Address">-->
-<!--            </div>-->
-
-<!--            <div class="input-group mb-2">-->
-<!--                <input type="text" class="form-control input_pass" placeholder="Organizations CVR">-->
-<!--            </div>-->
-
-
-
-<!--            <div class="d-flex justify-content-center mt&#45;&#45;1 p-0 login_container">-->
-<!--                <button  type="submit" name="button" class="btn login_btn">Create Organizations</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link th:href="@{/css/admin/adminLookUpUser.css}" type="text/css" rel="stylesheet">
 
     <title>Admin Page</title>
 </head>
 <body>
-<div class="container">
-    <a href="/admin" style="color:black;">
-        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
-    </a>
-    <div class="row">
-        <div class="col-sm mt-5">
-            <h1 class="text-center">Organizations</h1>
-        </div>
-    </div>
-
-    <table class="table mt-5 table-striped table-bordered table-dark table-hover">
-        <thead class="thead-dark">
-        <a href="#">
-            <tr>
-                <th scope="col ">Org ID</th>
-                <th scope="col">Org Name</th>
-                <th scope="col">Org Address</th>
-                <th scope="col">Org CVR</th>
-                <th scope="col">Action</th>
-            </tr>
+    <main class="container">
+        <a href="/admin" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
         </a>
-        </thead>
-        <tbody>
-        <tr th:each="organization : ${orglist}">
-            <th th:text="${organization.org_id}">Organization ID</th>
-            <td th:text="${organization.org_name}">Organization Name</td>
-            <td th:text="${organization.org_address}">Organization Address</td>
-            <td th:text="${organization.org_cvr}">Organization CVR</td>
-            <td>
-                <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/editorganizations/' + ${organization.getOrg_id()}}" class="btn btn-danger">Edit Organization</a>
-                </div>
-                <div class="d-flex justify-content-center mt--1 p-2 login_container" >
-                    <form th:action="@{/admin/delete/org}" method="post">
-                        <input type="submit" class="btn btn-danger" value="Delete" >
-                        <input type="text" name="org_id" style="display: none;" th:value="${organization.getOrg_id()}">
-                    </form>
-                </div>
-                <div class="d-flex justify-content-center mt--1 p-2 login_container ">
-                    <a th:href="@{'/admin/news/' + ${organization.getOrg_name()}}" class="btn btn-danger">Edit News</a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+        <div class="row">
+            <div class="col-sm mt-5">
+                <h1 class="text-center">Organizations</h1>
+            </div>
+        </div>
+        <table class="table mt-5 table-striped table-bordered table-dark table-hover">
+            <thead class="thead-dark">
+            <a href="#">
+                <tr>
+                    <th scope="col ">Org ID</th>
+                    <th scope="col">Org Name</th>
+                    <th scope="col">Org Address</th>
+                    <th scope="col">Org CVR</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </a>
+            </thead>
+            <tbody>
+
+    <!-- === ORGANIAZATION LIST === -->
+            <tr align="center" th:each="organization : ${orglist}">
+                <th th:text="${organization.org_id}">Organization ID</th>
+                <td th:text="${organization.org_name}">Organization Name</td>
+                <td th:text="${organization.org_address}">Organization Address</td>
+                <td th:text="${organization.org_cvr}">Organization CVR</td>
+                <td align="center">
+
+                    <!-- ACTIONS -->
+                    <a th:href="@{'/admin/edit/organization/' + ${organization.getOrg_id()}}" class="mt-3 w-75 btn btn-info">Edit Organization</a>
+                    <a th:href="@{'/admin/project/' + ${organization.getOrg_id()}}" class="mt-3 w-75 btn btn-info">Edit Organization Projects</a>
+                    <a th:href="@{'/admin/news/' + ${organization.getOrg_name()}}" class="mt-3 w-75 btn btn-info">Edit Organization News</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
 </body>
+<script src="/static/js/admin/adminMain.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </html>
 
 

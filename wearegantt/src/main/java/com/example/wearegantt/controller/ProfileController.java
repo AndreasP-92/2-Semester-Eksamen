@@ -21,37 +21,26 @@ import java.util.List;
 @Controller
 public class ProfileController {
 
-//REPOSITORIES ====================
-
-    OrganizationRepo orgRep = new OrganizationRepo();
-
-    UserRepo userRepo       = new UserRepo();
-
-    ProfileRepo profileRepo = new ProfileRepo();
-
-    ProjectRepo projectRepo = new ProjectRepo();
-
-
-//    =================
+//    =================== SERVICES ==================
 
     ProjectServices projectServices = new ProjectServices();
     ObjectManager objectManager = new ObjectManager();
 
-
-
-//   =========================================== GET ROUTES ===================================
-
+//   =================================================================== GET CONTROLLER ==========================================================================
 
 
 
-// EDIT PROFILE =================
-    @GetMapping("/editprofile/{user_mail}")
+//    ******************************************* GET PROFILE *******************************************
+
+
+// ================= EDIT PROFILE =================
+    @GetMapping("/profile/{user_mail}")
     private ModelAndView profile(@PathVariable(name = "user_mail")String user_mail){
         ModelAndView mav = new ModelAndView("profile/editProfile");
 
-        User user                   = userRepo.getOneUser(user_mail);
-        Organization org            = orgRep.getOneOrgWId(user.getFk_orgId());
-        Profile profile             = profileRepo.getOneProfile(user.getUser_id());
+        User user                   = objectManager.userRepo.getOneUser(user_mail);
+        Organization org            = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+        Profile profile             = objectManager.profileRepo.getOneProfile(user.getUser_id());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         mav.addObject("auth", authorities);
@@ -60,19 +49,19 @@ public class ProfileController {
         mav.addObject("user", user);
         mav.addObject("activePage", "profile");
 
-
-        System.out.println(user);
-
         return mav;
     }
 
-// NEW ORGANIZATION =================
+
+//    ******************************************* GET ORGANIZATION *******************************************
+
+// ================= NEW ORGANIZATION =================
 
     @GetMapping("/profile/organization")
     private String newOrganization(Model model, Principal principal){
 
-        User user                   = userRepo.getOneUser(principal.getName());
-        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
+        Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         model.addAttribute("auth", authorities);
@@ -82,15 +71,15 @@ public class ProfileController {
         return "profile/newOrganization";
     }
 
-// UPDATE ORGANIZATION =================
+// =================UPDATE ORGANIZATION =================
 
 
     @GetMapping("/profile/organization/{org_name}")
     public ModelAndView Organization(@PathVariable(name = "org_name")String org_name, Principal principal){
         ModelAndView mav    = new ModelAndView("profile/editOrganization");
 
-        Organization org    = orgRep.getOneOrg(org_name);
-        User user           = userRepo.getOneUser(principal.getName());
+        Organization org            = objectManager.organizationRepo.getOneOrg(org_name);
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         mav.addObject("auth", authorities);
@@ -100,18 +89,18 @@ public class ProfileController {
         return mav;
     }
 
+//    ******************************************* GET PROFILE SUPPORT *******************************************
+
 // =============== PROFILE SUPPORT ===============
 
     @GetMapping("/profile/support")
     public String profileSupport(Model model, Principal principal) {
 
-        User user = objectManager.userRepo.getOneUser(principal.getName());
-        List<SupportTicket> supportTicketList = objectManager.ticketRepo.getAllTicketsWUserMail(user.getUser_mail());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
-        Profile profile = objectManager.profileRepo.getOneProfile(user.getUser_id());
-        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-        System.out.println(supportTicketList);
+        User user                               = objectManager.userRepo.getOneUser(principal.getName());
+        List<SupportTicket> supportTicketList   = objectManager.ticketRepo.getAllTicketsWUserMail(user.getUser_mail());
+        Organization org                        = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+        Profile profile                         = objectManager.profileRepo.getOneProfile(user.getUser_id());
+        Authorities authorities                 = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
         model.addAttribute("auth", authorities);
         model.addAttribute("profile", profile);
@@ -120,8 +109,6 @@ public class ProfileController {
         model.addAttribute("user", user);
         model.addAttribute("supportTicketList", supportTicketList);
         model.addAttribute("activePage", "support");
-
-
 
         return "profile/profileTicket";
     }
@@ -132,13 +119,11 @@ public class ProfileController {
     private ModelAndView ticket(@PathVariable(name = "profile_id") int profile_id, Principal principal){
         ModelAndView mav    = new ModelAndView("profile/support");
 
-        User user           = userRepo.getOneUser(principal.getName());
-        Profile profile     = profileRepo.getOneProfile(user.getUser_id());
-        Organization org    = orgRep.getOneOrgWId(user.getFk_orgId());
+        User user                   = objectManager.userRepo.getOneUser(principal.getName());
+        Profile profile             = objectManager.profileRepo.getOneProfile(user.getUser_id());
+        Organization org            = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
-
-//        Organization organization   = orgRep.getOneOrgWId(user.getFk_orgId());
         mav.addObject("auth", authorities);
         mav.addObject("org", org);
         mav.addObject("user", user);
@@ -166,43 +151,16 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
     return mav;
 }
 
-//  =================================  POST ROUTES =============================
+//   =================================================================== GET CONTROLLER ==========================================================================
 
-    // CREATE TICKET =======================
+//    ******************************************* POST PROFILE SUPPORT *******************************************
 
-//    @PostMapping("/insert/ticket")
-//    public String postUserTicket(WebRequest dataFromForm, Principal principal) {
-//        String ticket_title         = (dataFromForm.getParameter("ticket_title"));
-//        String ticket_ownerName     = (dataFromForm.getParameter("ticket_ownerName"));
-//        String ticket_ownerMail     = (dataFromForm.getParameter("ticket_ownerMail"));
-//        String ticket_context       = (dataFromForm.getParameter("ticket_context"));
-//        String user                 = dataFromForm.getRemoteUser();
-//        int ticket_active           = 1;
-//        int ticket_taken            = 0;
-//
-//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-//
-//
-//        System.out.println("MAIL============="+ticket_ownerName);
-//        System.out.println("USER============="+user);
-//
-//        objectManager.ticketRepo.insertSupportTicket(ticket_title, ticket_context, timestamp, ticket_ownerMail, ticket_ownerName, ticket_active, ticket_taken);
-//        if(user == null){
-//            return "redirect:/";
-//        } else{
-//
-//            return "redirect:/editprofile/"+principal.getName();
-//        }
-//
-//
-//    }
 
-    // ============== SAVE MESSAGE ==============
+// ============== SAVE MESSAGE ==============
 
     @PostMapping("/profile/save/chat")
     public String saveMessage(WebRequest dataFromForm) {
-        String user_mail           = (dataFromForm.getRemoteUser());
-        String message_context      = (dataFromForm.getParameter("message_context"));
+        String message_context     = (dataFromForm.getParameter("message_context"));
         String ticket_ownerMail    = (dataFromForm.getParameter("ticket_ownerMail"));
         String ticket_id           = (dataFromForm.getParameter("ticket_id"));
 
@@ -221,7 +179,10 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
         return "redirect:/profile/support";
     }
 
-//    INSERT ORGANIZATION =============
+//    ******************************************* POST ORGANIZATION *******************************************
+
+
+//   ============= INSERT ORGANIZATION =============
 
     @PostMapping("/insert/org")
     public String postOrg(WebRequest dataFromForm,  Principal principal) {
@@ -231,17 +192,17 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
 
         int cvrParsed = Integer.parseInt(org_cvr);
 
-        orgRep.insertOrg(org_name, org_address, cvrParsed);
+        objectManager.organizationRepo.insertOrg(org_name, org_address, cvrParsed);
 
-        User user           = userRepo.getOneUser(principal.getName());
-        Organization org    = orgRep.getOneOrg(org_name);
+        User user           = objectManager.userRepo.getOneUser(principal.getName());
+        Organization org    = objectManager.organizationRepo.getOneOrg(org_name);
 
-        userRepo.updateUserWId(user.getUser_id(), org.getOrg_id());
+        objectManager.userRepo.updateUserWId(user.getUser_id(), org.getOrg_id());
 
-        return "redirect:/";
+        return "redirect:/profile/"+user.getUser_mail();
     }
 
-//    DELETE ORGANIZATION =============
+//   ============= DELETE ORGANIZATION =============
 
     @PostMapping("/delete/org")
     public String deleteOrg(WebRequest dataFromForm) {
@@ -249,13 +210,15 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
 
         int idParsed = Integer.parseInt(org_id);
 
-        orgRep.deleteOrg(idParsed);
+        User user = objectManager.userRepo.getOneUserWOrgId(idParsed);
+
+        objectManager.organizationRepo.deleteOrg(idParsed);
 
 
-        return "redirect:/";
+        return "redirect:/profile/"+user.getUser_mail();
     }
 
-    //    INVITE USER ORGANIZATION =============
+//   ============= INVITE USER ORGANIZATION =============
 
     @PostMapping("/insert/org/user")
     public String inviteUserToOrg(WebRequest dataFromForm) {
@@ -264,14 +227,14 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
 
         int idParsed = Integer.parseInt(org_id);
 
-        User user = userRepo.getOneUser(user_mail);
+        User user = objectManager.userRepo.getOneUser(user_mail);
 
-        userRepo.updateUserWId(user.getUser_id(), idParsed);
+        objectManager.userRepo.updateUserWId(user.getUser_id(), idParsed);
 
-        return "redirect:/";
+        return "redirect:/profile/"+user_mail;
     }
 
-//    UPDATE ORGANIZATION =============
+//   ============= UPDATE ORGANIZATION =============
 
 
     @PostMapping("/update/org")
@@ -284,13 +247,18 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
         int cvrParsed   = Integer.parseInt(org_cvr);
         int idParsed    = Integer.parseInt(org_id);
 
-        orgRep.updateOrg(idParsed, org_name, org_address, cvrParsed);
+        User user = objectManager.userRepo.getOneUserWOrgId(idParsed);
+
+        objectManager.organizationRepo.updateOrg(idParsed, org_name, org_address, cvrParsed);
 
 
-        return "redirect:/";
+        return "redirect:/profile/"+user.getUser_mail();
     }
 
-//    UPDATE PROFILE =============
+//    ******************************************* POST PROFILE *******************************************
+
+
+//   ============= UPDATE PROFILE =============
 
     @PostMapping("/update/profile")
     public String updateProfile(WebRequest dataFromForm,  Principal principal) {
@@ -307,14 +275,38 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
         int phoneParse  = Integer.parseInt(profile_phone);
         int zipParsed   = Integer.parseInt(profile_zip);
 
-        User user = userRepo.getOneUser(principal.getName());
+        User user = objectManager.userRepo.getOneUser(principal.getName());
 
-        profileRepo.updateProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
+        objectManager.profileRepo.updateProfile(idParse,profile_firstname,profile_lastname,profile_address,phoneParse, profile_country, zipParsed, profile_jobTitle, user.getUser_id());
 
-        return "redirect:/";
+        return "redirect:/profile/"+user.getUser_mail();
     }
 
-    //    DELETE PROFILE ========
+//   ============= UPDATE PROFILE SUBSCRIPTION ========
+
+    @PostMapping("/update/profile/subscription")
+    public String updateSub(WebRequest dataFromForm) {
+        String user_id      = (dataFromForm.getParameter("user_id"));
+        String role         = (dataFromForm.getParameter("role"));
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        int userIdParsed = Integer.parseInt(user_id);
+
+        User user = objectManager.userRepo.getOneUserWId(userIdParsed);
+
+        if(role.equals("ROLE_NORMALUSER")){
+            objectManager.userRepo.insertPayment(4, timestamp, user.getUser_id());
+        }
+        if(role.equals("ROLE_SUPERUSER")){
+            objectManager.userRepo.insertPayment(12, timestamp, user.getUser_id());
+        }
+        objectManager.userRepo.insertAuthUser(role, user.getUser_mail());
+
+        return "redirect:/profile/"+user.getUser_mail();
+    }
+
+    //   ============= DELETE PROFILE ========
 
     @PostMapping("/delete/profile")
     public String deleteProfile(WebRequest dataFromForm) {
@@ -322,13 +314,15 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
 
         int idParsed = Integer.parseInt(user_id);
 
-        userRepo.disableUser(idParsed);
+        objectManager.userRepo.disableUser(idParsed);
 
         return "redirect:/login?logout";
     }
 
 
-    //    UPDATE CREDENTIALS ========
+
+
+    //   ============= UPDATE CREDENTIALS ========
 
     @PostMapping("/update/credentials")
     public String updatePassword(WebRequest dataFromForm) {
@@ -341,13 +335,12 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
 
         int idParsed = Integer.parseInt(user_id);
         if(user_password==""){
-            userRepo.updateEmail(idParsed,user_mail);
+            objectManager.userRepo.updateEmail(idParsed,user_mail);
         }else {
-            userRepo.updateCredentials(idParsed,user_mail,password1);
+            objectManager.userRepo.updateCredentials(idParsed,user_mail,password1);
         }
 
-        return "redirect:/login?logout";
+        return "redirect:/profile/"+user_mail;
     }
-//    INSERT TICKET =============
 
 }

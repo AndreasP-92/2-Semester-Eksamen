@@ -5,7 +5,6 @@ import com.example.wearegantt.model.Order;
 import com.example.wearegantt.model.User;
 import com.example.wearegantt.repository.UserRepo;
 import com.example.wearegantt.services.ObjectManager;
-import com.example.wearegantt.services.PaypalService;
 import com.fasterxml.jackson.core.json.async.NonBlockingJsonParser;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -23,38 +22,46 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.Map;
 
 
 @Controller
 public class LoginController {
 
+//    =================== SERVICES ==================
+
     UserRepo userRepo = new UserRepo();
 
     ObjectManager objectManager = new ObjectManager();
 
-    @Autowired
-    PaypalService service;
+//   =================================================================== GET CONTROLLER ==========================================================================
 
-
-//    =================================== GET ROUTES ==================
+// ============== LOGIN ==============
 
     @GetMapping("/login")
-    private String login() {
-        System.out.println("login test");
+    private String login(HttpServletRequest request, Model model) {
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        System.out.println("INPUT============="+inputFlashMap);
+        if (inputFlashMap != null) {
+            model.addAttribute("success", inputFlashMap.get("success"));
+        }
         return "login/login";
     }
 
+// ============== REGISTER ==============
+
     @GetMapping("/register")
-    public String   register(HttpServletRequest request, Model model){
+    public String  register(HttpServletRequest request, Model model){
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
         if (inputFlashMap != null) {
-            System.out.println(inputFlashMap.get("error"));
             model.addAttribute("error", inputFlashMap.get("error"));
         }
 
         return "/login/register";
     }
+
+// ============== USER TYPE SELECTION ==============
 
     @GetMapping("/usertype")
     private String userType() {
@@ -62,37 +69,40 @@ public class LoginController {
         return "login/userType";
     }
 
-    @GetMapping("/paypal")
-    private String paypal() {
+//   =================================================================== POST CONTROLLER ==========================================================================
 
-        return "paypal";
-    }
-//    =================================== POST ROUTES ==================
-
-//    SAVE USER ==============
+//   ============== SAVE USER ==============
 
     @PostMapping("/saveUser")
     public RedirectView postUser(RedirectAttributes redirectAttributes, WebRequest dataFromForm) {
-        String firstname = (dataFromForm.getParameter("firstname"));
-        String lastname = (dataFromForm.getParameter("lastname"));
-        String address = (dataFromForm.getParameter("address"));
-        String phone = (dataFromForm.getParameter("phone"));
-        String country = (dataFromForm.getParameter("country"));
-        String zipcode = (dataFromForm.getParameter("zipcode"));
-        String jobTitle = (dataFromForm.getParameter("jobTitle"));
-        String password = (dataFromForm.getParameter("password"));
-        String email = (dataFromForm.getParameter("email"));
-        String role      = (dataFromForm.getParameter("role"));
+        String firstname    = (dataFromForm.getParameter("firstname"));
+        String lastname     = (dataFromForm.getParameter("lastname"));
+        String address      = (dataFromForm.getParameter("address"));
+        String phone        = (dataFromForm.getParameter("phone"));
+        String country      = (dataFromForm.getParameter("country"));
+        String zipcode      = (dataFromForm.getParameter("zipcode"));
+        String jobTitle     = (dataFromForm.getParameter("jobTitle"));
+        String password     = (dataFromForm.getParameter("password"));
+        String email        = (dataFromForm.getParameter("email"));
+        String role         = (dataFromForm.getParameter("role"));
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         int zipParsed = Integer.parseInt(zipcode);
         int phoneParsed = Integer.parseInt(phone);
 
+        // CHECKS IF USER EXISTS IN DB
         boolean userCheck = objectManager.userRepo.CheckUsernameExists(email);
 
+        //  IF USER EXISTS RETURN Account Exists Aldready
         if(userCheck == true){
-            redirectAttributes.addFlashAttribute("error", "Account Exists already");
+            redirectAttributes.addFlashAttribute("error", "Account Exists Already");
             return new RedirectView("/register");
+
+        // IF USER DOESN'T EXIST
         } else{
+
+            //  ENCRYPTS PASSWORD
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             String password1 = encoder.encode(password);
 
@@ -102,46 +112,17 @@ public class LoginController {
             userRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed, jobTitle, userObj.getUser_id());
             userRepo.insertAuthUser(role, userObj.getUser_mail());
 
+            //   VALIDATE USERTYPE
+            if(role.equals("ROLE_NORMALUSER")){
+                objectManager.userRepo.insertPayment(4, timestamp, userObj.getUser_id());
+            }
+            if(role.equals("ROLE_SUPERUSER")){
+                objectManager.userRepo.insertPayment(12, timestamp, userObj.getUser_id());
+            }
+            redirectAttributes.addFlashAttribute("success", "Success!");
             return new RedirectView ("/login");
         }
     }
-
-    public static final String SUCCESS_URL = "pay/success";
-    public static final String CANCEL_URL = "pay/cancel";
-
-//    PAY ==============
-
-
-    @GetMapping("/pay")
-    public String payment(@ModelAttribute("order") Order order) {
-        try {
-            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(), order.getIntent(), order.getDescription(), "http://localhost:1338/" + CANCEL_URL, "http://localhost:1338/" + SUCCESS_URL);
-            for (Links link : payment.getLinks()) {
-                if (link.getRel().equals("approval_url")) {
-                    return "redirect:" + link.getHref();
-                }
-            }
-        } catch (PayPalRESTException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/";
-    }
-
-//    LOGIN ?????????????????
-
-    @RequestMapping(value = "/login/login", method = RequestMethod.POST)
-    public String login(@ModelAttribute(name = "loginForm") LoginForm loginForm, Model model) {
-        String user_mail = loginForm.getUser_mail();
-        String user_password = loginForm.getUser_password();
-        System.out.println("test");
-
-        if (user_mail.equals(user_mail) && user_password.equals(user_password)) {
-            return "main/index";
-        }
-        model.addAttribute("invalidCredentials", true);
-        return "login/login";
-    }
-
 }
 
 

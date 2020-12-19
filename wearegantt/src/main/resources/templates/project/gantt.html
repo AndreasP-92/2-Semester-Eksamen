@@ -28,31 +28,6 @@
                 <a th:href="@{'/projects/create/task/'+${project.getProject_id()}}">Add Task</a>
                 <a th:href="@{'/profile/organization/'+${org.getOrg_name()}}">Add Employee</a>
                 <a th:href="@{'/projects/edit/'+${project.getProject_id}}">Edit Project</a>
-
-<!--                <form class="">-->
-<!--                    <h2 class="sidenavHeaders">Gantt Titles</h2>-->
-<!--                    <div class="form-check" style="color:white;">-->
-<!--                        <input class="form-check-input" checked type="checkbox" name="analysis">-->
-<!--                        <label class="form-check-label sidenavLabel"  name="analysis">Analysis</label>-->
-<!--                    </div>-->
-<!--                    <div class="form-check" style="color:white;">-->
-<!--                        <input class="form-check-input" checked type="checkbox" name="design">-->
-<!--                        <label class="form-check-label sidenavLabel"  name="design">Design</label>-->
-<!--                    </div>-->
-<!--                    <div class="form-check" style="color:white;">-->
-<!--                        <input class="form-check-input" checked type="checkbox" name="development">-->
-<!--                        <label class="form-check-label sidenavLabel"  name="development">Development</label>-->
-<!--                    </div>-->
-<!--                    <div class="form-check" style="color:white;">-->
-<!--                        <input class="form-check-input" checked type="checkbox" name="testing">-->
-<!--                        <label class="form-check-label sidenavLabel"  name="testing">Testing</label>-->
-<!--                    </div>-->
-
-<!--                    <div align="center">-->
-<!--                        <button class="mt-3 btn w-50 submitbtn">Save</button>-->
-
-<!--                    </div>-->
-<!--                </form>-->
             </div>
         </div>
 
@@ -81,6 +56,7 @@
                             </tr>
                         </thead>
                         <tbody>
+<!-- === TASK FOR-EACH === -->
                             <tr th:each="task : ${taskList}" class="mt-5">
                                 <td class="number"></td>
                                 <td th:text="${task.task_name}">Task Name</td>
@@ -90,12 +66,16 @@
                                 <td th:text="${task.task_duration} + ' Days'">Duration</td>
                                 <td th:text="${task.task_start}">Start</td>
                                 <td th:text="${task.task_end}">End</td>
+
+                            <!-- EDIT BUTTON -->
                                 <td><a th:href="@{'/gantt/edit/task/'+${task.task_id}}" class="btn btn-warning">Edit Task</a></td></a>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+<!-- === GANT DIAGRAM === -->
             <div class="col-sm-6">
                 <div class="mr-3">
                     <div class="mt-5">
@@ -114,6 +94,8 @@
                                 <span></span><span></span><span></span>
                                 <span></span><span></span><span></span>
                             </div>
+
+<!-- === TASK'S FOR DIAGRAM FOR-EACH === -->
                             <span th:each="taskList : ${taskList}">
                                 <div class="gantt__row">
                                     <div th:text="${taskList.fk_profileName}" class="gantt__row-first">
@@ -144,45 +126,43 @@
                 </div>
             </div>
         </div>
+
+        <!-- UNDERSTANDING OF COLOR -->
         <div class="row">
             <div class="col-sm-6"></div>
             <div align="left" class="col-sm-6">
-<!--                <div class="row" align="right">-->
-                    <div class="col-sm-5 row">
-                        <div class="col-sm-4">
-                            <p>Analysis :</p>
-                        </div>
-                        <div class="col-sm-2">
-                            <span class="gatt_color_meaning" style="background-color: #343a40;"></span>
-                        </div>
+                <div class="col-sm-5 row">
+                    <div class="col-sm-4">
+                        <p>Analysis :</p>
                     </div>
-                    <div class="col-sm-5 row">
-                        <div class="col-sm-4">
-                            <p>Design :</p>
-                        </div>
-                        <div class="col-sm-2">
-                            <span class="gatt_color_meaning" style="background-color: #33a541;"></span>
-                        </div>
+                    <div class="col-sm-2">
+                        <span class="gatt_color_meaning" style="background-color: #343a40;"></span>
                     </div>
-                    <div class="col-sm-5 row">
-                        <div class="col-sm-4">
-                            <p>Development :</p>
-                        </div>
-                        <div class="col-sm-2">
-                            <span class="gatt_color_meaning" style="background-color: #ccb40e;"></span>
-                        </div>
+                </div>
+                <div class="col-sm-5 row">
+                    <div class="col-sm-4">
+                        <p>Design :</p>
                     </div>
-                    <div class="col-sm-5 row">
-                        <div class="col-sm-4">
-                            <p>Testing :</p>
-                        </div>
-                        <div class="col-sm-2">
-                            <span class="gatt_color_meaning" style="background-color: #7d6e02;"></span>
-                        </div>
-
+                    <div class="col-sm-2">
+                        <span class="gatt_color_meaning" style="background-color: #33a541;"></span>
                     </div>
-
-<!--                </div>-->
+                </div>
+                <div class="col-sm-5 row">
+                    <div class="col-sm-4">
+                        <p>Development :</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="gatt_color_meaning" style="background-color: #ccb40e;"></span>
+                    </div>
+                </div>
+                <div class="col-sm-5 row">
+                    <div class="col-sm-4">
+                        <p>Testing :</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="gatt_color_meaning" style="background-color: #7d6e02;"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Whats New</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link th:href="@{/css/main/newsfeed.css}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!--=================== NAVIGATION ============================ -->
+        <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+
+
+
+        </div>
+    </header>
+    <main>
+        <!--=================== Block 1 ============================ -->
+        <div class="container" align="center">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="container" align="center">
+                        <div class="col-sm-12" align="center">
+                            <img th:src="@{/images/logo.png}" style="">
+                        </div>
+                        <form id="news" method="post" class="w-50">
+                            <h3 style="text-align: center">What's New?</h3>
+                            <a href="/create/newsfeed" class="buttons w-25">Create Newsfeed</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--=================== Block 2 ============================ -->
+            <div class="row">
+                <div class="col-sm-12" th:each = "news : ${listNewsfeed}">
+                    <div class="projectBox m3" align="center">
+                        <h4 th:text="${news.newsfeed_title}" class="pt-2" align="center"></h4>
+                        <p th:text="${news.newsfeed_news}" class="p-3"></p>
+                        <p th:text="${news.newsfeed_datetime}" class="P-3 moveBottom"></p>
+                        <a th:href="@{'/edit/newsfeed/' + ${news.newsfeed_id}}" class="buttons M-3 mt-1 moveButtonBottom">Edit Newsfeed</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+        <!--=================== Footer ============================ -->
+
+        <div th:replace="partials/footer :: footerFragment"></div>
+
+</body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</html>

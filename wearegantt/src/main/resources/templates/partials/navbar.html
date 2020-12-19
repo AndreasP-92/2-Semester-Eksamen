@@ -26,7 +26,7 @@
                     <a th:class="${activePage == 'projects'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" href="/projects/">Project</a>
                 </li>
                 <li class="nav-item">
-                    <a th:class="${activePage == 'profile'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" th:href="@{'/editprofile/' + ${user.getUser_mail}}">Edit Profile</a>
+                    <a th:class="${activePage == 'profile'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" th:href="@{'/profile/' + ${user.getUser_mail}}">Edit Profile</a>
                 </li>
                 <li class="nav-item">
                     <a th:class="${activePage == 'support'} ? 'nav-link nav-active text-truncate text-white' : 'nav-link text-truncate text-white'" th:href="@{'/profile/support'}">Support</a>

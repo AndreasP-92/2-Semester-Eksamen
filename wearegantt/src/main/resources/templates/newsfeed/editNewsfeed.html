@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Newsfeed</title>
+
+    <link th:href="@{/css/main/editNewsfeed.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+<!--=================== NAVIGATION ============================ -->
+        <div th:replace="partials/navbar :: navigation" th:with="org=${org}, user=${user}, activePage=${activePage}, auth=${auth}"></div>
+    </header>
+
+    <main class="container">
+        <a th:href="@{'/newsfeed/' + ${org.getOrg_name()}}" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+        </a>
+        <div class="col-sm-12" align="center">
+            <img th:src="@{/images/logo.png}" style="">
+        </div>
+        <div align="center">
+
+        <!--==== EDIT NEWSFEED ==== -->
+            <form class="contact w-50" th:action="@{/update/newsfeed}" th:object="${newsfeed}" method="post">
+                <!-- ID -->
+                <input class="form-control" type="text" style="display:none" required th:field="*{newsfeed_id}" >
+
+                <h3 style="text-align: center">Edit Your News</h3>
+
+                <!-- TITLE -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="newsfeed_title">News Title</label>
+                    <input class="form-control"  type="text" id="newsfeed_title" required th:field="*{newsfeed_title}" >
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="form-group ml-5 mr-5">
+                    <label for="newsfeed_news">News Description</label>
+                    <textarea class="form-control" id="newsfeed_news" rows="3" required th:field="*{newsfeed_news}"></textarea>
+                </div>
+
+                <!-- SUBMIT -->
+                <div class="btn-group" role="group" aria-label="">
+                    <button class="btn form-button ml-5 mr-5 w-50" type="submit" id="update-submit" data-submit="...Sending">Update</button>
+                </div>
+             </form>
+
+<!--==== DELETE NEWSFEED ==== -->
+            <form class="contact w-50" id="deleteForm" th:action="@{/delete/newsfeed}" method="post" th:object="${newsfeed}">
+                <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{newsfeed_id}">
+
+                <!-- SUBMIT -->
+                <div class="col-sm-6" >
+                    <button class="btn form-button ml-5 mr-5 delete-submit w-50" id="deleteSubmitButton" type="submit" data-submit="...Sending">Delete</button>
+                </div>
+            </form>
+        </div>
+    </main>
+<!--=================== Footer ============================ -->
+
+    <div th:replace="partials/footer :: footerFragment"></div>
+
+</body>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="/js/main/main.js"></script>
+</html>

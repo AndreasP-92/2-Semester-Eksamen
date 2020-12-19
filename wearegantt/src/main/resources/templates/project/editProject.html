@@ -26,76 +26,92 @@
         <div class="col-sm-12">
             <img th:src="@{/images/logo.png/}" style="">
         </div>
-                        <div class="row">
+        <div class="row">
 
 <!-- == UPDATE PROJECT == -->
-                            <form class="col-sm-6 contact w-50" th:action="@{/update/project}" th:object="${project}" method="post" >
-                                <div class="form-group ml-5 mr-5">
-                                    <label>Project Id</label>
-                                    <input class="form-control" readonly type="text"  th:field="*{project_id}">
-                                </div>
+            <form class="col-sm-6 contact w-50" th:action="@{/update/project}" th:object="${project}" method="post" >
+                <div class="valid" id="notFilled"></div>
+                <!-- PROJECT ID -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Id</label>
+                    <input class="form-control" readonly type="text" required th:field="*{project_id}">
+                </div>
 
-                                <div class="form-group ml-5 mr-5">
-                                    <label>Project Name</label>
-                                    <input class="form-control" type="text"  th:field="*{project_name}">
-                                </div>
+                <!-- PROJECT NAME -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Name</label>
+                    <input class="form-control" type="text" required th:field="*{project_name}">
+                </div>
 
-                                <div class="form-group ml-5 mr-5">
-                                    <label>Project Description</label>
-                                    <input class="form-control" type="text"  th:field="*{project_desc}">
-                                </div>
+                <!-- PROJECT DESC -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Description</label>
+                    <input class="form-control" type="text" required th:field="*{project_desc}">
+                </div>
 
-                                <div class="form-group ml-5 mr-5">
-                                    <label>Project Start</label>
-                                    <input class="form-control" type="date"  th:field="*{project_start}">
-                                </div>
+                <!-- PROJECT START -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Start</label>
+                    <input class="form-control" type="date" required th:field="*{project_start}">
+                </div>
 
-                                <div class="form-group ml-5 mr-5">
-                                    <label>Project End</label>
-                                    <input class="form-control" type="date"  th:field="*{project_end}">
-                                </div>
+                <!-- PROJECT END -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project End</label>
+                    <input class="form-control" type="date" required  th:field="*{project_end}">
+                </div>
 
-                                <div class="form-group ml-5 mr-5">
-                                    <label>Project Duration </label>
-                                    <input class="form-control cInpu" type="text" disabled  th:value="${project.getProject_duration()} + ' Days'">
-                                </div>
+                <!-- PROJECT DURATION -->
+                <div class="form-group ml-5 mr-5">
+                    <label>Project Duration </label>
+                    <input class="form-control" type="text" required disabled  th:value="${project.getProject_duration()} + ' Days'">
+                </div>
 
-                                    <button type="submit" name="button" class="btn form-button ml-5 mr-5 w-50">Save Project</button>
-                            </form>
+                <!-- SUBMIT -->
+                <button type="submit" required class="btn form-button ml-5 mr-5 w-50">Save Project</button>
+            </form>
 <!-- == JOBTITLE OPTION == -->
-                            <div class="col-sm-6 contact w-50" align="left">
-                                <div th:each="jobtitle : ${jobTitlesList}">
-                                    <form th:action="@{/delete/projectJobTitle}" method="post" th:object="${project}">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <input style="display: none;" type="text" th:field="*{project_id}">
+            <div class="col-sm-6 contact w-50" align="left">
+                <div th:each="jobtitle : ${jobTitlesList}">
+                    <form th:action="@{/delete/projectJobTitle}" method="post" th:object="${project}">
+                        <div class="row">
 
-                                                <input style="display: none;" type="text" name="projectJobTitle_id" th:value="${jobtitle.getProjectJobTitle_id()}">
-                                                <p class="text-white" th:text="${jobtitle.getJobTitle_name()}"></p>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <button type="submit" class="btn form-button mt-3 mb-3">Remove</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <a class="btn form-button mt-3 mb-3 100" th:href="@{'/projects/create/newJobtitles/'+${project.project_id}}">Add More Job Titles</a>
+                            <!-- PROJECT ID -->
+                            <div class="col-sm-6">
+                                <input style="display: none;" type="text" th:field="*{project_id}">
+
+                                <!-- PROJECT JOB TITLE -->
+                                <input style="display: none;" type="text" name="projectJobTitle_id" th:value="${jobtitle.getProjectJobTitle_id()}">
+                                <p class="text-white" th:text="${jobtitle.getJobTitle_name()}"></p>
                             </div>
-<!-- == DELETE PROJECT == -->
+                            <div class="col-sm-6">
 
+                                <!-- SUBMIT -->
+                                <button type="submit" class="btn form-button mt-3 mb-3">Remove</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <a class="btn form-button mt-3 mb-3 100" th:href="@{'/projects/create/newJobtitles/'+${project.project_id}}">Add More Job Titles</a>
+            </div>
         </div>
-        <div align="center">
-            <form class="contact w-50" th:action="@{/delete/project}" method="post" th:object="${project}" align="center">
 
+<!-- == DELETE PROJECT == -->
+        <div align="center">
+            <form class="contact w-50" th:action="@{/delete/project}" id="deleteForm" method="post" th:object="${project}" align="center">
+
+                <!-- PROJECT ID -->
                 <input class="text-center p-3 mb-1" style="display: none" type="text" th:field="*{project_id}">
 
-                <button type="submit" name="button" class="btn bg-danger w-50 text-light">DELETE PROJECT</button>
+                <!-- SUBMIT -->
+                <button type="submit" id="deleteSubmitButton" class="btn bg-danger w-50 text-light">DELETE PROJECT</button>
             </form>
         </div>
         </div>
     </main>
 
-<!--=================== Footer ============================ -->
-<div th:replace="partials/footer :: footerFragment"></div>
+    <!--=================== Footer ============================ -->
+    <div th:replace="partials/footer :: footerFragment"></div>
 </body>
+<script src="/js/main/main.js"></script>
 </html>

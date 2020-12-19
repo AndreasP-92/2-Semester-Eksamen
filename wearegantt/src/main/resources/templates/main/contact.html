@@ -5,7 +5,7 @@
     <title>Contact Us</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="/css/main/contact.css" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/main/contact.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -16,13 +16,14 @@
 
         </div>
     </header>
-    <main class="container" align="center">
+    <main class="container">
+        <div align="center">
         <!--=================== logo ============================ -->
         <div class="col-sm-12" align="center">
             <img th:src="@{/images/logo.png/}" style="">
         </div>
 
-        <form id="contact w-50" th:action="@{/insert/ticket}"  method="post">
+        <form class="contact w-50" th:action="@{/insert/ticket}"  method="post">
             <h3 style="text-align: center">Contact Form</h3>
             <h4></h4>
             <div class="form-group ml-5 mr-5">
@@ -40,7 +41,7 @@
     <!--=================== Submit button ============================ -->
             <button class="btn form-button ml-5 mr-5" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
         </form>
-
+        </div>
     </main>
         <!--=================== Footer ============================ -->
     <div th:replace="partials/footer :: footerFragment"></div>
