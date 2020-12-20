@@ -170,7 +170,7 @@ public class OrganizationRepo {
             ps.setInt(1, org_id);
 
             int row = ps.executeUpdate();
-            System.out.println("row deleted");
+            System.out.println("ORG deleted");
 
         }catch (SQLException e){
             System.out.println(e);

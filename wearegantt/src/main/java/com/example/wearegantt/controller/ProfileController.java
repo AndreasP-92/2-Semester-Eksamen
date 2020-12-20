@@ -43,6 +43,8 @@ public class ProfileController {
         Profile profile             = objectManager.profileRepo.getOneProfile(user.getUser_id());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 
+        System.out.println(user);
+
         mav.addObject("auth", authorities);
         mav.addObject("profile", profile);
         mav.addObject("org", org);

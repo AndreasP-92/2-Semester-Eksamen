@@ -1,4 +1,4 @@
-package com.example.wearegantt.controller;
+package com.example.wearegantt.model;
 
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.services.ObjectManager;

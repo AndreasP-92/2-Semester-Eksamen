@@ -118,7 +118,7 @@
             </form>
 <!-- === DELETE USER === -->
             <form class="contact w-50"  id="deleteForm" th:action="@{/admin/delete/user}" th:object="${user}" method="post" >
-                <input type="text" style="display: none;" th:value="*{user_id}">
+                <input type="text" style="display: none;" name="user_id" th:value="*{user_id}">
 
                 <!-- SUBMIT -->
                 <button  type="submit" class="w-50 btn btn-danger ml-5 mr-5" id="deleteSubmitButton" value="Delete">Delete User</button>

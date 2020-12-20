@@ -133,11 +133,11 @@
                             <a class="w-50 btn form-button ml-5 mr-5"
                                href="/profile/organization/">New Organization</a>
                         </div>
-                        <div th:if="${user.fk_orgId > 0}">
-                            <div class="contact w-50">
-                                <a class="w-50 btn form-button ml-5 mr-5"
-                                   th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
-                            </div>
+                    </div>
+                    <div th:if="${user.fk_orgId > 0}">
+                        <div class="contact w-50">
+                            <a class="w-50 btn form-button ml-5 mr-5"
+                               th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
                         </div>
                     </div>
                 </div>
