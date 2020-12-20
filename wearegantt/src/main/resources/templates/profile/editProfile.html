@@ -134,7 +134,7 @@
                                href="/profile/organization/">New Organization</a>
                         </div>
                     </div>
-                    <div th:if="${user.fk_orgId > 0}">
+                    <div th:if="${user.fk_orgId > 0 && auth.getAuth_role() == 'ROLE_SUPERUSER' || user.fk_orgId == 0 &&  auth.getAuth_role() == 'ROLE_TRIALUSER'}}">
                         <div class="contact w-50">
                             <a class="w-50 btn form-button ml-5 mr-5"
                                th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
