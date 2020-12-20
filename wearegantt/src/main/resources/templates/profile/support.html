@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    <link href="/css/main/contact.css" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/main/contact.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -17,13 +17,13 @@
         <a th:href="@{'/profile/support'}" style="color:black;">
             <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
         </a>
-        <div>
+        <div align="center">
             <div class="col-sm-12" align="center">
                 <img th:src="@{/images/logo.png/}" style="">
             </div>
 
     <!-- === TICKET FORM === -->
-            <form id="contact" th:action="@{/insert/ticket}" th:object="${profile}" method="post" class="w-50">
+            <form class="contact w-50" th:action="@{/insert/ticket}" th:object="${profile}" method="post">
                 <h3 style="text-align: center">Contact Form</h3>
 
                 <!-- TICKET TITLE -->
@@ -40,7 +40,6 @@
 
                 <!-- TICKET OWNER MAIL -->
                 <div class="form-group ml-5 mr-5">
-                    <label for="user_mail">Your Mail</label>
                     <input name="ticket_ownerMail" style="display: none" id="user_mail" th:value="${user.user_mail}" type="text" class="form-control">
                 </div>
 

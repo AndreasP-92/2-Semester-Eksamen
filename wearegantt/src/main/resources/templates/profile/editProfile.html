@@ -74,9 +74,10 @@
                     </form>
 
 
-<!-- === INSERT PROJECT === -->
-                    <form class="contact w-50" th:object="${user}" th:action="@{/update/credentials}" method="post"  id="registerForm">
-                        <input style="display:none" type="text" th:field="*{user_id}">
+<!-- === CHANGE PASSWORD === -->
+                    <form class="contact w-50" th:object="${user}" th:action="@{/update/credentials}" method="post"  id="editPassForm">
+                        <div class="valid" id="notFilled"></div>
+                        <input style="display:none" type="text" name="user_id" th:value="*{user_id}">
 
                         <h3>Edit Your Email & Password</h3>
 
@@ -106,7 +107,7 @@
 <!-- === DELETE PROFILE === -->
                     <form class="contact w-50" id="deleteForm" th:action="@{/delete/profile}" th:object="${user}" method="post">
 
-                        <input class="text-center p-3 mb-1" type="text" style="display: none;" th:field="*{user_id}">
+                        <input class="text-center p-3 mb-1" type="text" style="display: none;" name="user_id" th:value="*{user_id}">
                         <button type="submit" name="button" id="deleteSubmitButton" class="w-50 btn btn-danger ml-5 mr-5" >Delete Profile</button>
 
                     </form>
@@ -127,14 +128,16 @@
                     </form>
 
     <!-- === EDIT / NEW ORGANIZATION === -->
-                    <div class="contact w-50">
-                        <div th:if="${user.fk_orgId == 0 && auth.getAuth_role() == 'ROLE_SUPERUSER' || user.fk_orgId == 0 &&  auth.getAuth_role() == 'ROLE_TRIALUSER'}">
+                    <div th:if="${user.fk_orgId == 0 && auth.getAuth_role() == 'ROLE_SUPERUSER' || user.fk_orgId == 0 &&  auth.getAuth_role() == 'ROLE_TRIALUSER' || user.fk_orgId == 0 &&  auth.getAuth_role() == 'ROLE_ADMIN'}">
+                        <div class="contact w-50">
                             <a class="w-50 btn form-button ml-5 mr-5"
                                href="/profile/organization/">New Organization</a>
                         </div>
                         <div th:if="${user.fk_orgId > 0}">
-                            <a class="w-50 btn form-button ml-5 mr-5"
-                               th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
+                            <div class="contact w-50">
+                                <a class="w-50 btn form-button ml-5 mr-5"
+                                   th:href="@{'/profile/organization/' + ${org.org_name}}">Edit Organization</a>
+                            </div>
                         </div>
                     </div>
                 </div>

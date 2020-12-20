@@ -16,7 +16,7 @@ function button(){
         } if(formValid == false){
             document.getElementById('notFilled').innerHTML = "Please fill all fields";
         }
-        if(formValid){
+        if(formValid && getPassword01.value == getPassword02.value){
             registerForm.submit()
         }
     });

@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.FlashMapManager;
+import org.springframework.web.servlet.support.SessionFlashMapManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     ObjectManager objectManager = new ObjectManager();
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
@@ -46,8 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         + "WHERE fk_userMail = ?");
     }
 
-    @Override
 //    hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/admin").permitAll()
@@ -62,9 +64,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("user_password")
                 .loginProcessingUrl("/doLogin")
                 .defaultSuccessUrl("/profile")
-                .failureUrl("/")
-//                    .successForwardUrl("/login_success_handler")
-//                    .failureForwardUrl("/login_failure_handler")
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
@@ -94,10 +93,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                         System.out.println("Login Failure!!!....");
 
-                        httpServletResponse.sendRedirect("/");
+                        httpServletResponse.sendRedirect("/login");
                     }
                 })
-                .and().exceptionHandling().accessDeniedPage("/403");
+                .and().exceptionHandling().accessDeniedPage("/");
     }
 
 }

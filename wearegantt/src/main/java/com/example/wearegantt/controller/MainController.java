@@ -23,6 +23,7 @@ public class MainController {
     @GetMapping("/*")
     public String handle(Model model, Principal principal) {
         User user                   = objectManager.userRepo.getOneUser(principal.getName());
+        System.out.println(user);
         Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
 

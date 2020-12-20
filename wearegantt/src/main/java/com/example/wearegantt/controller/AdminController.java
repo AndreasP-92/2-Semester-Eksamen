@@ -264,8 +264,7 @@ public class AdminController {
 
 //   =================================================================== POST CONTROLLER ==========================================================================
 
-//    ******************************************* POST ADMIN SUPPORT ****************************************
-
+//    ******************************************* ADMIN SUPPORT ****************************************
 
 // ============== SAVE MESSAGE ==============
 
@@ -326,7 +325,7 @@ public String closeTicket(WebRequest dataFromForm) {
 
         SupportMessage supportMessage = objectManager.ticketRepo.getOneMessage(ticketIdParsed);
 
-//CHECK IF NOT ASIGNED ALREADY
+//CHECK IF NOT ASIGNED ALREADY AND ADD TICKET TO DB MESSAGES
         if(supportMessage == null){
             objectManager.ticketRepo.insertMessage(ticket_context, ticket_timestamp, ticketIdParsed, ticket_ownerMail);
         }
@@ -335,7 +334,6 @@ public String closeTicket(WebRequest dataFromForm) {
 
 
 //    ******************************************* POST ADMIN USER ****************************************
-
 
     //  ==============  INSERT USER ==============
 
@@ -379,13 +377,10 @@ public String closeTicket(WebRequest dataFromForm) {
         return "redirect:/admin/lookupuser";
     }
 
-
-
-
     //================== EDIT PROFILE ===================
 
     @PostMapping("/admin/update/user")
-    public String updateAdminProfile(WebRequest dataFromForm,  Principal principal) {
+    public String updateAdminProfile(WebRequest dataFromForm) {
         String profile_id           = (dataFromForm.getParameter("profile_id"));
         String profile_firstname    = (dataFromForm.getParameter("profile_firstname"));
         String profile_lastname     = (dataFromForm.getParameter("profile_lastname"));
