@@ -23,13 +23,13 @@ public class JobTitleRepo {
 
         try {
 
-            //lavet et statement
+
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle");
 
-            //eksekvere en query
+
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
+
             while(rs.next()){
                 JobTitle tmp = new JobTitle(
                         rs.getInt(1),
@@ -54,14 +54,14 @@ public class JobTitleRepo {
 
         try {
 
-            //lavet et statement
+
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM jobTitle WHERE fk_orgId = ?");
             ps.setInt(1, fk_orgId);
 
-            //eksekvere en query
+
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
+
             while(rs.next()){
                 JobTitle tmp = new JobTitle(
                         rs.getInt(1),
