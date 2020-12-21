@@ -19,14 +19,11 @@ public class TicketRepo {
 
         try {
 
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT *, DATE_FORMAT(supportTicket_timestamp, '%m/%d/%Y %H:%i') AS ticket_timestamp FROM supportTicket WHERE supportTicket_taken = 0 AND supportTicket_active = 1");
 
-            //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
 
-            //Bruge resultatet til noget
             while(rs.next()){
                 SupportTicket tmp = new SupportTicket(
                         rs.getInt(1),
@@ -98,20 +95,19 @@ public class TicketRepo {
 
 //            PreparedStatement ps = establishConnection().prepareStatement("SELECT *, DATE_FORMAT(supportTicket_timestamp, '%m/%d/%Y %H:%i') AS ticket_timestamp FROM supportTicket");
 
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT supportTicket.*,  ticket_user.*,  DATE_FORMAT(supportTicket_timestamp, '%m/%d/%Y %H:%i') AS ticket_timestamp FROM ticket_user INNER JOIN supportTicket ON ticket_user.ticket_id = supportTicket.supportTicket_id WHERE user_id = ? AND supportTicket_active = 1");
             ps.setInt(1, user_id);
 
-            //eksekvere en query
+
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
+
             while(rs.next()){
                 GetTicketUser tmp = new GetTicketUser(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        rs.getString(14),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getInt(7),

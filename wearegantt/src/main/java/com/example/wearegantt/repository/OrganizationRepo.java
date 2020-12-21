@@ -19,14 +19,10 @@ public class OrganizationRepo {
         List<Organization> allOrgs = new ArrayList<>();
 
         try {
-
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM org");
 
-            //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
             while(rs.next()){
                 Organization tmp = new Organization(
                         rs.getInt(1),

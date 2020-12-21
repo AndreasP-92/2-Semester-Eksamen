@@ -22,14 +22,10 @@ public class ProfileRepo {
         List<Profile> allProfiles = new ArrayList<>();
 
         try {
-
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM profile");
 
-            //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
             while(rs.next()){
                 Profile tmp = new Profile(
                         rs.getInt(1),

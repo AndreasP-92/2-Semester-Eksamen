@@ -22,14 +22,12 @@ public class NewsfeedRepo {
 
         try {
 
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT *, DATE_FORMAT(newsfeed_datetime, '%m/%d/%Y %H:%i') AS ticket_timestamp FROM news WHERE fk_orgName = ?");
            // metoden i ps objektet fortæller hvad der skal stå på QUERY plads nummer 1 (?).
             ps.setString(1, fk_orgName);
-            //eksekvere en query
+
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
             while(rs.next()){
                 Newsfeed tmp = new Newsfeed(
                         rs.getInt(1),
