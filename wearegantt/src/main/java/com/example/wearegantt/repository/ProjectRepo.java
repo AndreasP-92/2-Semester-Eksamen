@@ -21,13 +21,10 @@ public class ProjectRepo {
 
         try {
 
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project");
 
-            //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
             while(rs.next()){
                 Project tmp = new Project(
                         rs.getInt(1),
@@ -56,8 +53,8 @@ public class ProjectRepo {
         try {
 
             //lavet et statement
-            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project");
-
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM project WHERE fk_orgId = ?");
+            ps.setInt(1, fk_orgId);
             //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
@@ -227,7 +224,6 @@ public class ProjectRepo {
 
     public void InsertProject(String project_name, String project_desc, int project_duration, String project_start,String project_end, int project_fk_orgId){
         try {
-            System.out.println("PROJECT ===" + project_duration);
             PreparedStatement ps = establishConnection().prepareStatement("INSERT INTO project(project_name, project_desc, project_duration, project_start, project_end, fk_orgId) VALUES (?, ?, ?, ?, ?, ?)");
             ps.setString(1, project_name);
             ps.setString(2, project_desc);

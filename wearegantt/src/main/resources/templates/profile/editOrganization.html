@@ -56,6 +56,9 @@
 
 <!-- ==== ADD ANOTHER USER TO ORGANIZATION === -->
                 <form class="contact w-50" th:action="@{/insert/org/user}" method="post" th:object="${org}">
+                    <div th:if="${error}">
+                        <p class="valid" th:text="${error}"></p>
+                    </div>
                     <h3>Add Another Employee</h3>
 
                     <!-- ORGANIZATION ID -->
@@ -65,7 +68,7 @@
 
                     <!-- USER MAIL -->
                     <div class="form-group ml-5 mr-5">
-                        <input class="form-control" type="text" required name="user_mail" placeholder="User Mail">
+                        <input class="form-control" type="email" required name="user_mail" placeholder="User Mail">
                     </div>
 
                     <!-- SUBMIT -->

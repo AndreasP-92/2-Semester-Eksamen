@@ -20,7 +20,7 @@
     <main align="center">
         <h1>Ops..</h1>
         <p>You got no Organization</p>
-        <div th:if="${auth.getAuth_role() == 'ROLE_SUPERUSER' || auth.getAuth_role() == 'ROLE_TRIALUSER' }">
+        <div th:if="${auth.getAuth_role() == 'ROLE_SUPERUSER' || auth.getAuth_role() == 'ROLE_TRIALUSER' || auth.getAuth_role() == 'ROLE_ADMIN' }">
             <a class="btn btn-info button" href="/profile/organization"><i class="icon-home"></i> Create Organization</a>
         </div>
         <div th:if="${auth.getAuth_role() == 'ROLE_NORMALUSER' }">

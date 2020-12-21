@@ -22,13 +22,10 @@ public class UserRepo {
 
         try {
 
-            //lavet et statement
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users");
 
-            //eksekvere en query
             ResultSet rs = ps.executeQuery();
 
-            //Bruge resultatet til noget
             while(rs.next()){
                 User tmp = new User(
                         rs.getInt(1),
@@ -82,38 +79,77 @@ public class UserRepo {
 
 // ========= CHECK IF USER EXISTS ===========
 
-    public boolean CheckUsernameExists(String user_mail)
-    {
+    public boolean checkUsernameExists(String user_mail) {
         boolean usernameExists = false;
 
-        try
-        {
+        System.out.println("CHECKUSERNAME KØRT");
+
+        try {
 
             PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE user_mail = ?");
             ps.setString(1,user_mail);
 
-            ResultSet rs =ps .executeQuery();
+            ResultSet rs =ps.executeQuery();
+
             String usernameCounter;
-            if(rs.next())
-            {
+
+            if(rs.next()) {
                 usernameCounter =  rs.getString("user_mail");
-                if(usernameCounter.equals(user_mail))
-                {
+
+                System.out.println("USERNAMECOUNTER======"+usernameCounter);
+                if(usernameCounter.equals(user_mail)) {
                     System.out.println("It already exists");
                     usernameExists = true;
                 }
             }
-
-
         }
 
-        catch (SQLException e)
-        {
-            System.out.println( e);
-        }
+        catch (SQLException e) {
+            System.out.println( e); }
+
+        System.out.println(usernameExists);
 
         return usernameExists;
     }
+
+    // ========= CHECK IF USER EXISTS 02 ===========
+
+    public boolean checkUsernameExists02(String user_mail) {
+        boolean usernameExists = false;
+
+
+        try {
+
+            PreparedStatement ps = establishConnection().prepareStatement("SELECT * FROM users WHERE user_mail = ?");
+            ps.setString(1,user_mail);
+
+            ResultSet rs =ps.executeQuery();
+
+            System.out.println(rs);
+
+            String usernameCounter;
+
+            if(rs.next()) {
+                usernameCounter =  rs.getString("user_mail");
+
+                if(usernameCounter.equals(user_mail)) {
+                    System.out.println("It does exist");
+
+                }
+            }else{
+                usernameExists = true;
+            }
+        }
+
+        catch (SQLException e) {
+            System.out.println( e); }
+
+        System.out.println(usernameExists);
+
+        return usernameExists;
+    }
+
+
 
 // ========= GET ONE USER ===========
 
@@ -313,6 +349,7 @@ public class UserRepo {
             ps.setInt(2, user_id);
 
             int row = ps.executeUpdate();
+            System.out.println("user updated");
 
         }catch (SQLException e){
             System.out.println(e);

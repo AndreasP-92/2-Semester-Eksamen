@@ -92,10 +92,10 @@
 
             </form>
 <!-- === NEW PASSWORD === -->
-            <form class="contact w-50" id="registerForm" th:action="@{/update/credentials}" th:object="${user}" method="post">
+            <form class="contact w-50" id="registerForm" th:action="@{/admin/update/credentials}" th:object="${user}" method="post">
 
-                <input style="display: none;" type="text" th:value="*{user_id}">
-                <input style="display: none;" type="text" th:value="*{user_mail}">
+                <input style="display: none;" type="text" name="user_id" th:value="*{user_id}">
+                <input style="display: none;" type="text" name="user_mail" th:value="*{user_mail}">
 
                 <!-- FIRST PASSWORD CHECK -->
                 <h3>Change Passowrd </h3>

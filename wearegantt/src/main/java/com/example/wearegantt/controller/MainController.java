@@ -20,19 +20,19 @@ public class MainController {
 //   =================================================================== GET CONTROLLER ==========================================================================
 
 //   ================= 404 PAGE =================
-    @GetMapping("/*")
-    public String handle(Model model, Principal principal) {
-        User user                   = objectManager.userRepo.getOneUser(principal.getName());
-        System.out.println(user);
-        Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
-        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
-
-        model.addAttribute("auth", authorities);
-        model.addAttribute("org", organization);
-        model.addAttribute("user", user);
-
-        return "main/404";
-    }
+//    @GetMapping("/*")
+//    public String handle(Model model, Principal principal) {
+//        User user                   = objectManager.userRepo.getOneUser(principal.getName());
+//        System.out.println(user);
+//        Organization organization   = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
+//        Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+//
+//        model.addAttribute("auth", authorities);
+//        model.addAttribute("org", organization);
+//        model.addAttribute("user", user);
+//
+//        return "main/404";
+//    }
 
 //   ================= INDEX =================
     @GetMapping("/")
@@ -101,7 +101,7 @@ public class MainController {
             return "redirect:/";
         } else{
 
-            return "redirect:/profile/"+principal.getName();
+            return "redirect:/profile/support";
         }
 
 

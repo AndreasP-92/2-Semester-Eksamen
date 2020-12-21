@@ -7,34 +7,34 @@
     <title>Add Job Titles</title>
 </head>
 <body>
-<main>
-    <a href="/admin/organization" style="color:black;">
-        <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
-    </a>
+    <main class="container">
+        <a href="/admin/organization" style="color:black;">
+            <i class='fas fa-arrow-left mt-5' style='font-size:36px'></i>
+        </a>
 
-    <div align="center">
-<!-- == INSERT JOBTITLE FORM == -->
-        <form class="contact w-50"  th:action="@{/admin/insert/newjobtitle}" th:object="${project}" method="post">
-            <h3>Add Jobtitle</h3>
+        <div align="center">
+    <!-- == INSERT JOBTITLE FORM == -->
+            <form class="contact w-50"  th:action="@{/admin/insert/newjobtitle}" th:object="${project}" method="post">
+                <h3>Add Jobtitle</h3>
 
-            <!-- JOBTITLE ID -->
-            <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_id" th:value="${project.project_id}">
+                <!-- JOBTITLE ID -->
+                <input class="text-center p-3 mb-1" type="text" style="display: none;" name="project_id" th:value="${project.project_id}">
 
-            <!-- NEW JOBTITLE -->
-            <div class="form-group ml-5 mr-5">
-                <input class="form-control" type="text" name="jobTitle_name" placeholder="Job Title">
-            </div>
+                <!-- NEW JOBTITLE -->
+                <div class="form-group ml-5 mr-5">
+                    <input class="form-control" type="text" name="jobTitle_name" placeholder="Job Title">
+                </div>
 
-            <!-- VALIDATE JOBTITLE -->
-            <div th:if="${error}">
-                <p style="color: #ff89af;" th:text="${error}"></p>
-            </div>
+                <!-- VALIDATE JOBTITLE -->
+                <div th:if="${error}">
+                    <p style="color: #ff89af;" th:text="${error}"></p>
+                </div>
 
-            <!-- SUBMIT -->
-            <button type="submit" class="w-50 btn form-button ml-5 mr-5">Save</button>
-        </form>
-    </div>
-</main>
+                <!-- SUBMIT -->
+                <button type="submit" class="w-50 btn form-button ml-5 mr-5">Save</button>
+            </form>
+        </div>
+    </main>
 </body>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </html>

@@ -12,11 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProfileController {
@@ -42,6 +47,8 @@ public class ProfileController {
         Organization org            = objectManager.organizationRepo.getOneOrgWId(user.getFk_orgId());
         Profile profile             = objectManager.profileRepo.getOneProfile(user.getUser_id());
         Authorities authorities     = objectManager.userRepo.getOneAuthWUserMail(user.getUser_mail());
+
+        System.out.println(authorities.getAuth_role());
 
         System.out.println(user);
 
@@ -77,8 +84,13 @@ public class ProfileController {
 
 
     @GetMapping("/profile/organization/{org_name}")
-    public ModelAndView Organization(@PathVariable(name = "org_name")String org_name, Principal principal){
+    public ModelAndView Organization(HttpServletRequest request, @PathVariable(name = "org_name")String org_name, Principal principal){
         ModelAndView mav    = new ModelAndView("profile/editOrganization");
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (inputFlashMap != null) {
+            mav.addObject("error", inputFlashMap.get("error"));
+        }
 
         Organization org            = objectManager.organizationRepo.getOneOrg(org_name);
         User user                   = objectManager.userRepo.getOneUser(principal.getName());
@@ -223,17 +235,32 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
 //   ============= INVITE USER ORGANIZATION =============
 
     @PostMapping("/insert/org/user")
-    public String inviteUserToOrg(WebRequest dataFromForm) {
+    public RedirectView inviteUserToOrg(RedirectAttributes redirectAttributes, WebRequest dataFromForm, Principal principal) {
         String user_mail  = (dataFromForm.getParameter("user_mail"));
         String org_id     = (dataFromForm.getParameter("org_id"));
 
-        int idParsed = Integer.parseInt(org_id);
+        System.out.println(user_mail);
 
+        int idParsed        = Integer.parseInt(org_id);
+
+        User currentUser            = objectManager.userRepo.getOneUser(principal.getName());
+        Organization organization   = objectManager.organizationRepo.getOneOrgWId(currentUser.getFk_orgId());
+
+        // CHECKS IF USER EXISTS IN DB
+        boolean userCheck   = objectManager.userRepo.checkUsernameExists02(user_mail);
+
+        //  IF USER EXISTS RETURN Account Exists Allready
+        if(userCheck == true){
+            redirectAttributes.addFlashAttribute("error", "Account doesn't exists");
+            return new RedirectView("/profile/organization/"+organization.getOrg_name());
+
+        // IF USER DOESN'T EXIST
+        }
+
+        redirectAttributes.addFlashAttribute("error", "Success");
         User user = objectManager.userRepo.getOneUser(user_mail);
-
         objectManager.userRepo.updateUserWId(user.getUser_id(), idParsed);
-
-        return "redirect:/profile/"+user_mail;
+        return new RedirectView("/profile/organization/"+organization.getOrg_name());
     }
 
 //   ============= UPDATE ORGANIZATION =============
@@ -297,13 +324,16 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
 
         User user = objectManager.userRepo.getOneUserWId(userIdParsed);
 
+//      IF NORMALUSER SELECTED -- 4 EUR
         if(role.equals("ROLE_NORMALUSER")){
             objectManager.userRepo.insertPayment(4, timestamp, user.getUser_id());
         }
+
+//      IF SUPERUSER SELECTED -- 12 EUR
         if(role.equals("ROLE_SUPERUSER")){
             objectManager.userRepo.insertPayment(12, timestamp, user.getUser_id());
         }
-        objectManager.userRepo.insertAuthUser(role, user.getUser_mail());
+        objectManager.userRepo.updateAuthorities(role, user.getUser_mail());
 
         return "redirect:/profile/"+user.getUser_mail();
     }
@@ -335,7 +365,11 @@ public ModelAndView profileChat(@PathVariable(name = "ticket_id")int ticket_id, 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String password1 = encoder.encode(user_password);
 
+        System.out.println(user_id);
+
         int idParsed = Integer.parseInt(user_id);
+
+//      IF PASSWORD EMPTY, ONLY UPDATE EMAIL
         if(user_password==""){
             objectManager.userRepo.updateEmail(idParsed,user_mail);
         }else {

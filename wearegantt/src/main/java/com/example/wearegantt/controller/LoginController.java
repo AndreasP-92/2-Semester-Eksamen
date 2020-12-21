@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Map;
 
@@ -56,6 +57,7 @@ public class LoginController {
     @GetMapping("/register")
     public String  register(HttpServletRequest request, Model model){
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+
         if (inputFlashMap != null) {
             model.addAttribute("error", inputFlashMap.get("error"));
         }
@@ -69,6 +71,17 @@ public class LoginController {
     private String userType() {
 
         return "login/userType";
+    }
+
+// ============== USER TYPE SELECTION ==============
+
+    @RequestMapping(value = "/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
     }
 
 //   =================================================================== POST CONTROLLER ==========================================================================
@@ -94,7 +107,7 @@ public class LoginController {
         int phoneParsed = Integer.parseInt(phone);
 
         // CHECKS IF USER EXISTS IN DB
-        boolean userCheck = objectManager.userRepo.CheckUsernameExists(email);
+        boolean userCheck = objectManager.userRepo.checkUsernameExists(email);
 
         //  IF USER EXISTS RETURN Account Exists Allready
         if(userCheck == true){

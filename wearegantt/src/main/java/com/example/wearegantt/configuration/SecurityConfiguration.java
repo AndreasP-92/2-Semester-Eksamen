@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     ObjectManager objectManager = new ObjectManager();
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
@@ -48,14 +49,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         + "WHERE fk_userMail = ?");
     }
 
-//    hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
     @Override
+//    hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin").permitAll()
-                .antMatchers("/newsfeed").permitAll()
-                .antMatchers("/projects").hasAnyRole("ADMIN", "TRIAL", "NORMALUSER", "SUPERUSER")
-                .antMatchers("/profile/{profile_mail}").permitAll()
+                .antMatchers("/admin").hasAnyRole("ADMIN")
+                .antMatchers("/newsfeed/*").hasAnyRole("ADMIN", "USER","TRIAL","SUPERUSER")
+                .antMatchers("/projects/*").hasAnyRole("ADMIN", "TRIAL", "NORMALUSER", "SUPERUSER")
+                .antMatchers("/profile/*").hasAnyRole("ADMIN", "TRIAL", "NORMALUSER", "SUPERUSER")
+                .antMatchers("/support/*").hasAnyRole("ADMIN", "TRIAL", "NORMALUSER", "SUPERUSER")
                 .antMatchers("/").permitAll()
                 .and().formLogin()
                 .permitAll()
@@ -64,6 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordParameter("user_password")
                 .loginProcessingUrl("/doLogin")
                 .defaultSuccessUrl("/profile")
+                .failureUrl("/")
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
@@ -93,10 +96,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                         System.out.println("Login Failure!!!....");
 
-                        httpServletResponse.sendRedirect("/login");
+                        httpServletResponse.sendRedirect("/");
                     }
                 })
-                .and().exceptionHandling().accessDeniedPage("/");
+                .and().exceptionHandling().accessDeniedPage("/403");
     }
 
 }

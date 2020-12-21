@@ -3,6 +3,7 @@ package com.example.wearegantt.controller;
 import com.example.wearegantt.model.*;
 import com.example.wearegantt.services.ObjectManager;
 import com.example.wearegantt.services.ProjectServices;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -236,15 +237,8 @@ public class AdminController {
         ModelAndView mav = new ModelAndView("admin/adminLookUpNews");
 
         List<Newsfeed>listNewsfeed  = objectManager.newsRepo.getAllNews(fk_orgName);
-        Organization organization   = objectManager.organizationRepo.getOneOrg(fk_orgName);
-        Project project             = objectManager.projectRepo.getOneProjectWOrgId(organization.getOrg_id());
-        User user                   = objectManager.userRepo.getOneUserWOrgId(organization.getOrg_id());
-        Profile profile             = objectManager.profileRepo.getOneProfile(user.getUser_id());
 
         mav.addObject("listNewsfeed", listNewsfeed);
-        mav.addObject("OneOrg", fk_orgName);
-        mav.addObject("project", project);
-        mav.addObject("profile", profile);
 
         return mav;
     }
@@ -359,6 +353,27 @@ public String closeTicket(WebRequest dataFromForm) {
         objectManager.profileRepo.insertProfile(firstname, lastname, address, phoneParsed, country, zipParsed, jobTitle, userObj.getUser_id());
 
         objectManager.userRepo.insertAuthUser(role, userObj.getUser_mail());
+
+
+        return "redirect:/admin/lookupuser";
+    }
+
+//   ============= UPDATE CREDENTIALS ========
+
+    @PostMapping("/admin/update/credentials")
+    public String updatePassword(WebRequest dataFromForm) {
+        String user_id          = (dataFromForm.getParameter("user_id"));
+        String user_mail        = (dataFromForm.getParameter("user_mail"));
+        String user_password    = (dataFromForm.getParameter("user_password"));
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password1 = encoder.encode(user_password);
+
+        System.out.println(user_id);
+
+        int idParsed = Integer.parseInt(user_id);
+
+        objectManager.userRepo.updateCredentials(idParsed,user_mail,password1);
 
 
         return "redirect:/admin/lookupuser";
@@ -528,7 +543,7 @@ public String closeTicket(WebRequest dataFromForm) {
         objectManager.organizationRepo.deleteAdminOrg(idParsed);
 
 
-        return "redirect:/admin/lookuporganization";
+        return "redirect:/admin/organization";
     }
 
 // ******************************************* POST ADMIN NEW *******************************************
@@ -547,7 +562,7 @@ public String closeTicket(WebRequest dataFromForm) {
 
         objectManager.newsRepo.updateAdminNews(idParse,newsfeed_news, newsfeed_title, newsfeed_img, newsfeed_datetime);
 
-        return "redirect:/admin/lookuporganization";
+        return "redirect:/admin/organization";
     }
 
     @PostMapping("/admin/delete/news")
@@ -559,7 +574,7 @@ public String closeTicket(WebRequest dataFromForm) {
         objectManager.newsRepo.deleteAdminNews(idParsed);
 
 
-        return "redirect:/admin/lookuporganization";
+        return "redirect:/admin/organization";
     }
 
 }
